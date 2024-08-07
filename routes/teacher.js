@@ -76,16 +76,30 @@ router.get("/timetable", checkTeacher, async function (req, res) {
   const timetables = await Timetable.find({
     status: true,
     times: { $elemMatch: { teacherId: req.session.teacher.id } },
-  }).populate("times.subjectId", "name");
+  })
+    .populate("times.subjectId", "name")
+    .populate("classId", "name");
   const list = [];
+  const subj = [];
   for (var i = 0; i < timetables.length; i++) {
+    let isFill = false;
     for (var j = 0; j < timetables[i].times.length; j++) {
       if (timetables[i].times[j].teacherId.equals(req.session.teacher.id)) {
+        if (!isFill) {
+          subj.push({
+            subjName: timetables[i].times[j].subjectId.name,
+            className: timetables[i].classId.name,
+          });
+          isFill = true;
+        }
         list.push(timetables[i].times[j]);
       }
     }
   }
-  res.render("teacher/timetable", { list: JSON.stringify(list) });
+  res.render("teacher/timetable", {
+    list: JSON.stringify(list),
+    subjList: subj,
+  });
 });
 
 router.get("/todayattendance", checkTeacher, async function (req, res) {
@@ -116,10 +130,11 @@ router.get("/todayattendance", checkTeacher, async function (req, res) {
   }
   var now = new Date();
   const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
   console.log(start);
   const attendances = await Attendance.find({
     teacherId: req.session.teacher.id,
-    created: { $gte: start },
+    created: { $gte: start, $lte: end },
     status: true,
   })
     .populate("classId", "name")

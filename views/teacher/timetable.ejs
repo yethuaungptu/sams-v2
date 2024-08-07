@@ -88,6 +88,29 @@
         </table>
       </div>
     </div>
+    <div class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 my-5">
+      <div></div>
+      <div class="col-span-2">
+        <table class="table">
+          <thead class="text-lg">
+            <th class="border-4 border-base-content">Subject Name</th>
+            <th class="border-4 border-base-content">Class Name</th>
+          </thead>
+          <tbody>
+            <% for(var i = 0; i < subjList.length;i++){%>
+            <tr>
+              <td class="border-4 border-base-content">
+                <%= subjList[i].subjName %>
+              </td>
+              <td class="border-4 border-base-content">
+                <%= subjList[i].className %>
+              </td>
+            </tr>
+            <%}%>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </body>
   <script src="/javascripts/jquery.min.js"></script>
   <script>
@@ -95,7 +118,7 @@
       const times = JSON.parse($("#times").val());
       for (var i = 0; i < times.length; i++) {
         let id = "#d" + times[i].time.charAt(0) + "p" + times[i].time.charAt(1);
-        console.log(id, times[i].subjectId.name);
+        console.log(id, times[i]);
         $(id).text(times[i].subjectId.name);
       }
     });

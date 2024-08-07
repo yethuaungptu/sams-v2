@@ -4452,6 +4452,11 @@ html:has(.drawer-toggle:checked) {
   margin-right: auto;
 }
 
+.my-10 {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -4470,11 +4475,6 @@ html:has(.drawer-toggle:checked) {
 .my-auto {
   margin-top: auto;
   margin-bottom: auto;
-}
-
-.my-10 {
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
 }
 
 .-mt-20 {
@@ -5547,6 +5547,10 @@ html:has(.drawer-toggle:checked) {
 }
 
 @media (min-width: 640px) {
+  .sm\:col-span-12 {
+    grid-column: span 12 / span 12;
+  }
+
   .sm\:inline-block {
     display: inline-block;
   }
@@ -5579,6 +5583,10 @@ html:has(.drawer-toggle:checked) {
 }
 
 @media (min-width: 768px) {
+  .md\:col-span-6 {
+    grid-column: span 6 / span 6;
+  }
+
   .md\:inline {
     display: inline;
   }
@@ -5624,6 +5632,10 @@ html:has(.drawer-toggle:checked) {
 
   .lg\:col-span-9 {
     grid-column: span 9 / span 9;
+  }
+
+  .lg\:col-span-4 {
+    grid-column: span 4 / span 4;
   }
 
   .lg\:mx-10 {
