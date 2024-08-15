@@ -4,10 +4,85 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script src="/javascripts/splide.min.js"></script>
+    <link href="/stylesheets/splide.min.css" rel="stylesheet" />
     <title>Index</title>
   </head>
-  <body>
+  <body class="min-h-screen bg-neutral-content">
     <% include ./partial/puplic_drawer %>
-    <h1>Index page</h1>
+    <div
+      class="splide h-96"
+      role="group"
+      aria-label="Splide Basic HTML Example"
+    >
+      <div class="splide__track">
+        <ul class="splide__list">
+          <li class="splide__slide" data-splide-interval="1000">
+            <img src="/images/img.jpg" class="h-96 w-full cover" alt="" />
+          </li>
+          <li class="splide__slide" data-splide-interval="1000">
+            <img src="/images/img2.jpg" alt="" class="h-96 w-full cover" />
+          </li>
+          <li class="splide__slide" data-splide-interval="1000">
+            <img src="/images/img3.jpg" alt="" class="h-96 w-full cover" />
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-3 text-2xl font-bold text-center text-primary">
+      Technological University Pathein
+    </div>
+    <div class="mt-3 text-xl font-normal text-center text-primary">
+      Student Attendance Management System
+    </div>
+    <div class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 m-3 gap-5">
+      <div class="card bg-primary w-80 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Reduce Paper Work</h2>
+          <p>
+            Our system is use online roll call system, So can reduce some
+            process
+          </p>
+        </div>
+      </div>
+      <div class="card bg-secondary w-80 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Reduce Paper Work</h2>
+          <p>
+            Our system is use online roll call system, So can reduce some
+            process
+          </p>
+        </div>
+      </div>
+      <div class="card bg-primary w-80 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Reduce Paper Work</h2>
+          <p>
+            Our system is use online roll call system, So can reduce some
+            process
+          </p>
+        </div>
+      </div>
+      <div class="card bg-secondary w-80 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Reduce Paper Work</h2>
+          <p>
+            Our system is use online roll call system, So can reduce some
+            process
+          </p>
+        </div>
+      </div>
+    </div>
   </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var splide = new Splide(".splide", {
+        type: "loop",
+        autoplay: "play",
+        perPage: 1,
+      });
+      splide.on("autoplay:playing", function (rate) {});
+      splide.mount();
+    });
+  </script>
 </html>
