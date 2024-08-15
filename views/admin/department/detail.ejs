@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Index</title>
+  </head>
+  <body>
+    <% include ../../partial/admin_drawer %>
+    <h1 class="my-5 text-center text-2xl font-bold text-base-content">
+      Welcome <%= locals.dept.name %> Department
+    </h1>
+    <% include ../partial/footerbar %>
+  </body>
+  <script>
+    console.log("<%= locals.dept.name %>");
+  </script>
+</html>

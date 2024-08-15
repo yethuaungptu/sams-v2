@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Index</title>
+  </head>
+  <body>
+    <% include ../../../partial/admin_drawer %>
+    <h1 class="my-5 text-center text-2xl font-bold text-base-content">
+      <%= locals.dept.name %> Department's Teacher List
+    </h1>
+    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 mb-5">
+      <div></div>
+      <div class="overflow-x-auto border m-5">
+        <table class="table">
+          <!-- head -->
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- row 1 -->
+            <tr>
+              <th>1</th>
+              <td>Dr Htaik</td>
+              <td>
+                <button class="btn btn-primary m-1">Detail</button>
+              </td>
+            </tr>
+            <!-- row 2 -->
+            <tr class="hover">
+              <th>2</th>
+              <td>Daw Zoe</td>
+              <td>
+                <button class="btn btn-primary m-1">Detail</button>
+              </td>
+            </tr>
+            <!-- row 3 -->
+            <tr>
+              <th>3</th>
+              <td>Daw Myat</td>
+              <td>
+                <button class="btn btn-primary m-1">Detail</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn btn-block btn-primary my-5">Add Teacher</button>
+      </div>
+    </div>
+    <% include ../../partial/footerbar %>
+  </body>
+  <script>
+    console.log("<%= locals.dept.name %>");
+  </script>
+</html>
