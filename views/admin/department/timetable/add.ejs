@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Index</title>
+  </head>
+  <body>
+    <% include ../../../partial/admin_drawer %>
+    <h1 class="my-5 text-center text-2xl font-bold text-base-content">
+      <%= locals.dept.name %> Department's Timetable Adding
+    </h1>
+    <div
+      class="grid lg:grid-cols-12 md:grid-cols-1 sm:grid-cols-1 overflow-x-auto mb-20"
+    >
+      <div class="grid grid-cols-subgrid gap-4 lg:col-span-9">
+        <table class="table">
+          <thead>
+            <th class="border-4">Day\Time</th>
+            <th class="border-4">9:00-10:00AM</th>
+            <th class="border-4">10:00-11:00AM</th>
+            <th class="border-4">11:00-12:00AM</th>
+            <th class="border-4 border-b-0"></th>
+            <th class="border-4">1:00-2:00PM</th>
+            <th class="border-4">2:00-3:00PM</th>
+            <th class="border-4">3:00-4:00PM</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border-4">Mon</td>
+              <td class="border-4" id="d1p1"></td>
+              <td class="border-4" id="d1p2"></td>
+              <td class="border-4" id="d1p3"></td>
+              <td class="border-4 border-t-0" rowspan="5">Lunch Time</td>
+              <td class="border-4" id="d1p4"></td>
+              <td class="border-4" id="d1p5"></td>
+              <td class="border-4" id="d1p6"></td>
+            </tr>
+            <tr>
+              <td class="border-4">Tue</td>
+              <td class="border-4" id="d2p1"></td>
+              <td class="border-4" id="d2p2"></td>
+              <td class="border-4" id="d2p3"></td>
+              <td class="border-4" id="d2p4"></td>
+              <td class="border-4" id="d2p5"></td>
+              <td class="border-4" id="d2p6"></td>
+            </tr>
+            <tr>
+              <td class="border-4">Wed</td>
+              <td class="border-4" id="d3p1"></td>
+              <td class="border-4" id="d3p2"></td>
+              <td class="border-4" id="d3p3"></td>
+              <td class="border-4" id="d3p4"></td>
+              <td class="border-4" id="d3p5"></td>
+              <td class="border-4" id="d3p6"></td>
+            </tr>
+            <tr>
+              <td class="border-4">Thu</td>
+              <td class="border-4" id="d4p1"></td>
+              <td class="border-4" id="d4p2"></td>
+              <td class="border-4" id="d4p3"></td>
+              <td class="border-4" id="d4p4"></td>
+              <td class="border-4" id="d4p5"></td>
+              <td class="border-4" id="d4p6"></td>
+            </tr>
+            <tr>
+              <td class="border-4">Fri</td>
+              <td class="border-4" id="d5p1"></td>
+              <td class="border-4" id="d5p2"></td>
+              <td class="border-4" id="d5p3"></td>
+              <td class="border-4" id="d5p4"></td>
+              <td class="border-4" id="d5p5"></td>
+              <td class="border-4" id="d5p6"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid grid-cols-subgrid gap-4 lg:col-span-3 border-2 mx-1">
+        <div class="col-span-12 border p-3">
+          <h3 class="text-xl font-bold text-center mb-3">Timetable Setup</h3>
+          <select
+            class="select select-bordered select-sm w-full max-w-xs my-2"
+            id="acyear"
+          >
+            <option disabled selected>Select Academic Year</option>
+            <option value="2020-2021">2020-2021</option>
+            <option value="2021-2022">2021-2022</option>
+            <option value="2022-2023">2022-2023</option>
+            <option value="2022-2023">2023-2024</option>
+          </select>
+          <select
+            class="select select-bordered select-sm w-full max-w-xs my-2"
+            id="class"
+          >
+            <option disabled selected>Select Class</option>
+            <option value="1BE first-sem">1BE first-sem</option>
+            <option value="1BE second-sem">1BE second-sem</option>
+            <option value="2BE first-sem">2BE first-sem</option>
+            <option value="2BE second-sem">2BE second-sem</option>
+          </select>
+          <hr />
+          <h3 class="text-xl font-bold text-center mb-3">Timetable form</h3>
+          <select class="select select-bordered select-sm w-full max-w-xs my-2">
+            <option disabled selected>Select Teacher Department</option>
+            <option value="IT">IT</option>
+            <option value="Myanmar">Myanmar</option>
+            <option value="English">English</option>
+            <option value="Math">Math</option>
+            <option value="Physic">Physic</option>
+            <option value="Chemistry">Chemistry</option>
+          </select>
+          <select
+            class="select select-bordered select-sm w-full max-w-xs my-2"
+            id="teacher"
+          >
+            <option disabled selected>Select Teacher</option>
+            <option value="Daw Htight">Daw Htight</option>
+            <option value="Daw Phyo">Daw Phyo</option>
+            <option value="Daw Nway">Daw Nway</option>
+          </select>
+          <select
+            class="select select-bordered select-sm w-full max-w-xs my-2"
+            id="subject"
+          >
+            <option disabled selected>Select Subject</option>
+            <option value="BEE">BEE</option>
+            <option value="C++">C++</option>
+            <option value="Web">Web</option>
+            <option value="Myan">Myan</option>
+            <option value="Eng">Eng</option>
+            <option value="Math">Math</option>
+          </select>
+          <select
+            class="select select-bordered select-sm w-full max-w-xs my-2"
+            id="day"
+          >
+            <option disabled selected>Select Day</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <select
+            class="select select-bordered select-sm w-full max-w-xs my-2 h-fit"
+            id="time"
+            multiple
+          >
+            <option disabled selected>Select Time</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select>
+          <button class="btn btn-block btn-primary btn-sm" id="btnAdd">
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+    <% include ../../partial/footerbar %>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script>
+    $("#btnAdd").click(function () {
+      const dd = $("#day").val();
+      const pp = $("#time").val();
+
+      for (var i = 0; i < pp.length; i++) {
+        const id = "#d" + dd + "p" + pp[i];
+        $(id).text($("#subject").val());
+      }
+    });
+  </script>
+</html>

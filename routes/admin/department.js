@@ -68,4 +68,8 @@ router.get("/:dept/timetable", checkDept, function (req, res) {
   res.render("admin/department/timetable");
 });
 
+router.get("/:dept/timetable/add", checkDept, function (req, res) {
+  res.render("admin/department/timetable/add");
+});
+
 module.exports = router;

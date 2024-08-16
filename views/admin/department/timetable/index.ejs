@@ -50,7 +50,11 @@
             </tr>
           </tbody>
         </table>
-        <button class="btn btn-block btn-primary my-5">Add Timetable</button>
+        <a
+          href="/admin/departments/<%= locals.dept.key %>/timetable/add"
+          class="btn btn-block btn-primary my-5"
+          >Add Timetable</a
+        >
       </div>
     </div>
     <% include ../../partial/footerbar %>
