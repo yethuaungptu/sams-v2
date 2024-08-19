@@ -17,40 +17,33 @@
         <table class="table">
           <!-- head -->
           <thead>
-            <tr>
-              <th></th>
+            <tr class="text-xl text-center">
+              <th>No</th>
               <th>Name</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <!-- row 1 -->
+            <% for(var i = 0; i < teachers.length;i++){%>
             <tr>
-              <th>1</th>
-              <td>Dr Htaik</td>
+              <th><%= i+1 %></th>
+              <td class="text-lg"><%= teachers[i].name %></td>
               <td>
-                <button class="btn btn-primary m-1">Detail</button>
+                <a
+                  href="/admin/departments/<%= locals.dept.key %>/teacher/detail/<%= teachers[i]._id %>"
+                  class="btn btn-sm btn-primary m-1"
+                  >Detail</a
+                >
               </td>
             </tr>
-            <!-- row 2 -->
-            <tr class="hover">
-              <th>2</th>
-              <td>Daw Zoe</td>
-              <td>
-                <button class="btn btn-primary m-1">Detail</button>
-              </td>
-            </tr>
-            <!-- row 3 -->
-            <tr>
-              <th>3</th>
-              <td>Daw Myat</td>
-              <td>
-                <button class="btn btn-primary m-1">Detail</button>
-              </td>
-            </tr>
+            <%}%>
           </tbody>
         </table>
-        <button class="btn btn-block btn-primary my-5">Add Teacher</button>
+        <a
+          href="/admin/departments/<%= locals.dept.key %>/teacher/add"
+          class="btn btn-block btn-primary my-5"
+          >Add Teacher</a
+        >
       </div>
     </div>
     <% include ../../partial/footerbar %>

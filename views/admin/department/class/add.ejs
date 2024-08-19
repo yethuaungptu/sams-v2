@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Index</title>
+  </head>
+  <body>
+    <% include ../../../partial/admin_drawer %>
+    <h1 class="my-5 text-center text-2xl font-bold text-base-content">
+      <%= locals.dept.name %> Department's Class Add
+    </h1>
+    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 mb-5">
+      <div></div>
+      <div class="card glass w-full">
+        <div class="card-body">
+          <h2 class="text-2xl text-center font-bold my-5">Adding Class</h2>
+          <form
+            action="/admin/departments/<%= locals.dept.key %>/class/add"
+            method="post"
+            id="frm"
+          >
+            <label class="input input-bordered flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"
+                />
+                <path
+                  d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"
+                />
+                <path
+                  d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"
+                />
+              </svg>
+              <input
+                type="text"
+                class="grow"
+                name="name"
+                id="name"
+                placeholder="Class name"
+              />
+            </label>
+            <input
+              type="button"
+              class="btn btn-primary w-40 my-2 mx-auto block"
+              onclick="checkFun()"
+              value="Add"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <% include ../../partial/footerbar %>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script>
+    function checkFun() {
+      if ($("#name").val() != "") {
+        const data = { name: $("#name").val() };
+        $.ajax("/admin/departments/<%= locals.dept.key %>/class/check", {
+          type: "POST",
+          data: data,
+          success: function (result) {
+            if (result.status == false) {
+              alert("Class is duplicated");
+            } else {
+              $("#frm").submit();
+            }
+          },
+        });
+      } else {
+        alert("Please fill class name");
+      }
+    }
+  </script>
+</html>

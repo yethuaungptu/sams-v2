@@ -32,7 +32,7 @@
               <td class="border-4" id="d1p1"></td>
               <td class="border-4" id="d1p2"></td>
               <td class="border-4" id="d1p3"></td>
-              <td class="border-4 border-t-0" rowspan="5">Lunch Time</td>
+              <td class="border-4 border-t-0" rowspan="5">Lunch Break</td>
               <td class="border-4" id="d1p4"></td>
               <td class="border-4" id="d1p5"></td>
               <td class="border-4" id="d1p6"></td>
@@ -136,11 +136,11 @@
             id="day"
           >
             <option disabled selected>Select Day</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+            <option value="1">Monday</option>
+            <option value="2">Tuesday</option>
+            <option value="3">Wednesday</option>
+            <option value="4">Thursday</option>
+            <option value="5">Friday</option>
           </select>
           <select
             class="select select-bordered select-sm w-full max-w-xs my-2 h-fit"
@@ -171,6 +171,12 @@
 
       for (var i = 0; i < pp.length; i++) {
         const id = "#d" + dd + "p" + pp[i];
+        // if (pp.length == 2) {
+        //   $(id).text($("#subject").val());
+        //   $(id).attr("colspan", "2");
+        //   $("#d" + dd + "p" + (Number(pp[i]) + 1)).remove();
+        //   break;
+        // }
         $(id).text($("#subject").val());
       }
     });

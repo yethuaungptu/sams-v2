@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Add</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <% include ../../../partial/admin_drawer %>
+    <h1 class="my-5 text-center text-2xl font-bold text-base-content">
+      <%= locals.dept.name %> Department's Teacher Detail
+    </h1>
+    <div class="grid lg:grid-cols-8 md:grid-cols-1 sm:grid-cols-1 mb-32">
+      <div></div>
+      <div class="grid col-span-6">
+        <div class="card glass w-full lg:card-side bg-base-100 shadow-xl">
+          <figure class="w-1/3 mx-auto">
+            <img src="/images/teacher.svg" alt="Album" />
+          </figure>
+          <div class="card-body">
+            <h2 class="text-xl text-center font-bold my-5">
+              <%= teacher.name %>
+            </h2>
+            <div
+              class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5"
+            >
+              <div class="text-lg text-center">
+                <p class="font-semibold mb-2">Email</p>
+                <p><%= teacher.email %></p>
+              </div>
+              <div class="text-lg text-center">
+                <p class="font-semibold mb-2">Phone</p>
+                <%= teacher.phone %>
+              </div>
+              <div class="text-lg text-center">
+                <p class="font-semibold mb-2">Address</p>
+                <%= teacher.address %>
+              </div>
+              <div class="text-lg text-center">
+                <p class="font-semibold mb-2">Family Teacher</p>
+                <%= teacher.isFamily ? "Yes":"No" %>
+              </div>
+              <% if(teacher.isFamily){%>
+              <div class="text-lg text-center">
+                <p class="font-semibold mb-2">Year</p>
+                <%= teacher.familyClass %>
+              </div>
+              <%}%>
+            </div>
+            <div class="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 my-5">
+              <div></div>
+              <div class="mx-auto">
+                <a
+                  href="/admin/departments/<%= locals.dept.key %>/teacher/update/<%= teacher._id %>"
+                  class="btn btn-sm w-24 btn-warning"
+                  >Update</a
+                >
+                <button
+                  onclick="del('<%= teacher._id %>')"
+                  class="btn btn-sm w-24 btn-error"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% include ../../partial/footerbar %>
+  </body>
+  <script>
+    function del(id) {
+      var opt = confirm("Are you sure for delete?");
+      if (opt)
+        location.href =
+          "/admin/departments/<%= locals.dept.key %>/teacher/delete/" + id;
+    }
+  </script>
+</html>

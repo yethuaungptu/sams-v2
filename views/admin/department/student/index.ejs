@@ -17,8 +17,8 @@
         <table class="table">
           <!-- head -->
           <thead>
-            <tr>
-              <th></th>
+            <tr class="text-xl text-center">
+              <th>No</th>
               <th>Name</th>
               <th>Action</th>
             </tr>
@@ -27,30 +27,18 @@
             <!-- row 1 -->
             <tr>
               <th>1</th>
-              <td>Ma Ei</td>
+              <td class="text-lg">Ma Ei</td>
               <td>
-                <button class="btn btn-primary m-1">Detail</button>
-              </td>
-            </tr>
-            <!-- row 2 -->
-            <tr class="hover">
-              <th>2</th>
-              <td>Mg Oak</td>
-              <td>
-                <button class="btn btn-primary m-1">Detail</button>
-              </td>
-            </tr>
-            <!-- row 3 -->
-            <tr>
-              <th>3</th>
-              <td>Mg Paing</td>
-              <td>
-                <button class="btn btn-primary m-1">Detail</button>
+                <button class="btn btn-sm btn-primary m-1">Detail</button>
               </td>
             </tr>
           </tbody>
         </table>
-        <button class="btn btn-block btn-primary my-5">Add Student</button>
+        <a
+          href="/admin/departments/<%= locals.dept.key %>/student/add"
+          class="btn btn-block btn-primary my-5"
+          >Add Student</a
+        >
       </div>
     </div>
     <% include ../../partial/footerbar %>

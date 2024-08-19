@@ -17,49 +17,121 @@
         <table class="table">
           <!-- head -->
           <thead>
-            <tr>
-              <th></th>
+            <tr class="text-xl text-center">
+              <th>No</th>
               <th>Name</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <!-- row 1 -->
+            <% for(var i = 0; i < classes.length;i++){%>
             <tr>
-              <th>1</th>
-              <td>1BE (first-sem)</td>
+              <th><%= i+1 %></th>
+              <td class="text-lg"><%= classes[i].name %></td>
               <td>
-                <button class="btn btn-warning m-1">Update</button
-                ><button class="btn btn-error m-1">Delete</button>
+                <button
+                  class="btn btn-sm btn-warning m-1"
+                  onclick="updateClass('<%= classes[i]._id %>','<%= classes[i].name %>')"
+                >
+                  Update</button
+                ><button
+                  class="btn btn-sm btn-error m-1"
+                  onclick="deleteClass('<%= classes[i]._id %>')"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
-            <!-- row 2 -->
-            <tr class="hover">
-              <th>2</th>
-              <td>1BE (second-sem)</td>
-              <td>
-                <button class="btn btn-warning m-1">Update</button
-                ><button class="btn btn-error m-1">Delete</button>
-              </td>
-            </tr>
-            <!-- row 3 -->
-            <tr>
-              <th>3</th>
-              <td>2BE (first-sem)</td>
-              <td>
-                <button class="btn btn-warning m-1">Update</button
-                ><button class="btn btn-error m-1">Delete</button>
-              </td>
-            </tr>
+            <%}%>
           </tbody>
         </table>
-        <button class="btn btn-block btn-primary my-5">Add Class</button>
+        <a
+          href="/admin/departments/<%= locals.dept.key %>/class/add"
+          class="btn btn-block btn-primary my-5"
+          >Add Class</a
+        >
       </div>
     </div>
-
+    <dialog id="updateModal" class="modal">
+      <div class="modal-box">
+        <h3 class="text-lg font-bold text-center my-3">Update Class</h3>
+        <form
+          action="/admin/departments/<%= locals.dept.key %>/class/update"
+          method="post"
+          id="frm"
+        >
+          <input type="hidden" name="id" id="id" />
+          <label class="input input-bordered flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              class="h-4 w-4 opacity-70"
+            >
+              <path
+                d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"
+              />
+              <path
+                d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"
+              />
+              <path
+                d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"
+              />
+            </svg>
+            <input
+              type="text"
+              class="grow"
+              name="name"
+              id="name"
+              placeholder="Class name"
+            />
+          </label>
+          <input
+            type="button"
+            class="btn btn-block btn-primary my-2"
+            onclick="checkFun()"
+            value="Update"
+          />
+        </form>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
     <% include ../../partial/footerbar %>
   </body>
+  <script src="/javascripts/jquery.min.js"></script>
   <script>
-    console.log("<%= locals.dept.name %>");
+    function deleteClass(id) {
+      var opt = confirm("Are you sure for delete?");
+      if (opt)
+        location.href =
+          "/admin/departments/<%= locals.dept.key %>/class/delete/" + id;
+    }
+    function updateClass(id, name) {
+      updateModal.show();
+      $("#id").val(id);
+      $("#name").val(name);
+    }
+    function checkFun() {
+      const id = $("#id").val();
+      const name = $("#name").val();
+      if (id != "" && name != "") {
+        const data = { name: $("#name").val(), id: $("#id").val() };
+        $.ajax("/admin/departments/<%= locals.dept.key %>/class/checkWithId", {
+          type: "POST",
+          data: data,
+          success: function (result) {
+            if (result.status == false) {
+              alert("Class is duplicated");
+            } else {
+              $("#frm").submit();
+            }
+          },
+        });
+      } else {
+        alert("please fill class name");
+      }
+    }
   </script>
 </html>
