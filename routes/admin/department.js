@@ -3,6 +3,7 @@ var bcrypt = require("bcryptjs");
 var router = express.Router();
 const Class = require("../../models/Class");
 const Teacher = require("../../models/Teacher");
+const Student = require("../../models/Student");
 
 /* GET users listing. */
 const deptList = [
@@ -110,7 +111,11 @@ router.get("/:dept/teacher", checkDept, async function (req, res) {
 });
 
 router.get("/:dept/teacher/add", checkDept, async function (req, res) {
-  const teachers = await Teacher.find({ status: true, isFamily: true });
+  const teachers = await Teacher.find({
+    status: true,
+    isFamily: true,
+    department: req.params.dept,
+  });
   const insertYear = [];
   teachers.map((item) => insertYear.push(item.familyClass));
   res.render("admin/department/teacher/add", { insertYear: insertYear });
@@ -148,6 +153,7 @@ router.get("/:dept/teacher/update/:id", checkDept, async function (req, res) {
     status: true,
     isFamily: true,
     _id: { $ne: req.params.id },
+    department: req.params.dept,
   });
   const insertYear = [];
   teachers.map((item) => insertYear.push(item.familyClass));
@@ -188,12 +194,117 @@ router.get("/:dept/teacher/delete/:id", checkDept, async function (req, res) {
   res.redirect("/admin/departments/" + req.params.dept + "/teacher");
 });
 
-router.get("/:dept/student", checkDept, function (req, res) {
-  res.render("admin/department/student");
+router.get("/:dept/student", checkDept, async function (req, res) {
+  const students = await Student.find({
+    status: true,
+    department: req.params.dept,
+  });
+  res.render("admin/department/student", { students: students });
 });
 
-router.get("/:dept/student/add", checkDept, function (req, res) {
-  res.render("admin/department/student/add");
+router.get("/:dept/student/add", checkDept, async function (req, res) {
+  const classes = await Class.find({
+    status: true,
+    department: req.params.dept,
+  });
+  res.render("admin/department/student/add", { classes: classes });
+});
+
+router.post("/:dept/student/check", checkDept, async function (req, res) {
+  const emailCheck = await Student.findOne({
+    status: true,
+    email: req.body.email,
+  });
+  const rollCheck = await Student.findOne({
+    status: true,
+    department: req.params.dept,
+    roll: req.body.roll,
+    classId: req.body.classId,
+  });
+  if (emailCheck == null && rollCheck == null) {
+    res.json({ status: true });
+  } else if (emailCheck != null) {
+    res.json({ status: false, msg: "Email is duplicate" });
+  } else if (rollCheck != null) {
+    res.json({ status: false, msg: "Roll No is already inserted" });
+  }
+});
+
+router.post("/:dept/student/checkWithId", checkDept, async function (req, res) {
+  const rollCheck = await Student.findOne({
+    status: true,
+    department: req.params.dept,
+    roll: req.body.roll,
+    classId: req.body.classId,
+    _id: { $ne: req.body.id },
+  });
+  if (rollCheck == null) {
+    res.json({ status: true });
+  } else {
+    res.json({ status: false, msg: "Roll No is already inserted" });
+  }
+});
+
+router.post("/:dept/student/add", checkDept, async function (req, res) {
+  const student = new Student();
+  student.name = req.body.name;
+  student.email = req.body.email;
+  student.password = req.body.password;
+  student.roll = req.body.roll;
+  student.classId = req.body.classId;
+  student.gender = req.body.gender;
+  student.phone = req.body.phone;
+  student.department = req.params.dept;
+  const data = await student.save();
+  res.redirect("/admin/departments/" + req.params.dept + "/student");
+});
+
+router.get("/:dept/student/detail/:id", checkDept, async function (req, res) {
+  const student = await Student.findById(req.params.id).populate(
+    "classId",
+    "name"
+  );
+  res.render("admin/department/student/detail", { student: student });
+});
+
+router.get("/:dept/student/update/:id", checkDept, async function (req, res) {
+  const classes = await Class.find({
+    status: true,
+    department: req.params.dept,
+  });
+  const student = await Student.findById(req.params.id).populate(
+    "classId",
+    "name"
+  );
+  res.render("admin/department/student/update", {
+    student: student,
+    classes: classes,
+  });
+});
+
+router.post("/:dept/student/update", checkDept, async function (req, res) {
+  const update = {
+    name: req.body.name,
+    roll: req.body.roll,
+    classId: req.body.classId,
+    gender: req.body.gender,
+    phone: req.body.phone,
+  };
+  if (req.body.password)
+    update.password = bcrypt.hashSync(
+      req.body.password,
+      bcrypt.genSaltSync(8),
+      null
+    );
+  const student = await Student.findByIdAndUpdate(req.body.id, update);
+  res.redirect("/admin/departments/" + req.params.dept + "/student");
+});
+
+router.get("/:dept/student/delete/:id", checkDept, async function (req, res) {
+  const student = await Student.findByIdAndUpdate(req.params.id, {
+    status: false,
+  });
+  res.redirect("/admin/departments/" + req.params.dept + "/student");
 });
 
 router.get("/:dept/subject", checkDept, function (req, res) {

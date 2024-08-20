@@ -24,14 +24,19 @@
             </tr>
           </thead>
           <tbody>
-            <!-- row 1 -->
+            <% for(var i = 0; i < students.length;i++){%>
             <tr>
-              <th>1</th>
-              <td class="text-lg">Ma Ei</td>
+              <th><%= i+1 %></th>
+              <td class="text-lg"><%= students[i].name %></td>
               <td>
-                <button class="btn btn-sm btn-primary m-1">Detail</button>
+                <a
+                  href="/admin/departments/<%= locals.dept.key %>/student/detail/<%= students[i]._id %>"
+                  class="btn btn-sm btn-primary m-1"
+                  >Detail</a
+                >
               </td>
             </tr>
+            <%}%>
           </tbody>
         </table>
         <a

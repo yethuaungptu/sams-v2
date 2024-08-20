@@ -3,25 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student Add</title>
+    <title>Student Update</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
     <% include ../../../partial/admin_drawer %>
     <h1 class="my-5 text-center text-2xl font-bold text-base-content">
-      <%= locals.dept.name %> Department's Student Add
+      <%= locals.dept.name %> Department's Student Update
     </h1>
     <div class="grid lg:grid-cols-10 md:grid-cols-1 sm:grid-cols-1 mb-32">
       <div></div>
       <div class="grid col-span-8">
         <div class="card glass w-full">
-          <h1 class="text-center text-2xl font-bold my-3">Adding Student</h1>
+          <h1 class="text-center text-2xl font-bold my-3">Updating Student</h1>
           <form
-            action="/admin/departments/<%= locals.dept.key %>/student/add"
+            action="/admin/departments/<%= locals.dept.key %>/student/update"
             method="post"
             class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-5 p-5"
             id="frm"
           >
+            <input type="hidden" name="id" id="id" value="<%= student._id %>">
             <label class="input input-bordered flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +39,7 @@
                 name="name"
                 id="name"
                 class="grow"
-                placeholder="Name"
+                value="<%= student.name %>"
               />
             </label>
             <label class="input input-bordered flex items-center gap-2">
@@ -60,7 +61,8 @@
                 class="grow"
                 name="email"
                 id="email"
-                placeholder="Email"
+                value="<%= student.email %>"
+                readonly
               />
             </label>
             <label class="input input-bordered flex items-center gap-2">
@@ -79,7 +81,7 @@
                 class="grow"
                 name="phone"
                 id="phone"
-                placeholder="Phone No"
+                value="<%= student.phone %>"
               />
             </label>
             <label class="input input-bordered flex items-center gap-2">
@@ -99,8 +101,8 @@
                 name="gender"
                 id="gender"
               >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="male" <%= student.gender == 'male'? "selected":"" %>>Male</option>
+                <option value="female" <%= student.gender == 'female'? "selected":"" %>>Female</option>
               </select>
             </label>
             <label class="input input-bordered flex items-center gap-2">
@@ -169,7 +171,7 @@
                 id="classId"
               >
                 <% for(var i = 0;i < classes.length;i++){%>
-                <option value="<%= classes[i]._id %>">
+                <option value="<%= classes[i]._id %>" <%=  student.classId.equals(classes[i]._id) ? "selected":"" %>>
                   <%= classes[i].name %>
                 </option>
                 <%}%>
@@ -193,7 +195,7 @@
                 name="roll"
                 id="roll"
                 class="grow"
-                placeholder="Roll No"
+                value="<%= student.roll %>"
               />
             </label>
 
@@ -203,7 +205,7 @@
                 class="btn block w-40 ms-auto btn-primary"
                 id="btnAdd"
               >
-                Add
+                Update
               </button>
             </div>
           </form>
@@ -223,23 +225,22 @@
       const roll = $("#roll").val() || "";
       const password = $("#password").val() || "";
       const compassword = $("#compassword").val() || "";
+      const id = $("#id").val();
       if (
         name != "" &&
         email != "" &&
         phone != "" &&
         gender != "" &&
         classId != "" &&
-        roll != "" &&
-        password != "" &&
-        compassword != ""
+        roll != "" 
       ) {
         if (password != compassword) {
           alert("Password and confirm password not match");
         } else if (roll < 1) {
           alert("Roll much be greater than or equal to 1");
         } else {
-          const data = { email: email, classId: classId, roll: roll };
-          $.ajax("/admin/departments/<%= locals.dept.key %>/student/check", {
+          const data = { id: id, classId: classId, roll: roll };
+          $.ajax("/admin/departments/<%= locals.dept.key %>/student/checkWithId", {
             type: "POST",
             data: data,
             success: function (result) {
