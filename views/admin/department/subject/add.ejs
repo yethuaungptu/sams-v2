@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Index</title>
+  </head>
+  <body>
+    <% include ../../../partial/admin_drawer %>
+    <h1 class="my-5 text-center text-2xl font-bold text-base-content">
+      <%= locals.dept.name %> Department's Subject Add
+    </h1>
+    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 mb-5">
+      <div></div>
+      <div class="card glass w-full">
+        <div class="card-body">
+          <h2 class="text-2xl text-center font-bold my-5">Adding Subject</h2>
+          <form
+            action="/admin/departments/<%= locals.dept.key %>/subject/add"
+            method="post"
+            id="frm"
+          >
+            <label class="input input-bordered flex items-center gap-2 my-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"
+                />
+                <path
+                  d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"
+                />
+                <path
+                  d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"
+                />
+              </svg>
+              <input
+                type="text"
+                class="grow"
+                name="name"
+                id="name"
+                placeholder="Subject Name"
+              />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 my-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  d="M3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0z"
+                />
+              </svg>
+              <input
+                type="text"
+                class="grow"
+                name="code"
+                id="code"
+                placeholder="Subject Code"
+              />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 my-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0"
+                />
+                <path
+                  d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"
+                />
+                <path
+                  d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"
+                />
+              </svg>
+              <select
+                class="select w-full select-ghost"
+                name="classId"
+                id="classId"
+              >
+                <% for(var i = 0;i < classes.length;i++){%>
+                <option value="<%= classes[i]._id %>">
+                  <%= classes[i].name %>
+                </option>
+                <%}%>
+              </select>
+            </label>
+            <input
+              type="button"
+              class="btn btn-primary w-40 my-2 mx-auto block"
+              onclick="checkFun()"
+              value="Add"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <% include ../../partial/footerbar %>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script>
+    function checkFun() {
+      const name = $("#name").val();
+      const code = $("#code").val();
+      const classId = $("#classId").val();
+      if (name != "" && code != "" && classId != "") {
+        const data = { code: code, classId: classId };
+        $.ajax("/admin/departments/<%= locals.dept.key %>/subject/check", {
+          type: "POST",
+          data: data,
+          success: function (result) {
+            if (result.status == false) {
+              alert("Subject code is duplicated");
+            } else {
+              $("#frm").submit();
+            }
+          },
+        });
+      } else {
+        alert("Please fill class name");
+      }
+    }
+  </script>
+</html>

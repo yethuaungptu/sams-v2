@@ -4,6 +4,7 @@ var router = express.Router();
 const Class = require("../../models/Class");
 const Teacher = require("../../models/Teacher");
 const Student = require("../../models/Student");
+const Subject = require("../../models/Subject");
 
 /* GET users listing. */
 const deptList = [
@@ -307,8 +308,90 @@ router.get("/:dept/student/delete/:id", checkDept, async function (req, res) {
   res.redirect("/admin/departments/" + req.params.dept + "/student");
 });
 
-router.get("/:dept/subject", checkDept, function (req, res) {
-  res.render("admin/department/subject");
+router.get("/:dept/subject", checkDept, async function (req, res) {
+  const subjects = await Subject.find({
+    status: true,
+    department: req.params.dept,
+  });
+  res.render("admin/department/subject", { subjects: subjects });
+});
+
+router.get("/:dept/subject/add", checkDept, async function (req, res) {
+  const classes = await Class.find({
+    status: true,
+    department: req.params.dept,
+  });
+  res.render("admin/department/subject/add", { classes: classes });
+});
+
+router.post("/:dept/subject/check", checkDept, async function (req, res) {
+  const subject = await Subject.findOne({
+    status: true,
+    department: req.params.dept,
+    code: req.body.code,
+    classId: req.body.classId,
+  });
+  subject == null ? res.json({ status: true }) : res.json({ status: false });
+});
+
+router.post("/:dept/subject/add", checkDept, async function (req, res) {
+  const subject = new Subject();
+  subject.name = req.body.name;
+  subject.code = req.body.code;
+  subject.classId = req.body.classId;
+  subject.department = req.params.dept;
+  const data = await subject.save();
+  res.redirect("/admin/departments/" + req.params.dept + "/subject");
+});
+
+router.get("/:dept/subject/detail/:id", checkDept, async function (req, res) {
+  const subject = await Subject.findById(req.params.id).populate(
+    "classId",
+    "name"
+  );
+  res.render("admin/department/subject/detail", {
+    subject: subject,
+  });
+});
+
+router.get("/:dept/subject/update/:id", checkDept, async function (req, res) {
+  const subject = await Subject.findById(req.params.id);
+  const classes = await Class.find({
+    status: true,
+    department: req.params.dept,
+  });
+  res.render("admin/department/subject/update", {
+    subject: subject,
+    classes: classes,
+  });
+});
+
+router.post("/:dept/subject/checkWithId", checkDept, async function (req, res) {
+  const subject = await Subject.findOne({
+    status: true,
+    department: req.params.dept,
+    code: req.body.code,
+    classId: req.body.classId,
+    _id: { $ne: req.body.id },
+  });
+  subject == null ? res.json({ status: true }) : res.json({ status: false });
+});
+
+router.post("/:dept/subject/update", checkDept, async function (req, res) {
+  const update = {
+    name: req.body.name,
+    code: req.body.code,
+    classId: req.body.classId,
+  };
+  const data = await Subject.findByIdAndUpdate(req.body.id, update);
+  res.redirect("/admin/departments/" + req.params.dept + "/subject");
+});
+
+router.get("/:dept/subject/delete/:id", checkDept, async function (req, res) {
+  const data = await Subject.findByIdAndUpdate(req.params.id, {
+    status: false,
+  });
+  res.redirect("/admin/departments/" + req.params.dept + "/subject");
 });
 
 router.get("/:dept/timetable", checkDept, function (req, res) {

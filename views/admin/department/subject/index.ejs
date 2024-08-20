@@ -17,40 +17,33 @@
         <table class="table">
           <!-- head -->
           <thead>
-            <tr>
-              <th></th>
+            <tr class="text-xl">
+              <th>No</th>
               <th>Name</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <!-- row 1 -->
-            <tr>
-              <th>1</th>
-              <td>WEB</td>
+            <% for(var i = 0; i < subjects.length;i++){%>
+            <tr class="text-lg">
+              <th><%= i+1 %></th>
+              <td><%= subjects[i].name %></td>
               <td>
-                <button class="btn btn-primary m-1">Detail</button>
+                <a
+                  href="/admin/departments/<%= locals.dept.key %>/subject/detail/<%= subjects[i]._id %>"
+                  class="btn btn-sm btn-primary m-1"
+                  >Detail</a
+                >
               </td>
             </tr>
-            <!-- row 2 -->
-            <tr class="hover">
-              <th>2</th>
-              <td>C++</td>
-              <td>
-                <button class="btn btn-primary m-1">Detail</button>
-              </td>
-            </tr>
-            <!-- row 3 -->
-            <tr>
-              <th>3</th>
-              <td>BEE</td>
-              <td>
-                <button class="btn btn-primary m-1">Detail</button>
-              </td>
-            </tr>
+            <%}%>
           </tbody>
         </table>
-        <button class="btn btn-block btn-primary my-5">Add Subject</button>
+        <a
+          href="/admin/departments/<%= locals.dept.key %>/subject/add"
+          class="btn btn-block btn-primary my-5"
+          >Add Subject</a
+        >
       </div>
     </div>
     <% include ../../partial/footerbar %>

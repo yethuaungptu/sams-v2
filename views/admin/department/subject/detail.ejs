@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Subject Detail</title>
+  </head>
+  <body>
+    <% include ../../../partial/admin_drawer %>
+    <h1 class="my-5 text-center text-2xl font-bold text-base-content">
+      <%= locals.dept.name %> Department's Subject Detail
+    </h1>
+    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 mb-5">
+      <div></div>
+      <div class="card glass w-full">
+        <div class="card-body">
+          <div class="font-bold text-lg">
+            Subject Name : <%= subject.name %>
+          </div>
+          <div class="font-bold text-lg">
+            Subject Code : <%= subject.code %>
+          </div>
+          <div class="font-bold text-lg">
+            Class Name : <%= subject.classId.name %>
+          </div>
+        </div>
+        <div class="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 my-5">
+          <div></div>
+          <div class="mx-auto">
+            <a
+              href="/admin/departments/<%= locals.dept.key %>/subject/update/<%= subject._id %>"
+              class="btn btn-sm btn-warning"
+              >Update</a
+            >
+            <button
+              onclick="del('<%= subject._id %>')"
+              class="btn btn-sm btn-error"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% include ../../partial/footerbar %>
+  </body>
+  <script>
+    console.log("<%= locals.dept.name %>");
+    function del(id) {
+      var opt = confirm("Are you sure for delete?");
+      if (opt)
+        location.href =
+          "/admin/departments/<%= locals.dept.key %>/subject/delete/" + id;
+    }
+  </script>
+</html>
