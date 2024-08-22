@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Index</title>
+  </head>
+  <body>
+    <% include ../../../partial/admin_drawer %>
+    <h1 class="my-5 text-center text-2xl font-bold text-base-content">
+      <%= locals.dept.name %> Department's Academic Combination Update
+    </h1>
+    <div class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 mb-5">
+      <div></div>
+      <div class="card glass w-full mb-16 col-span-2">
+        <div class="card-body">
+          <h2 class="text-2xl text-center font-bold my-5">
+            Updating Academic Combination
+          </h2>
+          <form>
+            <label class="input input-bordered flex items-center gap-2 my-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"
+                />
+                <path
+                  d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"
+                />
+                <path
+                  d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"
+                />
+              </svg>
+              <input
+                type="text"
+                class="grow"
+                name="name"
+                id="name"
+                value="<%= academic.name %>"
+              />
+            </label>
+            <div class="grid grid-cols-2 gap-2">
+              <label class="input input-bordered flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  class="h-4 w-4 opacity-70"
+                >
+                  <path
+                    d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-5.146-5.146-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708"
+                  />
+                </svg>
+                <select
+                  class="select w-full select-ghost"
+                  name="fromYear"
+                  id="fromYear"
+                ></select>
+              </label>
+              <label class="input input-bordered flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  class="h-4 w-4 opacity-70"
+                >
+                  <path
+                    d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-5.146-5.146-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708"
+                  />
+                </svg>
+                <select
+                  class="select w-full select-ghost"
+                  name="toYear"
+                  id="toYear"
+                ></select>
+              </label>
+            </div>
+            <label class="input input-bordered flex items-center gap-2 my-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0"
+                />
+                <path
+                  d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"
+                />
+                <path
+                  d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"
+                />
+              </svg>
+              <select
+                class="select w-full select-ghost"
+                name="classId"
+                id="classId"
+              >
+                <option disabled selected><%= academic.classId.name %></option>
+              </select>
+            </label>
+            <div id="subList">
+              <% for(var i = 0; i < academic.combination.length;i++){%>
+              <div
+                class="grid grid-cols-4 gap-2 border-2 border-primary rounded-md m-1 p-1"
+              >
+                <h1 class="col-span-4 text-center">Subject</h1>
+                <label
+                  class="input input-bordered col-span-2 flex items-center gap-2 my-2"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    class="h-4 w-4 opacity-70"
+                  >
+                    <path
+                      d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"
+                    />
+                    <path
+                      d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3z"
+                    />
+                  </svg>
+                  <select
+                    class="select w-full select-ghost department"
+                    name="department"
+                  >
+                    <option selected disabled>Select department</option>
+                    <option value="<%= locals.dept.key %>">
+                      <%= locals.dept.key %>
+                    </option>
+                    <option value="Eng">English</option>
+                    <option value="Myan">Myanmar</option>
+                    <option value="Math">Mathematics</option>
+                    <option value="Phy">Physic</option>
+                    <option value="Chem">Chemistry</option>
+                  </select>
+                </label>
+                <label
+                  class="input input-bordered col-span-2 flex items-center gap-2 my-2"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    class="h-4 w-4 opacity-70"
+                  >
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                    <path
+                      fill-rule="evenodd"
+                      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                    />
+                  </svg>
+                  <select
+                    class="select w-full select-ghost teacherId"
+                    name="teacherId"
+                  ></select>
+                </label>
+                <label
+                  class="input input-bordered col-span-3 flex items-center gap-2 my-2"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    class="h-4 w-4 opacity-70"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M8 4a.5.5 0 0 1 .5.5v.634l.549-.317a.5.5 0 1 1 .5.866L9 6l.549.317a.5.5 0 1 1-.5.866L8.5 6.866V7.5a.5.5 0 0 1-1 0v-.634l-.549.317a.5.5 0 1 1-.5-.866L7 6l-.549-.317a.5.5 0 0 1 .5-.866l.549.317V4.5A.5.5 0 0 1 8 4M5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"
+                    />
+                    <path
+                      d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"
+                    />
+                    <path
+                      d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"
+                    />
+                  </svg>
+                  <select
+                    class="select w-full select-ghost subjectId"
+                    name="subjectId"
+                  >
+                    <option disabled selected>Select Subject</option>
+                    <% for(var j = 0; j < subjects.length;j++){%>
+                    <option value="<%= subjects[j]._id %>" <%= subjects[j]._id.equals(academic.combination[i].subjectId) ? "selected":"" %>>
+                      <%= subjects[j].name %>
+                    </option>
+                    <%}%>
+                  </select>
+                </label>
+                <button
+                  type="button"
+                  class="btn btn-error w-1/2 mx-auto btn-sm my-auto btn-remove"
+                >
+                  -
+                </button>
+              </div>
+              <%}%>
+            </div>
+            <button
+              type="button"
+              class="btn btn-primary btn-sm ms-auto hidden"
+              id="btnAdd"
+            >
+              Add Subject
+            </button>
+            <input
+              type="button"
+              class="btn btn-primary w-40 my-2 mx-auto block"
+              onclick="checkFun()"
+              value="Update"
+              id="checkBtn"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <% include ../../partial/footerbar %>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script>
+    var date = new Date();
+    var year = date.getFullYear();
+    let subjCount = 0;
+    const comLen = "<%= academic.combination.length %>";
+    let subjects;
+    $("#btnAdd").removeClass("hidden").addClass("block");
+    const data = { classId: "<%= academic.classId._id %>" };
+    $.ajax("/admin/departments/<%= locals.dept.key %>/academic/getSubj", {
+      type: "POST",
+      data: data,
+      success: function (result) {
+        subjects = result.subjects;
+      },
+    });
+
+    for (var i = year - 2; i < year + 2; i++) {
+      $("#fromYear").append(`<option value='${i}'>${i}</option>`);
+      $("#toYear").append(`<option value='${i}'>${i}</option>`);
+    }
+    $("#fromYear").val("<%= academic.fromYear%>");
+    $("#toYear").val("<%= academic.toYear%>");
+    <% for(var i = 0; i < academic.combination.length ;i++){%>
+      $(".department")[<%=i %>].value ="<%= academic.combination[i].department %>"
+      ;
+        if ($($(".department")[<%=i %>]).parents()[1].children[2].children[1].children.length > 0) {
+          $($(".department")[<%=i %>]).parents()[1].children[2].children[1].options.length = 0;
+        }
+        $.ajax(
+          "/admin/departments/<%= locals.dept.key %>/academic/getTeacher",
+          {
+            type: "POST",
+            data: { department: "<%= academic.combination[i].department %>" },
+            success: function (result) {
+              for (var i = 0; i < result.teachers.length; i++) {
+                $($(".department")[<%=i %>]).parents()[1].children[2].children[1].append(
+                  new Option(
+                    result.teachers[i].name,
+                    result.teachers[i]._id,
+                    false,
+                    false
+                  )
+                );
+              }
+              $($(".department")[<%=i %>]).parents()[1].children[2].children[1].value = "<%= academic.combination[i].teacherId %>"
+            },
+          }
+        );
+    <%}%>
+    $("#btnAdd").click(function () {
+      let opt = "";
+      for (var i = 0; i < subjects.length; i++) {
+        opt +=
+          "<option value=" +
+          subjects[i]._id +
+          ">" +
+          subjects[i].name +
+          "</option>";
+      }
+      subjCount++;
+      const item = `<div
+                class="grid grid-cols-4 gap-2 border-2 border-primary rounded-md m-1 p-1"
+              >
+                <h1 class="col-span-4 text-center">Subject</h1>
+                <label
+                  class="input input-bordered col-span-2 flex items-center gap-2 my-2"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    class="h-4 w-4 opacity-70"
+                  >
+                    <path
+                      d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"
+                    />
+                    <path
+                      d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3z"
+                    />
+                  </svg>
+                  <select
+                    class="select w-full select-ghost department"
+                    name="department"
+                  >
+                    <option selected disabled>Select department</option>
+                    <option value="<%= locals.dept.key %>">
+                      <%= locals.dept.key %>
+                    </option>
+                    <option value="Eng">English</option>
+                    <option value="Myan">Myanmar</option>
+                    <option value="Math">Mathematics</option>
+                    <option value="Phy">Physic</option>
+                    <option value="Chem">Chemistry</option>
+                  </select>
+                </label>
+                <label
+                  class="input input-bordered col-span-2 flex items-center gap-2 my-2"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    class="h-4 w-4 opacity-70"
+                  >
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                    <path
+                      fill-rule="evenodd"
+                      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                    />
+                  </svg>
+                  <select
+                    class="select w-full select-ghost teacherId"
+                    name="teacherId"
+                  >
+
+                  </select>
+                </label>
+                <label
+                  class="input input-bordered col-span-3 flex items-center gap-2 my-2"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    class="h-4 w-4 opacity-70"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M8 4a.5.5 0 0 1 .5.5v.634l.549-.317a.5.5 0 1 1 .5.866L9 6l.549.317a.5.5 0 1 1-.5.866L8.5 6.866V7.5a.5.5 0 0 1-1 0v-.634l-.549.317a.5.5 0 1 1-.5-.866L7 6l-.549-.317a.5.5 0 0 1 .5-.866l.549.317V4.5A.5.5 0 0 1 8 4M5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"
+                    />
+                    <path
+                      d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"
+                    />
+                    <path
+                      d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"
+                    />
+                  </svg>
+                  <select
+                    class="select w-full select-ghost subjectId"
+                    name="subjectId"
+                  >
+                    <option disabled selected>Select Subject</option>
+                    ${opt}
+                  </select>
+                </label>
+                <button
+                  type="button"
+                  class="btn btn-error w-1/2 mx-auto btn-sm my-auto btn-remove"
+                >
+                  -
+                </button>
+              </div>`;
+      $("#subList").append(item);
+      refreshFun();
+      $("#classId").attr("disabled", "disabled");
+    });
+    function refreshFun() {
+      $(".btn-remove").click(function () {
+        $(this).parents()[0].remove();
+        subjCount--;
+      });
+
+      $(".department").on("change", function () {
+        const data = { department: $(this).val() };
+        const selectOpt = $(this).parents()[1].children[2].children[1];
+        if (selectOpt.children.length > 0) {
+          selectOpt.options.length = 0;
+        }
+        $.ajax(
+          "/admin/departments/<%= locals.dept.key %>/academic/getTeacher",
+          {
+            type: "POST",
+            data: data,
+            success: function (result) {
+              for (var i = 0; i < result.teachers.length; i++) {
+                selectOpt.append(
+                  new Option(
+                    result.teachers[i].name,
+                    result.teachers[i]._id,
+                    false,
+                    false
+                  )
+                );
+              }
+            },
+          }
+        );
+      });
+    }
+    // $("#checkBtn").click(function () {
+    //   console.log($(this).parents()[0]);
+    // });
+    function checkFun() {
+      let subjectList = [];
+      const name = $("#name").val();
+      const fromYear = $("#fromYear").val();
+      const toYear = $("#toYear").val();
+      const classId = $("#classId").val();
+      const list = $("#subList")[0].children;
+      for (var i = 0; i < list.length; i++) {
+        subjectList.push({
+          department: list[i].children[1].children[1].value,
+          teacherId: list[i].children[2].children[1].value,
+          subjectId: list[i].children[3].children[1].value,
+        });
+      }
+      if (
+        name != "" &&
+        toYear >= fromYear &&
+        classId != "" &&
+        subjectList.length > 0
+      ) {
+        const data = {
+          name: name,
+          fromYear: fromYear,
+          toYear: toYear,
+          classId: classId,
+          subjectList: JSON.stringify(subjectList),
+          id: "<%= academic._id %>"
+        };
+        $.ajax("/admin/departments/<%= locals.dept.key %>/academic/update", {
+          type: "POST",
+          data: data,
+          success: function (result) {
+            if (result.status == true) {
+              location.href =
+                "/admin/departments/<%= locals.dept.key %>/academic";
+            } else {
+              alert("Somethings was wrong");
+            }
+          },
+        });
+        console.log(name, fromYear, toYear, classId, subjectList);
+      } else if (name == "") {
+        alert("Please enter Academic name");
+      } else if (toYear < fromYear) {
+        alert("Year setup is incorrect");
+      } else if (classId == "") {
+        alert("Please select class");
+      } else if (subjectList.length == 0) {
+        alert("Need to insert one or more subject");
+      }
+    }
+    refreshFun();
+  </script>
+</html>

@@ -5,6 +5,7 @@ const Class = require("../../models/Class");
 const Teacher = require("../../models/Teacher");
 const Student = require("../../models/Student");
 const Subject = require("../../models/Subject");
+const Academic = require("../../models/Academic");
 
 /* GET users listing. */
 const deptList = [
@@ -27,12 +28,11 @@ const deptArr = [
   { key: "MP", name: "Michemical Power", type: "major" },
   { key: "Eng", name: "English", type: "minor" },
   { key: "Myan", name: "Myanmar", type: "minor" },
-  { key: "Math", name: "Mathemitic", type: "minor" },
+  { key: "Math", name: "Mathematic", type: "minor" },
   { key: "Phy", name: "Physic", type: "minor" },
   { key: "Chem", name: "Chemistry", type: "minor" },
 ];
 const checkDept = function (req, res, next) {
-  console.log(deptList.includes(req.params.dept));
   if (deptList.includes(req.params.dept)) {
     const deptData = deptArr.filter((d) => d["key"] === req.params.dept);
     req.session.dept = deptData[0];
@@ -107,7 +107,10 @@ router.get("/:dept/class/delete/:id", checkDept, async function (req, res) {
 });
 
 router.get("/:dept/teacher", checkDept, async function (req, res) {
-  const teachers = await Teacher.find({ status: true });
+  const teachers = await Teacher.find({
+    status: true,
+    department: req.params.dept,
+  });
   res.render("admin/department/teacher", { teachers: teachers });
 });
 
@@ -199,7 +202,7 @@ router.get("/:dept/student", checkDept, async function (req, res) {
   const students = await Student.find({
     status: true,
     department: req.params.dept,
-  });
+  }).populate("classId", "name");
   res.render("admin/department/student", { students: students });
 });
 
@@ -312,7 +315,7 @@ router.get("/:dept/subject", checkDept, async function (req, res) {
   const subjects = await Subject.find({
     status: true,
     department: req.params.dept,
-  });
+  }).populate("classId", "name");
   res.render("admin/department/subject", { subjects: subjects });
 });
 
@@ -392,6 +395,112 @@ router.get("/:dept/subject/delete/:id", checkDept, async function (req, res) {
     status: false,
   });
   res.redirect("/admin/departments/" + req.params.dept + "/subject");
+});
+
+router.get("/:dept/academic", checkDept, async function (req, res) {
+  const academics = await Academic.find({
+    status: true,
+    department: req.params.dept,
+  }).populate("classId", "name");
+  res.render("admin/department/academic", { academics: academics });
+});
+
+router.get("/:dept/academic/add", checkDept, async function (req, res) {
+  const academic = await Academic.find({
+    status: true,
+    department: req.params.dept,
+  }).select("classId");
+  let list = [];
+  console.log(academic);
+  academic.map((item) => list.push(item.classId));
+  const classes = await Class.find({
+    status: true,
+    department: req.params.dept,
+    _id: { $nin: list },
+  });
+  res.render("admin/department/academic/add", { classes: classes });
+});
+
+router.post("/:dept/academic/getSubj", checkDept, async function (req, res) {
+  const subjects = await Subject.find({
+    status: true,
+    classId: req.body.classId,
+  });
+  res.json({ subjects: subjects });
+});
+
+router.post("/:dept/academic/getTeacher", checkDept, async function (req, res) {
+  const teachers = await Teacher.find({
+    status: true,
+    department: req.body.department,
+  });
+  res.json({ teachers: teachers });
+});
+
+router.post("/:dept/academic/add", checkDept, async function (req, res) {
+  const academic = new Academic();
+  try {
+    academic.name = req.body.name;
+    academic.fromYear = req.body.fromYear;
+    academic.toYear = req.body.toYear;
+    academic.classId = req.body.classId;
+    academic.department = req.params.dept;
+    academic.combination = JSON.parse(req.body.subjectList);
+    const data = await academic.save();
+    res.json({ status: true });
+  } catch (e) {
+    console.log(e);
+    res.json({ status: false });
+  }
+});
+
+router.get("/:dept/academic/detail/:id", checkDept, async function (req, res) {
+  const academic = await Academic.findById(req.params.id)
+    .populate("classId", "name")
+    .populate("combination.teacherId", "name")
+    .populate("combination.subjectId", "name");
+  res.render("admin/department/academic/detail", { academic: academic });
+});
+
+router.get("/:dept/academic/update/:id", checkDept, async function (req, res) {
+  const academic = await Academic.findById(req.params.id).populate(
+    "classId",
+    "name"
+  );
+  const subjects = await Subject.find({
+    status: true,
+    classId: academic.classId,
+  });
+  res.render("admin/department/academic/update", {
+    academic: academic,
+    subjects: subjects,
+  });
+});
+
+router.post("/:dept/academic/update", checkDept, async function (req, res) {
+  const academic = new Academic();
+  try {
+    const update = {
+      name: req.body.name,
+      fromYear: req.body.fromYear,
+      toYear: req.body.toYear,
+      combination: JSON.parse(req.body.subjectList),
+    };
+
+    const data = await Academic.findByIdAndUpdate(req.body.id, update);
+    res.json({ status: true });
+  } catch (e) {
+    console.log(e);
+    res.json({ status: false });
+  }
+});
+
+router.get("/:dept/academic/delete/:id", checkDept, async function (req, res) {
+  const update = {
+    status: false,
+  };
+  const data = await Academic.findByIdAndUpdate(req.params.id, update);
+  res.redirect("/admin/departments/" + req.params.dept + "/academic");
 });
 
 router.get("/:dept/timetable", checkDept, function (req, res) {

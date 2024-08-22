@@ -22,6 +22,10 @@ const SubjectSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Classes",
   },
+  teacherId: {
+    type: Schema.Types.ObjectId,
+    ref: "Teachers",
+  },
 });
 
 module.exports = mongoose.model("Subjects", SubjectSchema);

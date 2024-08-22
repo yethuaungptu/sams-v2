@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <link rel="stylesheet" href="/stylesheets/dataTables.tailwindcss.css" />
-    <title>Index</title>
+    <title>Academic</title>
   </head>
   <body>
     <% include ../../../partial/admin_drawer %>
     <h1 class="my-5 text-center text-2xl font-bold text-base-content">
-      <%= locals.dept.name %> Department's Subject List
+      <%= locals.dept.name %> Department's Academic Combination List
     </h1>
     <div class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 mb-5">
       <div></div>
@@ -26,14 +26,14 @@
             </tr>
           </thead>
           <tbody>
-            <% for(var i = 0; i < subjects.length;i++){%>
-            <tr class="text-lg">
-              <th><%= i+1 %></th>
-              <td><%= subjects[i].name %></td>
-              <td><%= subjects[i].classId.name %></td>
+            <% for(var i = 0; i < academics.length;i++){%>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= academics[i].name %></td>
+              <td><%= academics[i].classId.name %></td>
               <td>
                 <a
-                  href="/admin/departments/<%= locals.dept.key %>/subject/detail/<%= subjects[i]._id %>"
+                  href="/admin/departments/<%= locals.dept.key %>/academic/detail/<%= academics[i]._id %>"
                   class="btn btn-sm btn-primary m-1"
                   >Detail</a
                 >
@@ -43,9 +43,9 @@
           </tbody>
         </table>
         <a
-          href="/admin/departments/<%= locals.dept.key %>/subject/add"
+          href="/admin/departments/<%= locals.dept.key %>/academic/add"
           class="btn btn-block btn-primary my-5"
-          >Add Subject</a
+          >Add Academic Combination</a
         >
       </div>
     </div>

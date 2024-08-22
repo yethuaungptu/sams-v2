@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/dataTables.tailwindcss.css" />
     <title>Index</title>
   </head>
   <body>
@@ -11,10 +12,10 @@
     <h1 class="my-5 text-center text-2xl font-bold text-base-content">
       <%= locals.dept.name %> Department's Class List
     </h1>
-    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 mb-5">
+    <div class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 mb-5">
       <div></div>
-      <div class="overflow-x-auto border m-5">
-        <table class="table">
+      <div class="overflow-x-auto border m-5 col-span-2">
+        <table id="example" class="display table my-3" style="width: 100%">
           <!-- head -->
           <thead>
             <tr class="text-xl">
@@ -101,6 +102,11 @@
     <% include ../../partial/footerbar %>
   </body>
   <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/dataTables.js"></script>
+  <script src="/javascripts/dataTables.tailwindcss.js"></script>
+  <script>
+    new DataTable("#example");
+  </script>
   <script>
     function deleteClass(id) {
       var opt = confirm("Are you sure for delete?");

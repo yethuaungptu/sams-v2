@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Academic Detail</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <% include ../../../partial/admin_drawer %>
+    <h1 class="my-5 text-center text-2xl font-bold text-base-content">
+      <%= locals.dept.name %> Department's Academic Combination Detail
+    </h1>
+    <div class="grid lg:grid-cols-8 md:grid-cols-1 sm:grid-cols-1 mb-32">
+      <div></div>
+      <div class="grid col-span-6">
+        <div class="card glass w-full lg:card-side bg-base-100 shadow-xl">
+          <figure class="w-1/3 mx-auto">
+            <img src="/images/academic.svg" alt="Album" />
+          </figure>
+          <div class="card-body">
+            <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1">
+              <div></div>
+              <div class="grid grid-cols-1 gap-5">
+                <div class="text-lg">
+                  <p class="font-semibold mb-2">Name : <%= academic.name %></p>
+                </div>
+                <div class="text-lg">
+                  <p class="font-semibold mb-2">
+                    Year : <%= academic.fromYear %> - <%= academic.toYear %>
+                  </p>
+                </div>
+                <div class="text-lg">
+                  <p class="font-semibold mb-2">
+                    Class : <%= academic.classId.name %>
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 col-span-3 gap-3"
+              >
+                <% for(var i = 0; i < academic.combination.length;i++){%>
+                <div class="card w-full border-1 bg-base-200 p-2">
+                  <div class="card-bod">
+                    <p class="text-lg font-semibold text-center">
+                      <%= academic.combination[i].department %>
+                    </p>
+                    <p class="text-lg font-semibold">
+                      Teacher : <%= academic.combination[i].teacherId.name %>
+                    </p>
+                    <p class="text-lg font-semibold">
+                      Subject : <%= academic.combination[i].subjectId.name %>
+                    </p>
+                  </div>
+                </div>
+                <%}%>
+              </div>
+            </div>
+            <div class="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 my-5">
+              <div></div>
+              <div class="mx-auto">
+                <a
+                  href="/admin/departments/<%= locals.dept.key %>/academic/update/<%= academic._id %>"
+                  class="btn btn-sm w-24 btn-warning"
+                  >Update</a
+                >
+                <button
+                  onclick="del('<%= academic._id %>')"
+                  class="btn btn-sm w-24 btn-error"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% include ../../partial/footerbar %>
+  </body>
+  <script>
+    function del(id) {
+      var opt = confirm("Are you sure for delete?");
+      if (opt)
+        location.href =
+          "/admin/departments/<%= locals.dept.key %>/academic/delete/" + id;
+    }
+  </script>
+</html>
