@@ -18,19 +18,28 @@
           <div class="stats stats-horizontal shadow">
             <div class="stat">
               <div class="stat-title">Total Students</div>
-              <div class="stat-value">100</div>
+              <div class="stat-value">
+                <%= studentInfo.some((item)=> item._id == "IT")?
+                studentInfo.filter((item)=> item._id == "IT")[0].count : 0 %>
+              </div>
               <div class="stat-desc">All Class</div>
             </div>
 
             <div class="stat">
               <div class="stat-title">Total Teacher</div>
-              <div class="stat-value">6</div>
+              <div class="stat-value">
+                <%= teacherInfo.some((item)=> item._id == "IT")?
+                teacherInfo.filter((item)=> item._id == "IT")[0].count : 0 %>
+              </div>
               <div class="stat-desc">Current Department</div>
             </div>
 
             <div class="stat">
               <div class="stat-title">Total Class</div>
-              <div class="stat-value">4</div>
+              <div class="stat-value">
+                <%= classInfo.some((item)=> item._id == "IT")?
+                classInfo.filter((item)=> item._id == "IT")[0].count : 0 %>
+              </div>
               <div class="stat-desc">At Department</div>
             </div>
           </div>
@@ -47,19 +56,28 @@
           <div class="stats stats-horizontal shadow">
             <div class="stat">
               <div class="stat-title">Total Students</div>
-              <div class="stat-value">100</div>
+              <div class="stat-value">
+                <%= studentInfo.some((item)=> item._id == "Civil")?
+                studentInfo.filter((item)=> item._id == "Civil")[0].count : 0 %>
+              </div>
               <div class="stat-desc">All Class</div>
             </div>
 
             <div class="stat">
               <div class="stat-title">Total Teacher</div>
-              <div class="stat-value">6</div>
+              <div class="stat-value">
+                <%= teacherInfo.some((item)=> item._id == "Civil")?
+                teacherInfo.filter((item)=> item._id == "Civil")[0].count : 0 %>
+              </div>
               <div class="stat-desc">Current Department</div>
             </div>
 
             <div class="stat">
               <div class="stat-title">Total Class</div>
-              <div class="stat-value">4</div>
+              <div class="stat-value">
+                <%= classInfo.some((item)=> item._id == "Civil")?
+                classInfo.filter((item)=> item._id == "Civil")[0].count : 0 %>
+              </div>
               <div class="stat-desc">At Department</div>
             </div>
           </div>
@@ -76,19 +94,28 @@
           <div class="stats stats-horizontal shadow">
             <div class="stat">
               <div class="stat-title">Total Students</div>
-              <div class="stat-value">100</div>
+              <div class="stat-value">
+                <%= studentInfo.some((item)=> item._id == "EC")?
+                studentInfo.filter((item)=> item._id == "EC")[0].count : 0 %>
+              </div>
               <div class="stat-desc">All Class</div>
             </div>
 
             <div class="stat">
               <div class="stat-title">Total Teacher</div>
-              <div class="stat-value">6</div>
+              <div class="stat-value">
+                <%= teacherInfo.some((item)=> item._id == "EC")?
+                teacherInfo.filter((item)=> item._id == "EC")[0].count : 0 %>
+              </div>
               <div class="stat-desc">Current Department</div>
             </div>
 
             <div class="stat">
               <div class="stat-title">Total Class</div>
-              <div class="stat-value">4</div>
+              <div class="stat-value">
+                <%= classInfo.some((item)=> item._id == "EC")?
+                classInfo.filter((item)=> item._id == "EC")[0].count : 0 %>
+              </div>
               <div class="stat-desc">At Department</div>
             </div>
           </div>
@@ -105,19 +132,28 @@
           <div class="stats stats-horizontal shadow">
             <div class="stat">
               <div class="stat-title">Total Students</div>
-              <div class="stat-value">100</div>
+              <div class="stat-value">
+                <%= studentInfo.some((item)=> item._id == "EP")?
+                studentInfo.filter((item)=> item._id == "EP")[0].count : 0 %>
+              </div>
               <div class="stat-desc">All Class</div>
             </div>
 
             <div class="stat">
               <div class="stat-title">Total Teacher</div>
-              <div class="stat-value">6</div>
+              <div class="stat-value">
+                <%= teacherInfo.some((item)=> item._id == "EP")?
+                teacherInfo.filter((item)=> item._id == "EP")[0].count : 0 %>
+              </div>
               <div class="stat-desc">Current Department</div>
             </div>
 
             <div class="stat">
               <div class="stat-title">Total Class</div>
-              <div class="stat-value">4</div>
+              <div class="stat-value">
+                <%= classInfo.some((item)=> item._id == "EP")?
+                classInfo.filter((item)=> item._id == "EP")[0].count : 0 %>
+              </div>
               <div class="stat-desc">At Department</div>
             </div>
           </div>
@@ -134,19 +170,28 @@
           <div class="stats stats-horizontal shadow">
             <div class="stat">
               <div class="stat-title">Total Students</div>
-              <div class="stat-value">100</div>
+              <div class="stat-value">
+                <%= studentInfo.some((item)=> item._id == "MP")?
+                studentInfo.filter((item)=> item._id == "MP")[0].count : 0 %>
+              </div>
               <div class="stat-desc">All Class</div>
             </div>
 
             <div class="stat">
               <div class="stat-title">Total Teacher</div>
-              <div class="stat-value">6</div>
+              <div class="stat-value">
+                <%= teacherInfo.some((item)=> item._id == "MP")?
+                teacherInfo.filter((item)=> item._id == "MP")[0].count : 0 %>
+              </div>
               <div class="stat-desc">Current Department</div>
             </div>
 
             <div class="stat">
               <div class="stat-title">Total Class</div>
-              <div class="stat-value">4</div>
+              <div class="stat-value">
+                <%= classInfo.some((item)=> item._id == "MP")?
+                classInfo.filter((item)=> item._id == "MP")[0].count : 0 %>
+              </div>
               <div class="stat-desc">At Department</div>
             </div>
           </div>
@@ -163,7 +208,10 @@
           <div class="stats stats-horizontal shadow">
             <div class="stat mx-auto">
               <div class="stat-title">Total Teacher</div>
-              <div class="stat-value">11</div>
+              <div class="stat-value">
+                <%= teacherInfo.some((item)=> item._id == "Eng")?
+                teacherInfo.filter((item)=> item._id == "Eng")[0].count : 0 %>
+              </div>
               <div class="stat-desc">Current Department</div>
             </div>
           </div>
@@ -180,7 +228,10 @@
           <div class="stats stats-horizontal shadow">
             <div class="stat mx-auto">
               <div class="stat-title">Total Teacher</div>
-              <div class="stat-value">11</div>
+              <div class="stat-value">
+                <%= teacherInfo.some((item)=> item._id == "Math")?
+                teacherInfo.filter((item)=> item._id == "Math")[0].count : 0 %>
+              </div>
               <div class="stat-desc">Current Department</div>
             </div>
           </div>
@@ -197,7 +248,10 @@
           <div class="stats stats-horizontal shadow">
             <div class="stat mx-auto">
               <div class="stat-title">Total Teacher</div>
-              <div class="stat-value">11</div>
+              <div class="stat-value">
+                <%= teacherInfo.some((item)=> item._id == "Myan")?
+                teacherInfo.filter((item)=> item._id == "Myan")[0].count : 0 %>
+              </div>
               <div class="stat-desc">Current Department</div>
             </div>
           </div>
@@ -214,7 +268,10 @@
           <div class="stats stats-horizontal shadow">
             <div class="stat mx-auto">
               <div class="stat-title">Total Teacher</div>
-              <div class="stat-value">11</div>
+              <div class="stat-value">
+                <%= teacherInfo.some((item)=> item._id == "Phy")?
+                teacherInfo.filter((item)=> item._id == "Phy")[0].count : 0 %>
+              </div>
               <div class="stat-desc">Current Department</div>
             </div>
           </div>
@@ -231,7 +288,10 @@
           <div class="stats stats-horizontal shadow">
             <div class="stat mx-auto">
               <div class="stat-title">Total Teacher</div>
-              <div class="stat-value">11</div>
+              <div class="stat-value">
+                <%= teacherInfo.some((item)=> item._id == "Chem")?
+                teacherInfo.filter((item)=> item._id == "Chem")[0].count : 0 %>
+              </div>
               <div class="stat-desc">Current Department</div>
             </div>
           </div>

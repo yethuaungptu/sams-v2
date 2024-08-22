@@ -11,27 +11,34 @@
     <h1 class="my-5 text-center text-2xl font-bold text-base-content">
       <%= locals.dept.name %> Department's Timetable List
     </h1>
-    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 mb-5">
+    <div class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 mb-5">
       <div></div>
-      <div class="overflow-x-auto border m-5">
+      <div class="overflow-x-auto border m-5 col-span-2">
         <table class="table">
           <!-- head -->
           <thead>
             <tr class="text-xl text-center">
               <th>No</th>
-              <th>Name</th>
+              <th>Academic Name</th>
+              <th>Class Name</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <!-- row 1 -->
+            <% for(var i = 0; i < timetables.length;i++){%>
             <tr>
-              <th>1</th>
-              <td class="text-lg">1BE (first-sem)</td>
+              <th><%= i+1 %></th>
+              <td class="text-lg"><%= timetables[i].academicId.name %></td>
+              <td class="text-lg"><%= timetables[i].classId.name %></td>
               <td>
-                <button class="btn btn-sm btn-primary m-1">Detail</button>
+                <a
+                  href="/admin/departments/<%= locals.dept.key %>/timetable/detail/<%= timetables[i]._id%>"
+                  class="btn btn-sm btn-primary m-1"
+                  >Detail</a
+                >
               </td>
             </tr>
+            <%}%>
           </tbody>
         </table>
         <a

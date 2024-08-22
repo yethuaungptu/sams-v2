@@ -81,104 +81,232 @@
           <h3 class="text-xl font-bold text-center mb-3">Timetable Setup</h3>
           <select
             class="select select-bordered select-sm w-full max-w-xs my-2"
-            id="acyear"
+            id="academic"
+            name="academic"
           >
             <option disabled selected>Select Academic Year</option>
-            <option value="2020-2021">2020-2021</option>
-            <option value="2021-2022">2021-2022</option>
-            <option value="2022-2023">2022-2023</option>
-            <option value="2022-2023">2023-2024</option>
+            <% for(var i = 0; i < academics.length;i++){%>
+            <option
+              value="<%= academics[i]._id %>"
+              data-combine="<%= JSON.stringify(academics[i].combination) %>"
+              data-classId="<%= academics[i].classId %>"
+            >
+              <%= academics[i].name %>
+            </option>
+            <%}%>
           </select>
           <select
             class="select select-bordered select-sm w-full max-w-xs my-2"
-            id="class"
+            id="building"
+            name="building"
           >
-            <option disabled selected>Select Class</option>
-            <option value="1BE first-sem">1BE first-sem</option>
-            <option value="1BE second-sem">1BE second-sem</option>
-            <option value="2BE first-sem">2BE first-sem</option>
-            <option value="2BE second-sem">2BE second-sem</option>
-          </select>
-          <hr />
-          <h3 class="text-xl font-bold text-center mb-3">Timetable form</h3>
-          <select class="select select-bordered select-sm w-full max-w-xs my-2">
-            <option disabled selected>Select Teacher Department</option>
-            <option value="IT">IT</option>
-            <option value="Myanmar">Myanmar</option>
-            <option value="English">English</option>
-            <option value="Math">Math</option>
-            <option value="Physic">Physic</option>
-            <option value="Chemistry">Chemistry</option>
+            <option disabled selected>Select Building</option>
+            <option value="MB">Main Building</option>
+            <option value="B1">Building 1</option>
+            <option value="B2">Building 2</option>
           </select>
           <select
             class="select select-bordered select-sm w-full max-w-xs my-2"
-            id="teacher"
+            id="room"
+            name="room"
           >
-            <option disabled selected>Select Teacher</option>
-            <option value="Daw Htight">Daw Htight</option>
-            <option value="Daw Phyo">Daw Phyo</option>
-            <option value="Daw Nway">Daw Nway</option>
+            <option disabled selected>Select Room</option>
           </select>
-          <select
-            class="select select-bordered select-sm w-full max-w-xs my-2"
-            id="subject"
-          >
-            <option disabled selected>Select Subject</option>
-            <option value="BEE">BEE</option>
-            <option value="C++">C++</option>
-            <option value="Web">Web</option>
-            <option value="Myan">Myan</option>
-            <option value="Eng">Eng</option>
-            <option value="Math">Math</option>
-          </select>
-          <select
-            class="select select-bordered select-sm w-full max-w-xs my-2"
-            id="day"
-          >
-            <option disabled selected>Select Day</option>
-            <option value="1">Monday</option>
-            <option value="2">Tuesday</option>
-            <option value="3">Wednesday</option>
-            <option value="4">Thursday</option>
-            <option value="5">Friday</option>
-          </select>
-          <select
-            class="select select-bordered select-sm w-full max-w-xs my-2 h-fit"
-            id="time"
-            multiple
-          >
-            <option disabled selected>Select Time</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-          </select>
-          <button class="btn btn-block btn-primary btn-sm" id="btnAdd">
-            Add
+          <button class="btn btn-block btn-primary btn-sm" id="setupBtn">
+            Setup
           </button>
+          <hr />
+          <div id="subjList" class="hidden">
+            <h3 class="text-xl font-bold text-center mb-3">Timetable form</h3>
+            <select
+              class="select select-bordered select-sm w-full max-w-xs my-2"
+              id="subject"
+            >
+              <option disabled selected>Select Subject</option>
+            </select>
+            <select
+              class="select select-bordered select-sm w-full max-w-xs my-2"
+              id="day"
+            >
+              <option disabled selected>Select Day</option>
+              <option value="1">Monday</option>
+              <option value="2">Tuesday</option>
+              <option value="3">Wednesday</option>
+              <option value="4">Thursday</option>
+              <option value="5">Friday</option>
+            </select>
+            <select
+              class="select select-bordered select-sm w-full max-w-xs my-2 h-fit"
+              id="time"
+              multiple
+            >
+              <option disabled selected>Select Time</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+            <button class="btn block ms-auto btn-primary btn-sm" id="btnAdd">
+              Add
+            </button>
+          </div>
         </div>
+        <button
+          class="btn btn-block btn-sm btn-success col-span-full"
+          id="btnComplete"
+        >
+          Complete timetable
+        </button>
       </div>
     </div>
     <% include ../../partial/footerbar %>
   </body>
   <script src="/javascripts/jquery.min.js"></script>
   <script>
-    $("#btnAdd").click(function () {
-      const dd = $("#day").val();
-      const pp = $("#time").val();
-
-      for (var i = 0; i < pp.length; i++) {
-        const id = "#d" + dd + "p" + pp[i];
-        // if (pp.length == 2) {
-        //   $(id).text($("#subject").val());
-        //   $(id).attr("colspan", "2");
-        //   $("#d" + dd + "p" + (Number(pp[i]) + 1)).remove();
-        //   break;
-        // }
-        $(id).text($("#subject").val());
+    const list = [
+      {
+        building: "MB",
+        room: [
+          { name: "Room 101", value: "R101" },
+          { name: "Room 102", value: "R102" },
+          { name: "Room 103", value: "R103" },
+          { name: "Room 104", value: "R104" },
+          { name: "Room 105", value: "R105" },
+          { name: "Room 106", value: "R106" },
+          { name: "Room 107", value: "R107" },
+          { name: "Room 201", value: "R201" },
+          { name: "Room 202", value: "R202" },
+          { name: "Room 203", value: "R203" },
+          { name: "Room 204", value: "R204" },
+          { name: "Room 301", value: "R301" },
+          { name: "Room 302", value: "R302" },
+          { name: "Room 303", value: "R303" },
+          { name: "Room 304", value: "R304" },
+          { name: "Room 305", value: "R305" },
+          { name: "Room 306", value: "R306" },
+          { name: "Room 307", value: "R307" },
+        ],
+      },
+      {
+        building: "B1",
+        room: [
+          { name: "Room 1", value: "R1" },
+          { name: "Room 2", value: "R2" },
+          { name: "Room 3", value: "R3" },
+          { name: "Room 4", value: "R4" },
+          { name: "Room 5", value: "R5" },
+          { name: "Room 6", value: "R6" },
+          { name: "Room 7", value: "R7" },
+          { name: "Room 9", value: "R9" },
+          { name: "Room 10", value: "R10" },
+          { name: "Room 11", value: "R11" },
+          { name: "Room 12", value: "R12" },
+        ],
+      },
+      {
+        building: "B2",
+        room: [
+          { name: "Room 1", value: "R1" },
+          { name: "Room 2", value: "R2" },
+          { name: "Room 3", value: "R3" },
+          { name: "Room 4", value: "R4" },
+          { name: "Room 5", value: "R5" },
+          { name: "Room 6", value: "R6" },
+          { name: "Room 7", value: "R7" },
+          { name: "Room 9", value: "R9" },
+          { name: "Room 10", value: "R10" },
+          { name: "Room 11", value: "R11" },
+          { name: "Room 12", value: "R12" },
+        ],
+      },
+    ];
+    let academic;
+    $("#building").on("change", function () {
+      $("#room").empty();
+      const roomList = list.filter((item) => item.building == $(this).val());
+      for (var i = 0; i < roomList[0].room.length; i++) {
+        $("#room").append(
+          `<option value='${roomList[0].room[i].value}'>${roomList[0].room[i].value}</option>`
+        );
       }
+    });
+
+    $("#setupBtn").click(function () {
+      academic = $("#academic").val() || "";
+      const building = $("#building").val() || "";
+      const room = $("#room").val() || "";
+      if (academic != "" && building != "" && room != "") {
+        $("#subjList").removeClass("hidden");
+        $("#setupBtn").addClass("hidden");
+        $("#academic").attr("disabled", "disabled");
+        const data = $("#academic option:selected").data("combine");
+        for (var i = 0; i < data.length; i++) {
+          $("#subject").append(
+            `<option value='${data[i].subjectId._id}' data-teacher='${data[i].teacherId}'>${data[i].subjectId.name}`
+          );
+        }
+        refFun();
+      } else {
+        alert("Please select all field");
+      }
+    });
+    function refFun() {
+      $("#btnAdd").click(function () {
+        const dd = $("#day").val();
+        const pp = $("#time").val();
+
+        for (var i = 0; i < pp.length; i++) {
+          const id = "#d" + dd + "p" + pp[i];
+          $(id).text($("#subject option:selected").text());
+          $(id).data("id", $("#subject option:selected").val());
+          $(id).data(
+            "teacherId",
+            $("#subject option:selected").data("teacher")
+          );
+        }
+      });
+    }
+
+    $("#btnComplete").click(function () {
+      let times = [];
+      let isComplete = true;
+      for (var i = 1; i <= 5; i++) {
+        for (var j = 1; j <= 6; j++) {
+          times.push({
+            time: "" + i + j,
+            subjectId: $("#d" + i + "p" + j).data("id"),
+            teacherId: $("#d" + i + "p" + j).data("teacherId"),
+          });
+          if (!$("#d" + i + "p" + j).data("id")) isComplete = false;
+        }
+      }
+      if (isComplete) {
+        const data = {
+          classId: $("#academic option:selected").data("classid"),
+          academicId: academic,
+          building: $("#building").val(),
+          room: $("#room").val(),
+          times: JSON.stringify(times),
+        };
+        console.log(data);
+        $.ajax("/admin/departments/<%= locals.dept.key %>/timetable/add", {
+          type: "POST",
+          data: data,
+          success: function (result) {
+            if (result.status == true) {
+              location.href =
+                "/admin/departments/<%= locals.dept.key %>/timetable";
+            } else {
+              alert("Somethings was wrong");
+            }
+          },
+        });
+      } else {
+        alert("Please insert all timetable fields");
+      }
+      console.log(times, isComplete);
     });
   </script>
 </html>

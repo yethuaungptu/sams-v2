@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Index</title>
+  </head>
+  <body>
+    <% include ../../../partial/admin_drawer %>
+    <h1 class="my-5 text-center text-2xl font-bold text-base-content">
+      Technological University(Pathein)
+    </h1>
+    <h1 class="my-5 text-center text-2xl font-bold text-base-content">
+      Department of <%= locals.dept.name %> Engineering
+    </h1>
+    <h1 class="my-5 text-center text-2xl font-bold text-base-content">
+      <%= academic.fromYear %> - <%= academic.toYear %> Academic Year
+    </h1>
+    <div class="grid grid-cols-2 mx-2 lg:mx-10">
+      <p><%= timetable.classId.name %></p>
+      <p class="ms-auto">
+        Room No : <%= timetable.building %> - <%= timetable.room %>
+      </p>
+    </div>
+    <div
+      class="grid lg:grid-cols-12 md:grid-cols-1 sm:grid-cols-1 overflow-x-auto mx-1 lg:mx-10"
+    >
+      <input
+        type="hidden"
+        name="times"
+        id="times"
+        value="<%= JSON.stringify(timetable.times) %>"
+      />
+      <!-- <input
+        type="hidden"
+        name="teachers"
+        id="teachers"
+        value="<%= JSON.stringify(teachers) %>"
+      /> -->
+      <div class="grid gap-4 lg:col-span-12">
+        <table class="table">
+          <thead>
+            <th class="border-4">Day\Time</th>
+            <th class="border-4">9:00-10:00AM</th>
+            <th class="border-4">10:00-11:00AM</th>
+            <th class="border-4">11:00-12:00AM</th>
+            <th class="border-4 border-b-0"></th>
+            <th class="border-4">1:00-2:00PM</th>
+            <th class="border-4">2:00-3:00PM</th>
+            <th class="border-4">3:00-4:00PM</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border-4">Mon</td>
+              <td class="border-4" id="d1p1"></td>
+              <td class="border-4" id="d1p2"></td>
+              <td class="border-4" id="d1p3"></td>
+              <td class="border-4 border-t-0" rowspan="5">Lunch Break</td>
+              <td class="border-4" id="d1p4"></td>
+              <td class="border-4" id="d1p5"></td>
+              <td class="border-4" id="d1p6"></td>
+            </tr>
+            <tr>
+              <td class="border-4">Tue</td>
+              <td class="border-4" id="d2p1"></td>
+              <td class="border-4" id="d2p2"></td>
+              <td class="border-4" id="d2p3"></td>
+              <td class="border-4" id="d2p4"></td>
+              <td class="border-4" id="d2p5"></td>
+              <td class="border-4" id="d2p6"></td>
+            </tr>
+            <tr>
+              <td class="border-4">Wed</td>
+              <td class="border-4" id="d3p1"></td>
+              <td class="border-4" id="d3p2"></td>
+              <td class="border-4" id="d3p3"></td>
+              <td class="border-4" id="d3p4"></td>
+              <td class="border-4" id="d3p5"></td>
+              <td class="border-4" id="d3p6"></td>
+            </tr>
+            <tr>
+              <td class="border-4">Thu</td>
+              <td class="border-4" id="d4p1"></td>
+              <td class="border-4" id="d4p2"></td>
+              <td class="border-4" id="d4p3"></td>
+              <td class="border-4" id="d4p4"></td>
+              <td class="border-4" id="d4p5"></td>
+              <td class="border-4" id="d4p6"></td>
+            </tr>
+            <tr>
+              <td class="border-4">Fri</td>
+              <td class="border-4" id="d5p1"></td>
+              <td class="border-4" id="d5p2"></td>
+              <td class="border-4" id="d5p3"></td>
+              <td class="border-4" id="d5p4"></td>
+              <td class="border-4" id="d5p5"></td>
+              <td class="border-4" id="d5p6"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div
+      class="grid lg:grid-cols-12 md:grid-cols-1 sm:grid-cols-1 mx-1 lg:mx-10 mt-5 mb-32"
+    >
+      <div class="grid-cols-1 col-span-3">
+        <p>Family Teacher -</p>
+        <p id="tname"></p>
+      </div>
+      <div class="col-span-9 overflow-x-auto">
+        <table class="table border-2">
+          <thead>
+            <th>Subject Code</th>
+            <th>Subject Name</th>
+            <th>Teacher Name</th>
+          </thead>
+          <tbody>
+            <% for(var i = 0; i < academic.combination.length;i++){
+            if(academic.combination[i].subjectId.name == "Library") continue;%>
+            <tr>
+              <td><%= academic.combination[i].subjectId.code %></td>
+              <td><%= academic.combination[i].subjectId.name %></td>
+              <td><%= academic.combination[i].teacherId.name %></td>
+            </tr>
+            <%}%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <% include ../../partial/footerbar %>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script>
+    const times = JSON.parse($("#times").val());
+    for (var i = 0; i < times.length; i++) {
+      let id = "#d" + times[i].time.charAt(0) + "p" + times[i].time.charAt(1);
+      $(id).text(times[i].subjectId.name);
+    }
+    const tname = <%- teachers.filter((item)=> timetable.classId.name.includes(item.familyClass))  %>
+    $('#tname').text(tname.name)
+  </script>
+</html>

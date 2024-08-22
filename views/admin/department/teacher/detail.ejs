@@ -38,16 +38,10 @@
                 </div>
                 <div class="text-lg">
                   <p class="font-semibold mb-2">
-                    Family Teacher : <%= teacher.isFamily ? "Yes":"No" %>
+                    Family Teacher : <%= teacher.isFamily ?
+                    teacher.familyClass:"No" %>
                   </p>
                 </div>
-                <% if(teacher.isFamily){%>
-                <div class="text-lg">
-                  <p class="font-semibold mb-2">
-                    Year : <%= teacher.familyClass %>
-                  </p>
-                </div>
-                <%}%>
               </div>
             </div>
             <div class="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 my-5">

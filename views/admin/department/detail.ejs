@@ -9,8 +9,94 @@
   <body>
     <% include ../../partial/admin_drawer %>
     <h1 class="my-5 text-center text-2xl font-bold text-base-content">
-      Welcome <%= locals.dept.name %> Department
+      Welcome From <%= locals.dept.name %> Department
     </h1>
+    <div
+      class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3 mx-1 lg:mx-10"
+    >
+      <% if(locals.dept.type === "major"){%>
+      <div class="card bg-orange-200 text-orange-600 w-full">
+        <div class="card-body">
+          <h2 class="card-title">Total Academic - <%= academicCount %></h2>
+          <p>Binding Class, Subject and Teacher</p>
+          <div class="card-actions justify-end">
+            <a
+              href="/admin/departments/<%= locals.dept.key %>/academic"
+              class="btn btn-sm"
+              >See more</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="card bg-pink-200 text-pink-600 w-full">
+        <div class="card-body">
+          <h2 class="card-title">Total Class - <%= classCount %></h2>
+          <p>Create for each class</p>
+          <div class="card-actions justify-end">
+            <a
+              href="/admin/departments/<%= locals.dept.key %>/class"
+              class="btn btn-sm"
+              >See more</a
+            >
+          </div>
+        </div>
+      </div>
+      <%}%>
+      <div class="card bg-blue-200 text-blue-600 w-full">
+        <div class="card-body">
+          <h2 class="card-title">Total Teacher - <%= teacherCount %></h2>
+          <p>Assign teacher for system</p>
+          <div class="card-actions justify-end">
+            <a
+              href="/admin/departments/<%= locals.dept.key %>/teacher"
+              class="btn btn-sm"
+              >See more</a
+            >
+          </div>
+        </div>
+      </div>
+      <% if(locals.dept.type === "major"){%>
+      <div class="card bg-teal-200 text-teal-600 w-full">
+        <div class="card-body">
+          <h2 class="card-title">Total Student - <%= studentCount %></h2>
+          <p>Student for department</p>
+          <div class="card-actions justify-end">
+            <a
+              href="/admin/departments/<%= locals.dept.key %>/student"
+              class="btn btn-sm"
+              >See more</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="card bg-lime-300 text-lime-600 w-full">
+        <div class="card-body">
+          <h2 class="card-title">Total Subject - <%= subjectCount %></h2>
+          <p>Subject for teaching</p>
+          <div class="card-actions justify-end">
+            <a
+              href="/admin/departments/<%= locals.dept.key %>/subject"
+              class="btn btn-sm"
+              >See more</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="card bg-purple-200 text-purple-600 w-full">
+        <div class="card-body">
+          <h2 class="card-title">Total Timetable - <%= timetableCount %></h2>
+          <p>Timetable for attendance</p>
+          <div class="card-actions justify-end">
+            <a
+              href="/admin/departments/<%= locals.dept.key %>/timetable"
+              class="btn btn-sm"
+              >See more</a
+            >
+          </div>
+        </div>
+      </div>
+      <%}%>
+    </div>
     <% include ../partial/footerbar %>
   </body>
   <script>

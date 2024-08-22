@@ -6,6 +6,7 @@ const Teacher = require("../../models/Teacher");
 const Student = require("../../models/Student");
 const Subject = require("../../models/Subject");
 const Academic = require("../../models/Academic");
+const Timetable = require("../../models/Timetable");
 
 /* GET users listing. */
 const deptList = [
@@ -43,14 +44,82 @@ const checkDept = function (req, res, next) {
   }
 };
 
-router.get("/", function (req, res, next) {
-  res.render("admin/department/index");
+router.get("/", async function (req, res, next) {
+  const teacherInfo = await Teacher.aggregate([
+    {
+      $match: { status: true },
+    },
+    {
+      $group: {
+        _id: "$department",
+        count: { $sum: 1 },
+      },
+    },
+  ]);
+  const classInfo = await Class.aggregate([
+    {
+      $match: { status: true },
+    },
+    {
+      $group: {
+        _id: "$department",
+        count: { $sum: 1 },
+      },
+    },
+  ]);
+  const studentInfo = await Student.aggregate([
+    {
+      $match: { status: true },
+    },
+    {
+      $group: {
+        _id: "$department",
+        count: { $sum: 1 },
+      },
+    },
+  ]);
+  res.render("admin/department/index", {
+    teacherInfo: teacherInfo,
+    classInfo: classInfo,
+    studentInfo: studentInfo,
+  });
 });
 
-router.get("/:dept", checkDept, function (req, res) {
+router.get("/:dept", checkDept, async function (req, res) {
   const deptData = deptArr.filter((d) => d["key"] === req.params.dept);
   console.log(deptData);
-  res.render("admin/department/detail");
+  const academicCount = await Academic.countDocuments({
+    status: true,
+    department: req.params.dept,
+  });
+  const classCount = await Class.countDocuments({
+    status: true,
+    department: req.params.dept,
+  });
+  const teacherCount = await Teacher.countDocuments({
+    status: true,
+    department: req.params.dept,
+  });
+  const studentCount = await Student.countDocuments({
+    status: true,
+    department: req.params.dept,
+  });
+  const subjectCount = await Subject.countDocuments({
+    status: true,
+    department: req.params.dept,
+  });
+  const timetableCount = await Timetable.countDocuments({
+    status: true,
+    department: req.params.dept,
+  });
+  res.render("admin/department/detail", {
+    academicCount: academicCount,
+    classCount: classCount,
+    teacherCount: teacherCount,
+    studentCount: studentCount,
+    subjectCount: subjectCount,
+    timetableCount: timetableCount,
+  });
 });
 
 router.get("/:dept/class", checkDept, async function (req, res) {
@@ -503,12 +572,68 @@ router.get("/:dept/academic/delete/:id", checkDept, async function (req, res) {
   res.redirect("/admin/departments/" + req.params.dept + "/academic");
 });
 
-router.get("/:dept/timetable", checkDept, function (req, res) {
-  res.render("admin/department/timetable");
+router.get("/:dept/timetable", checkDept, async function (req, res) {
+  const timetables = await Timetable.find({
+    status: true,
+    department: req.params.dept,
+  })
+    .populate("academicId", "name")
+    .populate("classId", "name");
+  res.render("admin/department/timetable", { timetables: timetables });
 });
 
-router.get("/:dept/timetable/add", checkDept, function (req, res) {
-  res.render("admin/department/timetable/add");
+router.get("/:dept/timetable/add", checkDept, async function (req, res) {
+  const timetable = await Timetable.find({
+    status: true,
+    department: req.params.dept,
+  }).select("academicId");
+  let list = [];
+  timetable.map((item) => list.push(item.academicId));
+  const academics = await Academic.find({
+    status: true,
+    department: req.params.dept,
+    _id: { $nin: list },
+  }).populate("combination.subjectId", "name");
+  res.render("admin/department/timetable/add", { academics: academics });
+});
+
+router.post("/:dept/timetable/add", checkDept, async function (req, res) {
+  try {
+    const timetable = new Timetable();
+    timetable.academicId = req.body.academicId;
+    timetable.building = req.body.building;
+    timetable.room = req.body.room;
+    timetable.classId = req.body.classId;
+    timetable.department = req.params.dept;
+    timetable.times = JSON.parse(req.body.times);
+    const data = await timetable.save();
+    res.json({ status: true });
+  } catch (e) {
+    res.json({ status: false });
+  }
+});
+
+router.get("/:dept/timetable/detail/:id", checkDept, async function (req, res) {
+  const timetable = await Timetable.findById(req.params.id)
+    .populate("times.subjectId", "name")
+    .populate("classId", "name");
+  const academic = await Academic.findById(timetable.academicId)
+    .populate("combination.subjectId", "name code")
+    .populate("combination.teacherId", "name");
+  const teachers = await Teacher.find(
+    {
+      status: true,
+      isFamily: true,
+      department: req.params.dept,
+    },
+    { _id: 0, name: 1, familyClass: 1 }
+  );
+  console.log(teachers);
+  res.render("admin/department/timetable/detail", {
+    timetable: timetable,
+    academic: academic,
+    teachers: teachers,
+  });
 });
 
 module.exports = router;
