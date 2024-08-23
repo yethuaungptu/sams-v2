@@ -12,47 +12,21 @@
     <h1 class="my-5 text-center text-2xl font-bold text-base-content">
       <%= locals.dept.name %> Department's Student List
     </h1>
-    <div class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 my-5">
-      <div></div>
-      <div class="overflow-x-auto border m-5 col-span-2">
-        <table id="example" class="display table my-3" style="width: 100%">
-          <!-- head -->
-          <thead>
-            <tr class="text-xl">
-              <th>No</th>
-              <th>Name</th>
-              <th>Class</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% for(var i = 0; i < students.length;i++){%>
-            <tr>
-              <th>
-                <% let year = students[i].classId.name.charAt(0); %> <%= (year
-                == '1')? 'I' : (year == '2')?'II':(year == '3')? 'III' : (year
-                == '4')? 'IV': (year == '5')? 'V' : 'VI'%>-<%=
-                students[i].department %>-<%= students[i].roll %>
-              </th>
-              <td class="text-lg"><%= students[i].name %></td>
-              <td class="text-lg"><%= students[i].classId.name %></td>
-              <td>
-                <a
-                  href="/admin/departments/<%= locals.dept.key %>/student/detail/<%= students[i]._id %>"
-                  class="btn btn-sm btn-primary m-1"
-                  >Detail</a
-                >
-              </td>
-            </tr>
-            <%}%>
-          </tbody>
-        </table>
-        <a
-          href="/admin/departments/<%= locals.dept.key %>/student/add"
-          class="btn btn-block btn-primary my-5"
-          >Add Student</a
-        >
+    <div
+      class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 my-5 mx-1 lg:mx-10 gap-5"
+    >
+      <% for(var i = 0; i < students.length;i++){%>
+      <div class="card glass">
+        <div class="card-body">
+          <h2 class="text-lg font-bold"><%= students[i].classId.name %></h2>
+          <a
+            href="/admin/departments/<%= locals.dept.key %>/student/list/<%= students[i].classId._id %>"
+            class="btn btn-primary btn-sm"
+            >see more</a
+          >
+        </div>
       </div>
+      <%}%>
     </div>
     <% include ../../partial/footerbar %>
   </body>

@@ -4250,16 +4250,12 @@ html:has(.drawer-toggle:checked) {
   grid-column: span 8 / span 8;
 }
 
-.col-span-full {
-  grid-column: 1 / -1;
-}
-
-.col-span-10 {
-  grid-column: span 10 / span 10;
-}
-
 .col-span-9 {
   grid-column: span 9 / span 9;
+}
+
+.col-span-full {
+  grid-column: 1 / -1;
 }
 
 .row-span-3 {
@@ -4284,10 +4280,6 @@ html:has(.drawer-toggle:checked) {
 
 .m-5 {
   margin: 1.25rem;
-}
-
-.m-10 {
-  margin: 2.5rem;
 }
 
 .mx-1 {
@@ -4484,10 +4476,6 @@ html:has(.drawer-toggle:checked) {
 
 .w-full {
   width: 100%;
-}
-
-.w-96 {
-  width: 24rem;
 }
 
 .max-w-xs {
@@ -4819,6 +4807,10 @@ html:has(.drawer-toggle:checked) {
   font-weight: 600;
 }
 
+.font-light {
+  font-weight: 300;
+}
+
 .text-base-content {
   --tw-text-opacity: 1;
   color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));
@@ -5005,6 +4997,10 @@ html:has(.drawer-toggle:checked) {
 }
 
 @media (min-width: 1024px) {
+  .lg\:col-span-12 {
+    grid-column: span 12 / span 12;
+  }
+
   .lg\:col-span-2 {
     grid-column: span 2 / span 2;
   }
@@ -5015,14 +5011,6 @@ html:has(.drawer-toggle:checked) {
 
   .lg\:col-span-9 {
     grid-column: span 9 / span 9;
-  }
-
-  .lg\:col-span-12 {
-    grid-column: span 12 / span 12;
-  }
-
-  .lg\:m-10 {
-    margin: 2.5rem;
   }
 
   .lg\:mx-10 {

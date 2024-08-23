@@ -40,7 +40,7 @@
       /> -->
       <div class="grid gap-4 lg:col-span-12">
         <table class="table">
-          <thead>
+          <thead class="text-lg">
             <th class="border-4">Day\Time</th>
             <th class="border-4">9:00-10:00AM</th>
             <th class="border-4">10:00-11:00AM</th>
@@ -52,7 +52,7 @@
           </thead>
           <tbody>
             <tr>
-              <td class="border-4">Mon</td>
+              <td class="border-4 text-lg text-center">MON</td>
               <td class="border-4" id="d1p1"></td>
               <td class="border-4" id="d1p2"></td>
               <td class="border-4" id="d1p3"></td>
@@ -62,7 +62,7 @@
               <td class="border-4" id="d1p6"></td>
             </tr>
             <tr>
-              <td class="border-4">Tue</td>
+              <td class="border-4 text-lg text-center">TUE</td>
               <td class="border-4" id="d2p1"></td>
               <td class="border-4" id="d2p2"></td>
               <td class="border-4" id="d2p3"></td>
@@ -71,7 +71,7 @@
               <td class="border-4" id="d2p6"></td>
             </tr>
             <tr>
-              <td class="border-4">Wed</td>
+              <td class="border-4 text-lg text-center">WED</td>
               <td class="border-4" id="d3p1"></td>
               <td class="border-4" id="d3p2"></td>
               <td class="border-4" id="d3p3"></td>
@@ -80,7 +80,7 @@
               <td class="border-4" id="d3p6"></td>
             </tr>
             <tr>
-              <td class="border-4">Thu</td>
+              <td class="border-4 text-lg text-center">THU</td>
               <td class="border-4" id="d4p1"></td>
               <td class="border-4" id="d4p2"></td>
               <td class="border-4" id="d4p3"></td>
@@ -89,7 +89,7 @@
               <td class="border-4" id="d4p6"></td>
             </tr>
             <tr>
-              <td class="border-4">Fri</td>
+              <td class="border-4 text-lg text-center">FRI</td>
               <td class="border-4" id="d5p1"></td>
               <td class="border-4" id="d5p2"></td>
               <td class="border-4" id="d5p3"></td>
@@ -110,7 +110,7 @@
       </div>
       <div class="col-span-9 overflow-x-auto">
         <table class="table border-2">
-          <thead>
+          <thead class="text-lg">
             <th>Subject Code</th>
             <th>Subject Name</th>
             <th>Teacher Name</th>
@@ -118,16 +118,35 @@
           <tbody>
             <% for(var i = 0; i < academic.combination.length;i++){
             if(academic.combination[i].subjectId.name == "Library") continue;%>
-            <tr>
-              <td><%= academic.combination[i].subjectId.code %></td>
-              <td><%= academic.combination[i].subjectId.name %></td>
-              <td><%= academic.combination[i].teacherId.name %></td>
+            <tr class="border-2">
+              <td class="border-2">
+                <%= academic.combination[i].subjectId.code %>
+              </td>
+              <td class="border-2">
+                <%= academic.combination[i].subjectId.name %>
+              </td>
+              <td class="border-2">
+                <%= academic.combination[i].teacherId.name %>
+              </td>
             </tr>
             <%}%>
           </tbody>
         </table>
       </div>
+      <div class="ms-auto col-span-12 mt-5">
+        <a
+          href="/admin/departments/<%= locals.dept.key %>/timetable/update/<%= timetable._id%>"
+          class="btn btn-warning btn-sm"
+          >Update</a
+        >
+        <a
+          href="/admin/departments/<%= locals.dept.key %>/timetable/delete/<%= timetable._id%>"
+          class="btn btn-error btn-sm"
+          >Delete</a
+        >
+      </div>
     </div>
+
     <% include ../../partial/footerbar %>
   </body>
   <script src="/javascripts/jquery.min.js"></script>

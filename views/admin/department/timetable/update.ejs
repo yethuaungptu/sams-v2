@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Index</title>
+  </head>
+  <body>
+    <% include ../../../partial/admin_drawer %>
+    <h1 class="my-5 text-center text-2xl font-bold text-base-content">
+      <%= locals.dept.name %> Department's Timetable Adding
+    </h1>
+    <div
+      class="grid lg:grid-cols-12 md:grid-cols-1 sm:grid-cols-1 overflow-x-auto mb-20"
+    >
+      <input
+        type="hidden"
+        name="times"
+        id="times"
+        value="<%= JSON.stringify(timetable.times) %>"
+      />
+      <div class="grid grid-cols-subgrid gap-4 lg:col-span-9">
+        <table class="table">
+          <thead>
+            <th class="border-4">Day\Time</th>
+            <th class="border-4">9:00-10:00AM</th>
+            <th class="border-4">10:00-11:00AM</th>
+            <th class="border-4">11:00-12:00AM</th>
+            <th class="border-4 border-b-0"></th>
+            <th class="border-4">1:00-2:00PM</th>
+            <th class="border-4">2:00-3:00PM</th>
+            <th class="border-4">3:00-4:00PM</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border-4">Mon</td>
+              <td class="border-4" id="d1p1"></td>
+              <td class="border-4" id="d1p2"></td>
+              <td class="border-4" id="d1p3"></td>
+              <td class="border-4 border-t-0" rowspan="5">Lunch Break</td>
+              <td class="border-4" id="d1p4"></td>
+              <td class="border-4" id="d1p5"></td>
+              <td class="border-4" id="d1p6"></td>
+            </tr>
+            <tr>
+              <td class="border-4">Tue</td>
+              <td class="border-4" id="d2p1"></td>
+              <td class="border-4" id="d2p2"></td>
+              <td class="border-4" id="d2p3"></td>
+              <td class="border-4" id="d2p4"></td>
+              <td class="border-4" id="d2p5"></td>
+              <td class="border-4" id="d2p6"></td>
+            </tr>
+            <tr>
+              <td class="border-4">Wed</td>
+              <td class="border-4" id="d3p1"></td>
+              <td class="border-4" id="d3p2"></td>
+              <td class="border-4" id="d3p3"></td>
+              <td class="border-4" id="d3p4"></td>
+              <td class="border-4" id="d3p5"></td>
+              <td class="border-4" id="d3p6"></td>
+            </tr>
+            <tr>
+              <td class="border-4">Thu</td>
+              <td class="border-4" id="d4p1"></td>
+              <td class="border-4" id="d4p2"></td>
+              <td class="border-4" id="d4p3"></td>
+              <td class="border-4" id="d4p4"></td>
+              <td class="border-4" id="d4p5"></td>
+              <td class="border-4" id="d4p6"></td>
+            </tr>
+            <tr>
+              <td class="border-4">Fri</td>
+              <td class="border-4" id="d5p1"></td>
+              <td class="border-4" id="d5p2"></td>
+              <td class="border-4" id="d5p3"></td>
+              <td class="border-4" id="d5p4"></td>
+              <td class="border-4" id="d5p5"></td>
+              <td class="border-4" id="d5p6"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid grid-cols-subgrid gap-4 lg:col-span-3 border-2 mx-1">
+        <div class="col-span-12 border p-3">
+          <h3 class="text-xl font-bold text-center mb-3">Timetable Setup</h3>
+          <select
+            class="select select-bordered select-sm w-full max-w-xs my-2"
+            id="academic"
+            name="academic"
+          >
+            <option
+              selected
+              value="<%= academic._id %>"
+              data-combine="<%= JSON.stringify(academic.combination) %>"
+              data-classId="<%= academic.classId %>"
+            >
+              <%= academic.name %>
+            </option>
+          </select>
+          <select
+            class="select select-bordered select-sm w-full max-w-xs my-2"
+            id="building"
+            name="building"
+          >
+            <option disabled selected>Select Building</option>
+            <option value="MB">Main Building</option>
+            <option value="B1">Building 1</option>
+            <option value="B2">Building 2</option>
+          </select>
+          <select
+            class="select select-bordered select-sm w-full max-w-xs my-2"
+            id="room"
+            name="room"
+          >
+            <option disabled selected>Select Room</option>
+          </select>
+          <hr />
+          <div id="subjList">
+            <h3 class="text-xl font-bold text-center mb-3">Timetable form</h3>
+            <select
+              class="select select-bordered select-sm w-full max-w-xs my-2"
+              id="subject"
+            >
+              <option disabled selected>Select Subject</option>
+            </select>
+            <select
+              class="select select-bordered select-sm w-full max-w-xs my-2"
+              id="day"
+            >
+              <option disabled selected>Select Day</option>
+              <option value="1">Monday</option>
+              <option value="2">Tuesday</option>
+              <option value="3">Wednesday</option>
+              <option value="4">Thursday</option>
+              <option value="5">Friday</option>
+            </select>
+            <select
+              class="select select-bordered select-sm w-full max-w-xs my-2 h-fit"
+              id="time"
+              multiple
+            >
+              <option disabled selected>Select Time</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+            <button class="btn block ms-auto btn-primary btn-sm" id="btnAdd">
+              Add
+            </button>
+          </div>
+        </div>
+        <button
+          class="btn btn-block btn-sm btn-success col-span-full"
+          id="btnComplete"
+        >
+          Update timetable
+        </button>
+      </div>
+    </div>
+    <% include ../../partial/footerbar %>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script>
+    const list = [
+      {
+        building: "MB",
+        room: [
+          { name: "Room 101", value: "R101" },
+          { name: "Room 102", value: "R102" },
+          { name: "Room 103", value: "R103" },
+          { name: "Room 104", value: "R104" },
+          { name: "Room 105", value: "R105" },
+          { name: "Room 106", value: "R106" },
+          { name: "Room 107", value: "R107" },
+          { name: "Room 201", value: "R201" },
+          { name: "Room 202", value: "R202" },
+          { name: "Room 203", value: "R203" },
+          { name: "Room 204", value: "R204" },
+          { name: "Room 301", value: "R301" },
+          { name: "Room 302", value: "R302" },
+          { name: "Room 303", value: "R303" },
+          { name: "Room 304", value: "R304" },
+          { name: "Room 305", value: "R305" },
+          { name: "Room 306", value: "R306" },
+          { name: "Room 307", value: "R307" },
+        ],
+      },
+      {
+        building: "B1",
+        room: [
+          { name: "Room 1", value: "R1" },
+          { name: "Room 2", value: "R2" },
+          { name: "Room 3", value: "R3" },
+          { name: "Room 4", value: "R4" },
+          { name: "Room 5", value: "R5" },
+          { name: "Room 6", value: "R6" },
+          { name: "Room 7", value: "R7" },
+          { name: "Room 9", value: "R9" },
+          { name: "Room 10", value: "R10" },
+          { name: "Room 11", value: "R11" },
+          { name: "Room 12", value: "R12" },
+        ],
+      },
+      {
+        building: "B2",
+        room: [
+          { name: "Room 1", value: "R1" },
+          { name: "Room 2", value: "R2" },
+          { name: "Room 3", value: "R3" },
+          { name: "Room 4", value: "R4" },
+          { name: "Room 5", value: "R5" },
+          { name: "Room 6", value: "R6" },
+          { name: "Room 7", value: "R7" },
+          { name: "Room 9", value: "R9" },
+          { name: "Room 10", value: "R10" },
+          { name: "Room 11", value: "R11" },
+          { name: "Room 12", value: "R12" },
+        ],
+      },
+    ];
+    let academic;
+    $("#building").on("change", function () {
+      $("#room").empty();
+      const roomList = list.filter((item) => item.building == $(this).val());
+      for (var i = 0; i < roomList[0].room.length; i++) {
+        $("#room").append(
+          `<option value='${roomList[0].room[i].value}'>${roomList[0].room[i].value}</option>`
+        );
+      }
+    });
+    $(function () {
+      $("#building").val("<%= timetable.building %>");
+      const roomList = list.filter(
+        (item) => item.building == "<%= timetable.building %>"
+      );
+      for (var i = 0; i < roomList[0].room.length; i++) {
+        $("#room").append(
+          `<option value='${roomList[0].room[i].value}'>${roomList[0].room[i].value}</option>`
+        );
+      }
+      $("#room").val("<%= timetable.room %>");
+      const data = $("#academic option:selected").data("combine");
+      for (var i = 0; i < data.length; i++) {
+        $("#subject").append(
+          `<option value='${data[i].subjectId._id}' data-teacher='${data[i].teacherId}'>${data[i].subjectId.name}</option>`
+        );
+      }
+    });
+
+    const times = JSON.parse($("#times").val());
+    console.log(times);
+    for (var i = 0; i < times.length; i++) {
+      let id = "#d" + times[i].time.charAt(0) + "p" + times[i].time.charAt(1);
+      $(id).text(times[i].subjectId.name);
+      $(id).data("subjectId", times[i].subjectId._id);
+      $(id).data("teacherId", times[i].teacherId);
+    }
+    function refFun() {
+      $("#btnAdd").click(function () {
+        const dd = $("#day").val();
+        const pp = $("#time").val();
+
+        for (var i = 0; i < pp.length; i++) {
+          const id = "#d" + dd + "p" + pp[i];
+          $(id).text($("#subject option:selected").text());
+          $(id).data("subjectId", $("#subject option:selected").val());
+          $(id).data(
+            "teacherId",
+            $("#subject option:selected").data("teacher")
+          );
+        }
+      });
+    }
+
+    refFun();
+
+    $("#btnComplete").click(function () {
+      let times = [];
+      let isComplete = true;
+      for (var i = 1; i <= 5; i++) {
+        for (var j = 1; j <= 6; j++) {
+          times.push({
+            time: "" + i + j,
+            subjectId: $("#d" + i + "p" + j).data("subjectId"),
+            teacherId: $("#d" + i + "p" + j).data("teacherId"),
+          });
+          if (!$("#d" + i + "p" + j).data("subjectId")) isComplete = false;
+        }
+      }
+      console.log(times);
+      if (isComplete) {
+        const data = {
+          classId: $("#academic option:selected").data("classid"),
+          academicId: academic,
+          building: $("#building").val(),
+          room: $("#room").val(),
+          times: JSON.stringify(times),
+          id: "<%= timetable._id %>",
+        };
+        console.log(data);
+        $.ajax("/admin/departments/<%= locals.dept.key %>/timetable/update", {
+          type: "POST",
+          data: data,
+          success: function (result) {
+            if (result.status == true) {
+              location.href =
+                "/admin/departments/<%= locals.dept.key %>/timetable";
+            } else {
+              alert("Somethings was wrong");
+            }
+          },
+        });
+      } else {
+        alert("Please insert all timetable fields");
+      }
+      console.log(times, isComplete);
+    });
+  </script>
+</html>

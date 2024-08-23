@@ -268,11 +268,39 @@ router.get("/:dept/teacher/delete/:id", checkDept, async function (req, res) {
 });
 
 router.get("/:dept/student", checkDept, async function (req, res) {
+  // const students = await Student.find({
+  //   status: true,
+  //   department: req.params.dept,
+  // }).populate("classId", "name");
+
+  const students = await Student.aggregate([
+    { $match: { status: true, department: req.params.dept } },
+    {
+      $group: {
+        _id: "$classId",
+      },
+    },
+    {
+      $lookup: {
+        from: "classes",
+        localField: "_id",
+        foreignField: "_id",
+        as: "classId",
+      },
+    },
+    { $unwind: { path: "$classId" } },
+  ]);
+  console.log(students);
+  res.render("admin/department/student", { students: students });
+});
+
+router.get("/:dept/student/list/:id", checkDept, async function (req, res) {
   const students = await Student.find({
     status: true,
     department: req.params.dept,
+    classId: req.params.id,
   }).populate("classId", "name");
-  res.render("admin/department/student", { students: students });
+  res.render("admin/department/student/list", { students: students });
 });
 
 router.get("/:dept/student/add", checkDept, async function (req, res) {
@@ -634,6 +662,42 @@ router.get("/:dept/timetable/detail/:id", checkDept, async function (req, res) {
     academic: academic,
     teachers: teachers,
   });
+});
+
+router.get("/:dept/timetable/update/:id", checkDept, async function (req, res) {
+  const timetable = await Timetable.findById(req.params.id).populate(
+    "times.subjectId",
+    "name"
+  );
+  const academic = await Academic.findById(timetable.academicId).populate(
+    "combination.subjectId",
+    "name"
+  );
+  res.render("admin/department/timetable/update", {
+    academic: academic,
+    timetable: timetable,
+  });
+});
+
+router.post("/:dept/timetable/update", checkDept, async function (req, res) {
+  try {
+    const update = {
+      building: req.body.building,
+      room: req.body.room,
+      times: JSON.parse(req.body.times),
+    };
+    const data = await Timetable.findByIdAndUpdate(req.body.id, update);
+    res.json({ status: true });
+  } catch (e) {
+    res.json({ status: false });
+  }
+});
+
+router.get("/:dept/timetable/delete/:id", checkDept, async function (req, res) {
+  const data = await Timetable.findByIdAndUpdate(req.params.id, {
+    status: false,
+  });
+  res.redirect("/admin/departments/" + req.params.dept + "/timetable");
 });
 
 module.exports = router;
