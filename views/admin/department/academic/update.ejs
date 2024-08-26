@@ -139,8 +139,12 @@
                     <option value="Eng">English</option>
                     <option value="Myan">Myanmar</option>
                     <option value="Math">Mathematics</option>
-                    <option value="Phy">Physic</option>
+                    <option value="Phy">Physics</option>
                     <option value="Chem">Chemistry</option>
+                    <option value="MP">Mechanical</option>
+                    <% if(locals.dept.key != "MP"){%>
+                      <option value="MP">Mechanical</option>
+                      \<%}%>
                   </select>
                 </label>
                 <label
@@ -317,8 +321,12 @@
                     <option value="Eng">English</option>
                     <option value="Myan">Myanmar</option>
                     <option value="Math">Mathematics</option>
-                    <option value="Phy">Physic</option>
+                    <option value="Phy">Physics</option>
                     <option value="Chem">Chemistry</option>
+                    <option value="MP">Mechanical</option>
+                    <% if(locals.dept.key != "MP"){%>
+                    <option value="MP">Mechanical</option>
+                    <%}%>
                   </select>
                 </label>
                 <label

@@ -30,7 +30,7 @@ const deptArr = [
   { key: "Eng", name: "English", type: "minor" },
   { key: "Myan", name: "Myanmar", type: "minor" },
   { key: "Math", name: "Mathematic", type: "minor" },
-  { key: "Phy", name: "Physic", type: "minor" },
+  { key: "Phy", name: "Physics", type: "minor" },
   { key: "Chem", name: "Chemistry", type: "minor" },
 ];
 const checkDept = function (req, res, next) {
