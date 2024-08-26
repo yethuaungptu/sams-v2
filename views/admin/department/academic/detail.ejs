@@ -21,9 +21,11 @@
           <div class="card-body">
             <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1">
               <div></div>
-              <div class="grid grid-cols-1 gap-5">
+              <div class="grid grid-cols-1 col-span-2 gap-5">
                 <div class="text-lg">
-                  <p class="font-semibold mb-2">ID : <%= academic.name %></p>
+                  <p class="font-semibold mb-2">
+                    Academic-ID : <%= academic.name %>
+                  </p>
                 </div>
                 <div class="text-lg">
                   <p class="font-semibold mb-2">
@@ -59,7 +61,7 @@
             </div>
             <div class="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 my-5">
               <div></div>
-              <div class="mx-auto">
+              <div class="mx-auto col-span-2">
                 <a
                   href="/admin/departments/<%= locals.dept.key %>/academic/update/<%= academic._id %>"
                   class="btn btn-sm w-24 btn-warning"

@@ -15,6 +15,12 @@ router.get("/", checkAdmin, function (req, res, next) {
   res.render("admin/index");
 });
 
+router.get("/logout", checkAdmin, function (req, res) {
+  req.session.destroy(function () {
+    res.redirect("/");
+  });
+});
+
 router.use("/departments", checkAdmin, departmentRouter);
 
 module.exports = router;

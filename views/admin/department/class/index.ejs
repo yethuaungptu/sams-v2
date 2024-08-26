@@ -21,7 +21,7 @@
             <tr class="text-xl">
               <th>No</th>
               <th>Name</th>
-              <th>Action</th>
+              <th class="text-center">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -29,7 +29,7 @@
             <tr>
               <th><%= i+1 %></th>
               <td class="text-lg"><%= classes[i].name %></td>
-              <td>
+              <td class="text-center">
                 <button
                   class="btn btn-sm btn-warning m-1"
                   onclick="updateClass('<%= classes[i]._id %>','<%= classes[i].name %>')"

@@ -409,11 +409,37 @@ router.get("/:dept/student/delete/:id", checkDept, async function (req, res) {
 });
 
 router.get("/:dept/subject", checkDept, async function (req, res) {
+  // const subjects = await Subject.find({
+  //   status: true,
+  //   department: req.params.dept,
+  // }).populate("classId", "name");
+  const subjects = await Subject.aggregate([
+    { $match: { status: true, department: req.params.dept } },
+    {
+      $group: {
+        _id: "$classId",
+      },
+    },
+    {
+      $lookup: {
+        from: "classes",
+        localField: "_id",
+        foreignField: "_id",
+        as: "classId",
+      },
+    },
+    { $unwind: { path: "$classId" } },
+  ]);
+  res.render("admin/department/subject", { subjects: subjects });
+});
+
+router.get("/:dept/subject/list/:id", checkDept, async function (req, res) {
   const subjects = await Subject.find({
     status: true,
     department: req.params.dept,
+    classId: req.params.id,
   }).populate("classId", "name");
-  res.render("admin/department/subject", { subjects: subjects });
+  res.render("admin/department/subject/list", { subjects: subjects });
 });
 
 router.get("/:dept/subject/add", checkDept, async function (req, res) {

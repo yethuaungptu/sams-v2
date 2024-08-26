@@ -11,16 +11,20 @@
     <h1 class="my-5 text-center text-2xl font-bold text-base-content">
       <%= locals.dept.name %> Department's Teacher List
     </h1>
-    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 mb-5">
+    <div class="grid lg:grid-cols-10 md:grid-cols-1 sm:grid-cols-1 mb-5">
       <div></div>
-      <div class="overflow-x-auto border m-5">
+      <div class="overflow-x-auto border m-5 col-span-8">
         <table class="table">
           <!-- head -->
           <thead>
             <tr class="text-xl">
               <th>No</th>
               <th>Name</th>
-              <th>Action</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Family Teacher</th>
+              <th class="text-center">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -28,27 +32,46 @@
             <tr>
               <th><%= i+1 %></th>
               <td class="text-lg"><%= teachers[i].name %></td>
+              <td class="text-lg"><%= teachers[i].email %></td>
+              <td class="text-lg"><%= teachers[i].phone %></td>
+              <td class="text-lg"><%= teachers[i].address %></td>
+              <td class="text-lg">
+                <%= teachers[i].isFamily ? teachers[i].familyClass: "-" %>
+              </td>
               <td>
                 <a
-                  href="/admin/departments/<%= locals.dept.key %>/teacher/detail/<%= teachers[i]._id %>"
-                  class="btn btn-sm btn-primary m-1"
-                  >Detail</a
+                  href="/admin/departments/<%= locals.dept.key %>/teacher/update/<%= teachers[i]._id %>"
+                  class="btn btn-sm btn-warning m-1"
+                  >Update</a
                 >
+                <button
+                  onclick="del('<%= teachers[i]._id %>')"
+                  class="btn btn-sm btn-error m-1"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
             <%}%>
           </tbody>
         </table>
-        <a
-          href="/admin/departments/<%= locals.dept.key %>/teacher/add"
-          class="btn btn-block btn-primary my-5"
-          >Add Teacher</a
-        >
+        <div class="flex place-content-end">
+          <a
+            href="/admin/departments/<%= locals.dept.key %>/teacher/add"
+            class="btn btn-primary my-5"
+            >Add Teacher</a
+          >
+        </div>
       </div>
     </div>
     <% include ../../partial/footerbar %>
   </body>
   <script>
-    console.log("<%= locals.dept.name %>");
+    function del(id) {
+      var opt = confirm("Are you sure for delete?");
+      if (opt)
+        location.href =
+          "/admin/departments/<%= locals.dept.key %>/teacher/delete/" + id;
+    }
   </script>
 </html>

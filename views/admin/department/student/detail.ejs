@@ -16,12 +16,16 @@
       <div class="grid col-span-6">
         <div class="card glass w-full lg:card-side bg-base-100 shadow-xl">
           <figure class="w-1/3 mx-auto">
-            <img src="/images/student.svg" alt="Album" />
+            <% if(student.gender == "male"){%>
+            <img src="/images/student-male.svg" alt="Album" />
+            <%}else{%>
+            <img src="/images/student-female2.svg" alt="Album" />
+            <%}%>
           </figure>
           <div class="card-body">
             <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1">
               <div></div>
-              <div class="grid grid-cols-1 gap-5">
+              <div class="grid grid-cols-1 col-span-2 gap-5">
                 <div class="text-lg">
                   <p class="font-semibold mb-2">Name : <%= student.name %></p>
                 </div>
@@ -43,14 +47,17 @@
                 </div>
                 <div class="text-lg">
                   <p class="font-semibold mb-2">
-                    Roll No : <%= student.roll %>
+                    Roll No : <% let year = student.classId.name.charAt(0); %>
+                    <%= (year == '1')? 'I' : (year == '2')?'II':(year == '3')?
+                    'III' : (year == '4')? 'IV': (year == '5')? 'V' : 'VI'%>-<%=
+                    student.department %>-<%= student.roll %>
                   </p>
                 </div>
               </div>
             </div>
             <div class="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 my-5">
               <div></div>
-              <div class="mx-auto">
+              <div class="mx-auto col-span-2">
                 <a
                   href="/admin/departments/<%= locals.dept.key %>/student/update/<%= student._id %>"
                   class="btn btn-sm w-24 btn-warning"

@@ -10,9 +10,9 @@
   <body>
     <% include ../../../partial/admin_drawer %>
     <h1 class="my-5 text-center text-2xl font-bold text-base-content">
-      <%= locals.dept.name %> Department's Student List
+      <%= locals.dept.name %> Department's Subject List
     </h1>
-    <div class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 my-5">
+    <div class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 mb-20">
       <div></div>
       <div class="overflow-x-auto border m-5 col-span-2">
         <table id="example" class="display table my-3" style="width: 100%">
@@ -20,30 +20,29 @@
           <thead>
             <tr class="text-xl">
               <th>No</th>
-              <th>Roll</th>
               <th>Name</th>
-              <th>Gender</th>
-              <th>Action</th>
+              <th>Code</th>
+              <th class="text-center">Action</th>
             </tr>
           </thead>
           <tbody>
-            <% for(var i = 0; i < students.length;i++){%>
-            <tr>
-              <td class="text-lg"><%= i+1 %></td>
-              <td class="text-lg">
-                <% let year = students[i].classId.name.charAt(0); %> <%= (year
-                == '1')? 'I' : (year == '2')?'II':(year == '3')? 'III' : (year
-                == '4')? 'IV': (year == '5')? 'V' : 'VI'%>-<%=
-                students[i].department %>-<%= students[i].roll %>
-              </td>
-              <td class="text-lg"><%= students[i].name %></td>
-              <td class="text-lg"><%= students[i].gender %></td>
-              <td>
+            <% for(var i = 0; i < subjects.length;i++){%>
+            <tr class="text-lg">
+              <th><%= i+1 %></th>
+              <td><%= subjects[i].name %></td>
+              <td><%= subjects[i].code %></td>
+              <td class="text-center">
                 <a
-                  href="/admin/departments/<%= locals.dept.key %>/student/detail/<%= students[i]._id %>"
-                  class="btn btn-sm btn-primary m-1"
-                  >Detail</a
+                  href="/admin/departments/<%= locals.dept.key %>/subject/update/<%= subjects[i]._id %>"
+                  class="btn btn-sm btn-warning"
+                  >Update</a
                 >
+                <button
+                  onclick="del('<%= subjects[i]._id %>')"
+                  class="btn btn-sm btn-error"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
             <%}%>
@@ -58,5 +57,11 @@
   <script src="/javascripts/dataTables.tailwindcss.js"></script>
   <script>
     new DataTable("#example");
+    function del(id) {
+      var opt = confirm("Are you sure for delete?");
+      if (opt)
+        location.href =
+          "/admin/departments/<%= locals.dept.key %>/subject/delete/" + id;
+    }
   </script>
 </html>
