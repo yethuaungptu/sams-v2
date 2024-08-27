@@ -20,6 +20,7 @@ router.post("/tlogin", async function (req, res) {
   const teacher = await Teacher.findOne({ email: req.body.email });
   if (teacher != null && Teacher.compare(req.body.password, teacher.password)) {
     req.session.teacher = {
+      id: teacher._id,
       name: teacher.name,
       email: teacher.email,
       department: teacher.department,

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Index</title>
+  </head>
+  <body>
+    <% include ../partial/teacher_drawer %>
+    <div
+      class="grid grid-cols-1 h-screen justify-items-center w-full bg-gray-200 p-8 flex-wrap mb-10"
+    >
+      <div class="bg-[#D1E9F6] rounded-lg shadow-xl pb-8 lg:w-[600px]">
+        <div class="w-full lg:h-[150px] min-[320px]:h-[150px]">
+          <img
+            src="/images/teacher-bg.jpg"
+            class="w-full h-full rounded-tl-lg rounded-tr-lg bg-cover"
+          />
+        </div>
+        <div class="flex flex-col items-center -mt-20">
+          <img
+            src="/images/teacher-profile.jpg"
+            class="w-40 border-4 border-white rounded-full bg-slate-900"
+          />
+          <div class="flex items-center space-x-2 mt-2">
+            <p class="text-2xl text-black"><%= teacher.name %></p>
+          </div>
+        </div>
+      </div>
+      <div class="w-[600px] max-w-full mt-3">
+        <div
+          class="relative flex flex-col h-full bg-[#D1E9F6] rounded-2xl bg-clip-border"
+        >
+          <div class="pb-0 p-5 text-gray-700">
+            Profile Information
+            <div class="absolute right-5 mt-0 rounded dropdown dropdown-left">
+              <button
+                tabindex="0"
+                class="border border-gray-700 hover:border-black p-2 hover:bg-green-700 rounded text-gray-700 hover:text-black bg-gray-100 bg-opacity-10 hover:bg-opacity-40"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="3"
+                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                  ></path>
+                </svg>
+                <ul
+                  tabindex="0"
+                  class="dropdown-content menu bg-gray-500 rounded-box z-[1] w-36 p-0 shadow"
+                >
+                  <li>
+                    <a onclick="my_modal_2.showModal()"> change passward </a>
+                  </li>
+                </ul>
+              </button>
+            </div>
+          </div>
+          <hr
+            class="my-5 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-50 dark:via-neutral-400"
+          />
+          <ul class="text-gray-700 mx-auto pb-5">
+            <li class="flex space-x-20 py-2">
+              <span class="font-bold w-24">Full name:</span>
+              <span class="text-gray-700"><%= teacher.name %></span>
+            </li>
+            <li class="flex space-x-20 py-2">
+              <span class="font-bold w-24">Email:</span>
+              <span class="text-gray-700"><%= teacher.email %></span>
+            </li>
+            <li class="flex space-x-20 py-2">
+              <span class="font-bold w-24">Department:</span>
+              <span class="text-gray-700"><%= teacher.department %></span>
+            </li>
+            <li class="flex space-x-20 py-2">
+              <span class="font-bold w-24">Contact:</span>
+              <span class="text-gray-700"><%= teacher.phone %></span>
+            </li>
+            <li class="flex space-x-20 py-2">
+              <span class="font-bold w-24">Address:</span>
+              <span class="text-gray-700"><%= teacher.address %></span>
+            </li>
+
+            <li class="flex space-x-8 py-2">
+              <span class="font-bold w-36">Family Teacher:</span>
+              <% if(teacher.isFamily){%>
+              <span class="text-gray-700"><%= teacher.familyClass %></span>
+              <%}else{%>
+              <span class="text-gray-700">-</span>
+              <%}%>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <dialog id="my_modal_2" class="modal">
+      <div class="modal-box">
+        <h3 class="text-lg font-bold text-center">Change Password</h3>
+        <form>
+          <label class="input input-bordered flex items-center gap-2 my-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              class="h-4 w-4 opacity-70"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <input
+              type="password"
+              id="oldPass"
+              class="grow"
+              name="oldPass"
+              placeholder="Old password"
+            />
+          </label>
+          <label class="input input-bordered flex items-center gap-2 my-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              class="h-4 w-4 opacity-70"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <input
+              type="password"
+              id="newPass"
+              name="newPass"
+              class="grow"
+              placeholder="New password"
+            />
+          </label>
+          <button
+            type="button"
+            onclick="updatePass()"
+            class="btn btn-primary block ms-auto"
+          >
+            Update
+          </button>
+        </form>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script>
+    function updatePass() {
+      if ($("#oldPass").val() != "" && $("#newPass").val() != "") {
+        const data = {
+          oldPass: $("#oldPass").val(),
+          newPass: $("#newPass").val(),
+          id: "<%= teacher._id %>",
+        };
+        $.ajax("/teacher/profileCheckAndUpdate", {
+          type: "POST",
+          data: data,
+          success: function (result) {
+            if (result.status == false) {
+              alert(result.msg);
+            } else {
+              location.reload();
+            }
+          },
+        });
+      } else {
+        alert("Please fill all fields");
+      }
+    }
+  </script>
+</html>
