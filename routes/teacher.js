@@ -41,11 +41,20 @@ router.post("/profileCheckAndUpdate", checkTeacher, async function (req, res) {
 });
 
 router.get("/timetable", checkTeacher, async function (req, res) {
+  console.log(req.session.teacher.id);
   const timetables = await Timetable.find({
-    "times.teacherId": req.session.teacher.id,
-  }).populate("times.subjectId");
-  console.log(timetables);
-  res.render("teacher/timetable");
+    status: true,
+    times: { $elemMatch: { teacherId: req.session.teacher.id } },
+  }).populate("times.subjectId", "name");
+  const list = [];
+  for (var i = 0; i < timetables.length; i++) {
+    for (var j = 0; j < timetables[i].times.length; j++) {
+      if (timetables[i].times[j].teacherId.equals(req.session.teacher.id)) {
+        list.push(timetables[i].times[j]);
+      }
+    }
+  }
+  res.render("teacher/timetable", { list: JSON.stringify(list) });
 });
 
 router.get("/logout", checkTeacher, async function (req, res) {
