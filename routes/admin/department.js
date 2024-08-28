@@ -256,9 +256,7 @@ router.post("/:dept/teacher/update", checkDept, async function (req, res) {
     update.familyClass = "";
   }
   const data = await Teacher.findByIdAndUpdate(req.body.id, update);
-  res.redirect(
-    "/admin/departments/" + req.params.dept + "/teacher/detail/" + req.body.id
-  );
+  res.redirect("/admin/departments/" + req.params.dept + "/teacher/");
 });
 
 router.get("/:dept/teacher/delete/:id", checkDept, async function (req, res) {

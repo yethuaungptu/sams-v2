@@ -17,7 +17,10 @@ router.get("/login", function (req, res, next) {
 });
 
 router.post("/tlogin", async function (req, res) {
-  const teacher = await Teacher.findOne({ email: req.body.email });
+  const teacher = await Teacher.findOne({
+    email: req.body.email,
+    status: true,
+  });
   if (teacher != null && Teacher.compare(req.body.password, teacher.password)) {
     req.session.teacher = {
       id: teacher._id,
@@ -32,7 +35,10 @@ router.post("/tlogin", async function (req, res) {
 });
 
 router.post("/slogin", async function (req, res) {
-  const student = await Student.findOne({ email: req.body.email });
+  const student = await Student.findOne({
+    email: req.body.email,
+    status: true,
+  });
   if (student != null && Student.compare(req.body.password, student.password)) {
     req.session.student = {
       name: student.name,

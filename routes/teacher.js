@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const Teacher = require("../models/Teacher");
-const Timetables = require("../models/Timetable");
 const bcrypt = require("bcryptjs");
 const Timetable = require("../models/Timetable");
 
