@@ -40,7 +40,6 @@ router.post("/profileCheckAndUpdate", checkTeacher, async function (req, res) {
 });
 
 router.get("/timetable", checkTeacher, async function (req, res) {
-  console.log(req.session.teacher.id);
   const timetables = await Timetable.find({
     status: true,
     times: { $elemMatch: { teacherId: req.session.teacher.id } },
@@ -54,6 +53,32 @@ router.get("/timetable", checkTeacher, async function (req, res) {
     }
   }
   res.render("teacher/timetable", { list: JSON.stringify(list) });
+});
+
+router.get("/attendance", checkTeacher, async function (req, res) {
+  const d = new Date();
+  const timetables = await Timetable.find({
+    status: true,
+    times: { $elemMatch: { teacherId: req.session.teacher.id } },
+  })
+    .populate("times.subjectId", "name")
+    .populate("classId", "name");
+  const list = [];
+  for (var i = 0; i < timetables.length; i++) {
+    let subList = [];
+    for (var j = 0; j < timetables[i].times.length; j++) {
+      if (
+        timetables[i].times[j].teacherId.equals(req.session.teacher.id) &&
+        timetables[i].times[j].time.charAt(0) == d.getDay()
+      ) {
+        subList.push(timetables[i].times[j]);
+      }
+    }
+    if (subList.length > 0)
+      list.push({ class: timetables[i].classId, subList: subList });
+  }
+  console.log(list);
+  res.render("teacher/attendance", { list: list });
 });
 
 router.get("/logout", checkTeacher, async function (req, res) {

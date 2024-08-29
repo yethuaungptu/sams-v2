@@ -8,10 +8,23 @@
   </head>
   <body>
     <% include ../partial/teacher_drawer %>
-    <div class="mt-5 text-center text-xl font-bold">Attendance</div>
+    <div class="my-5 text-center text-xl font-bold">Today Attendance</div>
     <div
-      class="grid lg:grid-cols-12 md:grid-cols-1 sm:grid-cols-1 overflow-x-auto mx-1 lg:mx-10 mt-5 lg:mt-20"
-    ></div>
+      class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 mx-3 lg:mx-10 gap-3"
+    >
+      <% for(var i = 0; i < list.length;i++){ for(var j = 0; j <
+      list[i].subList.length;j++){%>
+      <div class="card glass w-full">
+        <div class="card-body">
+          <div class="card-title"><%= list[i].class.name %></div>
+          <p class="text-2xl font-bold text-center">
+            Time : <%= list[i].subList[j].time.charAt(1) %>
+          </p>
+          <a href="#" class="btn btn-primary btn-sm">Call Attendance</a>
+        </div>
+      </div>
+      <%}%> <%}%>
+    </div>
   </body>
   <script src="/javascripts/jquery.min.js"></script>
 </html>

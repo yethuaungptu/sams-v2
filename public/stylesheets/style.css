@@ -4333,6 +4333,11 @@ html:has(.drawer-toggle:checked) {
   margin-bottom: auto;
 }
 
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+
 .-mt-20 {
   margin-top: -5rem;
 }
@@ -4387,10 +4392,6 @@ html:has(.drawer-toggle:checked) {
 
 .mt-5 {
   margin-top: 1.25rem;
-}
-
-.mt-10 {
-  margin-top: 2.5rem;
 }
 
 .block {
@@ -5234,10 +5235,6 @@ html:has(.drawer-toggle:checked) {
   .lg\:mx-10 {
     margin-left: 2.5rem;
     margin-right: 2.5rem;
-  }
-
-  .lg\:mt-32 {
-    margin-top: 8rem;
   }
 
   .lg\:mt-20 {
