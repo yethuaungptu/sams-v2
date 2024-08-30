@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Index</title>
+  </head>
+  <body>
+    <% include ../partial/teacher_drawer %>
+    <div class="my-5 text-center text-xl font-bold">Today Attendance</div>
+    <div
+      class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 mx-3 lg:mx-10 gap-3"
+    >
+      <% for(var i = 0; i < list.length;i++){ for(var j = 0; j <
+      list[i].subList.length;j++){%>
+      <div class="card glass w-full">
+        <div class="card-body">
+          <div class="card-title"><%= list[i].class.name %></div>
+          <p class="text-2xl font-bold text-center">
+            Time : <%= list[i].subList[j].time.charAt(1) %>
+          </p>
+          <a <%= (attendances.filter((data) => data.time == list[i].subList[j].time.charAt(1))).length > 0 ? "disabled":"" %>
+            href="/teacher/callAttendance?cid=<%= list[i].class._id %>&day=<%= list[i].subList[j].time.charAt(0) %>&time=<%= list[i].subList[j].time.charAt(1) %>&sid=<%= list[i].subList[j].subjectId._id %>&tid=<%= list[i].timetableId %>&teacherId=<%= list[i].subList[j].teacherId %>"
+            class="btn btn-primary btn-sm"
+            >Call Attendance</a
+          >
+        </div>
+      </div>
+      <%}%> <%}%>
+    </div>
+    <h1 class="my-5 text-center text-xl font-bold">
+      Today Attendance call List
+    </h1>
+    <div class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1">
+      <div></div>
+      <div class="col-span-2">
+        <table class="table border-2 border-base-content table-sm">
+          <thead class="text-lg">
+            <td class="border-2 border-base-content">No</td>
+            <td class="border-2 border-base-content">Class</td>
+            <td class="border-2 border-base-content">Subject</td>
+            <td class="border-2 border-base-content">Time</td>
+            <td class="border-2 border-base-content">Action</td>
+          </thead>
+          <tbody>
+            <% for(var i = 0; i < attendances.length;i++){%>
+            <tr class="border-2 border-base-content">
+              <td class="border-2 border-base-content"><%= i+1 %></td>
+              <td class="border-2 border-base-content"><%= attendances[i].classId.name %></td>
+              <td class="border-2 border-base-content"><%= attendances[i].subjectId.name %></td>
+              <td class="border-2 border-base-content"><%= attendances[i].time %></td>
+              <td class="border-2 border-base-content"><a href="/teacher/attendanceDetail/<%= attendances[i]._id %>" class="btn btn-sm btn-primary">Detail</a></td>
+            </tr>
+            <%}%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+</html>

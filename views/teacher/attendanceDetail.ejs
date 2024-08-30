@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/dataTables.tailwindcss.css" />
+    <title>Attendance Detail</title>
+  </head>
+  <body>
+    <% include ../partial/teacher_drawer %>
+    <h1 class="my-5 text-center text-xl font-bold">Attendance Detail</h1>
+    <div class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 my-5">
+      <div></div>
+      <div class="overflow-x-auto border m-5 col-span-2">
+        <table
+          class="display table my-3 border-2 border-base-content table-sm"
+          style="width: 100%"
+        >
+          <!-- head -->
+          <thead>
+            <tr class="text-xl border-2 border-base-content">
+              <th class="border-2 border-base-content">No</th>
+              <th class="border-2 border-base-content">Roll</th>
+              <th class="border-2 border-base-content">Name</th>
+              <th class="border-2 border-base-content">Attendance</th>
+            </tr>
+          </thead>
+          <tbody id="tb">
+            <% for(var i = 0; i < attendance.list.length;i++){%>
+            <tr class="border-2 border-base-content">
+              <td class="text-lg border-2 border-base-content"><%= i+1 %></td>
+              <td class="text-lg border-2 border-base-content">
+                <% let year = attendance.classId.name.charAt(0); %> <%= (year ==
+                '1')? 'I' : (year == '2')?'II':(year == '3')? 'III' : (year ==
+                '4')? 'IV': (year == '5')? 'V' : 'VI'%>-<%=
+                attendance.list[i].studentId.department %>-<%=
+                attendance.list[i].studentId.roll %>
+              </td>
+              <td
+                class="text-lg border-2 border-base-content"
+                data-id="<%= attendance.list[i].studentId._id %>"
+              >
+                <%= attendance.list[i].studentId.name %>
+              </td>
+              <td class="border-2 border-base-content">
+                <label class="cursor-pointer label">
+                  <input onclick="this.checked=!this.checked;" type="checkbox"
+                  <%= attendance.list[i].isAttendance ? 'checked="checked"':''
+                  %> class="checkbox checkbox-success" />
+                </label>
+              </td>
+            </tr>
+            <%}%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/dataTables.js"></script>
+  <script src="/javascripts/dataTables.tailwindcss.js"></script>
+  <script>
+    new DataTable("#example");
+  </script>
+</html>
