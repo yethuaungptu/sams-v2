@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>View Attendance Detail</title>
+  </head>
+  <body>
+    <% include ../partial/teacher_drawer %>
+    <h1 class="text-2xl text-center font-bold my-5">BEE Attendance</h1>
+    <div class="overflow-x-auto mx-1 lg:mx-10">
+      <table class="table table-zebra">
+        <!-- head -->
+        <thead>
+          <tr>
+            <th>Roll No</th>
+            <th>Name</th>
+            <th>December</th>
+            <th>January</th>
+            <th>February</th>
+            <th>March</th>
+            <th>June</th>
+            <th>July</th>
+            <th>Augest</th>
+            <th>Setpember</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- row 1 -->
+          <% for(var i = 0; i < studentList.length;i++){ let allCount = 0,
+          allAtt = 0;%>
+          <tr>
+            <th>
+              <% let year = studentList[i].classId.name.charAt(0); %> <%= (year
+              == '1')? 'I' : (year == '2')?'II':(year == '3')? 'III' : (year ==
+              '4')? 'IV': (year == '5')? 'V' : 'VI'%>-<%=
+              studentList[i].department %>-<%= studentList[i].roll %>
+            </th>
+            <td><%= studentList[i].name %></td>
+            <td>
+              <% const month11Data = attendanceList.filter(record =>
+              record.month == 11 ).flatMap(record =>
+              record.stuAttendance.filter(student =>
+              student.studentId.equals(studentList[i]._id)));
+              if(month11Data.length > 0){allCount += month11Data[0]?.totalCount;
+              allAtt += month11Data[0]?.attCount} %><%= month11Data.length > 0 ?
+              Math.floor((month11Data[0].attCount/month11Data[0].totalCount) *
+              100)+ '%' : '0%' %>
+            </td>
+            <td>
+              <% const month0Data = attendanceList.filter(record => record.month
+              == 0 ).flatMap(record => record.stuAttendance.filter(student =>
+              student.studentId.equals(studentList[i]._id)));
+              if(month0Data.length > 0){allCount += month0Data[0]?.totalCount;
+              allAtt += month0Data[0]?.attCount} %><%= month0Data.length > 0 ?
+              Math.floor((month0Data[0].attCount/month0Data[0].totalCount) *
+              100)+ '%' : '0%' %>
+            </td>
+            <td>
+              <% const month1Data = attendanceList.filter(record => record.month
+              == 1 ).flatMap(record => record.stuAttendance.filter(student =>
+              student.studentId.equals(studentList[i]._id)));
+              if(month1Data.length > 0){allCount += month1Data[0]?.totalCount;
+              allAtt += month1Data[0]?.attCount} %><%= month1Data.length > 0 ?
+              Math.floor((month1Data[0].attCount/month1Data[0].totalCount) *
+              100)+ '%' : '0%' %>
+            </td>
+            <td>
+              <% const month2Data = attendanceList.filter(record => record.month
+              == 2 ).flatMap(record => record.stuAttendance.filter(student =>
+              student.studentId.equals(studentList[i]._id)));
+              if(month2Data.length > 0){allCount += month2Data[0]?.totalCount;
+              allAtt += month2Data[0]?.attCount} %><%= month2Data.length > 0 ?
+              Math.floor((month2Data[0].attCount/month2Data[0].totalCount) *
+              100)+ '%' : '0%' %>
+            </td>
+            <td>
+              <% const month5Data = attendanceList.filter(record => record.month
+              == 5 ).flatMap(record => record.stuAttendance.filter(student =>
+              student.studentId.equals(studentList[i]._id)));
+              if(month5Data.length > 0){allCount += month5Data[0]?.totalCount;
+              allAtt += month5Data[0]?.attCount }%><%= month5Data.length > 0 ?
+              Math.floor((month5Data[0].attCount/month5Data[0].totalCount) *
+              100)+ '%' : '0%' %>
+            </td>
+            <td>
+              <% const month6Data = attendanceList.filter(record => record.month
+              == 6 ).flatMap(record => record.stuAttendance.filter(student =>
+              student.studentId.equals(studentList[i]._id)));
+              if(month6Data.length > 0){allCount += month6Data[0]?.totalCount;
+              allAtt += month6Data[0]?.attCount} %><%= month6Data.length > 0 ?
+              Math.floor((month6Data[0].attCount/month6Data[0].totalCount) *
+              100)+ '%' : '0%' %>
+            </td>
+            <td>
+              <% const month7Data = attendanceList.filter(record => record.month
+              == 7 ).flatMap(record => record.stuAttendance.filter(student =>
+              student.studentId.equals(studentList[i]._id)));
+              if(month7Data.length > 0){allCount += month7Data[0]?.totalCount;
+              allAtt += month7Data[0]?.attCount}%><%= month7Data.length > 0 ?
+              Math.floor((month7Data[0].attCount/month7Data[0].totalCount) *
+              100)+ '%' : '0%' %>
+            </td>
+            <td>
+              <% const month8Data = attendanceList.filter(record => record.month
+              == 8 ).flatMap(record => record.stuAttendance.filter(student =>
+              student.studentId.equals(studentList[i]._id)));
+              if(month8Data.length > 0){allCount += month8Data[0]?.totalCount;
+              allAtt += month8Data[0]?.attCount }%><%= month8Data.length > 0 ?
+              Math.floor((month8Data[0].attCount/month8Data[0].totalCount) *
+              100)+ '%' : '0%' %>
+            </td>
+            <td><%= Math.floor(allAtt/allCount * 100) %> %</td>
+          </tr>
+          <%}%>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

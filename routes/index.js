@@ -27,7 +27,9 @@ router.post("/tlogin", async function (req, res) {
       name: teacher.name,
       email: teacher.email,
       department: teacher.department,
+      isFamily: teacher.isFamily,
     };
+
     res.redirect("/teacher");
   } else {
     res.redirect("/login");
@@ -41,6 +43,7 @@ router.post("/slogin", async function (req, res) {
   });
   if (student != null && Student.compare(req.body.password, student.password)) {
     req.session.student = {
+      id: student._id,
       name: student.name,
       classId: student.classId,
       email: student.email,

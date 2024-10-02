@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>View Attendance Detail</title>
+  </head>
+  <body>
+    <% include ../partial/teacher_drawer %>
+    <h1 class="text-2xl text-center font-bold my-5">All Subject Attendance</h1>
+    <% for(var i = 0; i < subjects.length;
+    i++){if(!attendanceList[subjects[i]._id])continue;const attendances =
+    attendanceList[subjects[i]._id]; const month11List =
+    attendances.filter((item)=>{ return item._id.month == 11}); const month0List
+    = attendances.filter((item)=>{ return item._id.month == 0}); const
+    month1List = attendances.filter((item)=>{ return item._id.month == 1});
+    const month2List = attendances.filter((item)=>{ return item._id.month ==
+    2}); const month5List = attendances.filter((item)=>{ return item._id.month
+    == 5}); const month6List = attendances.filter((item)=>{ return
+    item._id.month == 6}); const month7List = attendances.filter((item)=>{
+    return item._id.month == 7}); const month8List =
+    attendances.filter((item)=>{ return item._id.month == 8});%>
+    <div class="mb-10">
+      <h1 class="text-xl ml-5 font-bold my-5"><%= subjects[i].name %></h1>
+      <div class="overflow-x-auto mx-1 lg:mx-10">
+        <table class="table table-zebra">
+          <!-- head -->
+          <thead>
+            <tr>
+              <th>Roll No</th>
+              <th>Name</th>
+              <th>December</th>
+              <th>January</th>
+              <th>February</th>
+              <th>March</th>
+              <th>June</th>
+              <th>July</th>
+              <th>Augest</th>
+              <th>Setpember</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(var j = 0; j < students.length;j++){let allTotal = 0; let
+            allAtt = 0; %>
+            <tr>
+              <th>
+                <% let year = students[j].classId.name.charAt(0); %> <%= (year
+                == '1')? 'I' : (year == '2')?'II':(year == '3')? 'III' : (year
+                == '4')? 'IV': (year == '5')? 'V' : 'VI'%>-<%=
+                students[j].department %>-<%= students[j].roll %>
+              </th>
+              <td><%= students[j].name %></td>
+              <td>
+                <% let total11Count = 0;let att11Count = 0;
+                if(month11List.length >0){ month11List[0].list.map((item)=>{
+                const data = item.list.filter((att)=>{ return
+                att.studentId.toString() == students[j]._id}); allTotal++;
+                total11Count++; if(data[0].isAttendance){ att11Count++;
+                allAtt++;}})}; %><%= month11List.length > 0 ?
+                Math.floor((att11Count/total11Count) *100) + " %": "0 %" %>
+              </td>
+              <td>
+                <% let total0Count = 0;let att0Count = 0; if(month0List.length
+                >0){ month0List[0].list.map((item)=>{ const data =
+                item.list.filter((att)=>{ return att.studentId.toString() ==
+                students[j]._id}); total0Count++; allTotal++;
+                if(data[0].isAttendance){att0Count++;allAtt++;}})}; %><%=
+                month0List.length > 0 ? Math.floor((att0Count/total0Count) *100)
+                + " %": "0 %" %>
+              </td>
+              <td>
+                <% let total1Count = 0;let att1Count = 0; if(month1List.length
+                >0){ month1List[0].list.map((item)=>{ const data =
+                item.list.filter((att)=>{ return att.studentId.toString() ==
+                students[j]._id}); total1Count++; allTotal++;
+                if(data[0].isAttendance){att1Count++;allAtt++;}})}; %><%=
+                month1List.length > 0 ? Math.floor((att1Count/total1Count) *100)
+                + " %": "0 %" %>
+              </td>
+              <td>
+                <% let total2Count = 0;let att2Count = 0; if(month2List.length
+                >0){ month2List[0].list.map((item)=>{ const data =
+                item.list.filter((att)=>{ return att.studentId.toString() ==
+                students[j]._id}); total2Count++; allTotal++;
+                if(data[0].isAttendance){att2Count++;allAtt++;}})}; %><%=
+                month2List.length > 0 ? Math.floor((att2Count/total2Count) *100)
+                + " %": "0 %" %>
+              </td>
+              <td>
+                <% let total5Count = 0;let att5Count = 0; if(month5List.length
+                >0){ month5List[0].list.map((item)=>{ const data =
+                item.list.filter((att)=>{ return att.studentId.toString() ==
+                students[j]._id}); total5Count++; allTotal++;
+                if(data[0].isAttendance){att5Count++;allAtt++}})}; %><%=
+                month5List.length > 0 ? Math.floor((att5Count/total5Count) *100)
+                + " %": "0 %" %>
+              </td>
+              <td>
+                <% let total6Count = 0;let att6Count = 0; if(month6List.length
+                >0){ month6List[0].list.map((item)=>{ const data =
+                item.list.filter((att)=>{ return att.studentId.toString() ==
+                students[j]._id}); total6Count++; allTotal++;
+                if(data[0].isAttendance){att6Count++;allAtt++;}})}; %><%=
+                month6List.length > 0 ? Math.floor((att6Count/total6Count) *100)
+                + " %": "0 %" %>
+              </td>
+              <td>
+                <% let total7Count = 0;let att7Count = 0; if(month7List.length
+                >0){ month7List[0].list.map((item)=>{ const data =
+                item.list.filter((att)=>{ return att.studentId.toString() ==
+                students[j]._id}); total7Count++; allTotal++;
+                if(data[0].isAttendance){att7Count++; allAtt++;}})}; %><%=
+                month7List.length > 0 ? Math.floor((att7Count/total7Count) *100)
+                + " %": "0 %" %>
+              </td>
+              <td>
+                <% let total8Count = 0;let att8Count = 0; if(month8List.length
+                >0){ month8List[0].list.map((item)=>{ const data =
+                item.list.filter((att)=>{ return att.studentId.toString() ==
+                students[j]._id}); total8Count++; allTotal++;
+                if(data[0].isAttendance){att8Count++;allAtt++;}})}; %><%=
+                month8List.length > 0 ? Math.floor((att8Count/total8Count) *100)
+                + " %": "0 %" %>
+              </td>
+              <td>
+                <%= allTotal > 0 ? (Math.floor((allAtt/allTotal) *100)+" %"):
+                "0%" %>
+              </td>
+            </tr>
+            <%}%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <%}%>
+  </body>
+</html>

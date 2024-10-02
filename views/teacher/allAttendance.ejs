@@ -8,22 +8,20 @@
   </head>
   <body>
     <% include ../partial/teacher_drawer %>
-    <div class="my-5 text-center text-xl font-bold">Attendance Class List</div>
+    <div class="my-5 text-center text-xl font-bold">
+      All Attendance Class List
+    </div>
     <div
       class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 mx-3 lg:mx-10 gap-3"
     >
       <% for(var i = 0; i < classList.length;i++){ %>
       <div class="card glass w-full">
         <div class="card-body">
-          <div class="card-title"><%= classList[i].classId.name %></div>
+          <div class="card-title"><%= classList[i].name %></div>
 
-          <p class="text-xl font-bold text-center">
-            <%= classList[i].combination.find((item)=>
-            item.teacherId.equals(teacherId)).subjectId.name %>
-          </p>
+          <p class="text-xl font-bold text-center">All Subject</p>
           <a
-            href="/teacher/viewAttendanceDetail/<%= classList[i].combination.find((item)=>
-            item.teacherId.equals(teacherId)).subjectId._id %>"
+            href="/teacher/viewAllAttendanceDetail/<%= classList[i]._id%>"
             class="btn btn-primary btn-sm"
             >View Attendance</a
           >

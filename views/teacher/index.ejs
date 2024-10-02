@@ -8,6 +8,24 @@
   </head>
   <body>
     <% include ../partial/teacher_drawer %>
-    <h1>Teacher Index page</h1>
+    <div class="h-screen content-center">
+      <h1 class="text-xl font-bold text-center my-3">Welcome Teacher!!</h1>
+      <div class="stats stats-vertical lg:stats-horizontal shadow grid mx-2">
+        <div class="stat">
+          <div class="stat-title">Total Subject</div>
+          <div class="stat-value"><%= subjectCount %></div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-title">Total Times</div>
+          <div class="stat-value"><%= timeCount %></div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-title">Total Class</div>
+          <div class="stat-value"><%= classCount %></div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
