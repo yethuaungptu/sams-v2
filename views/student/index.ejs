@@ -8,6 +8,25 @@
   </head>
   <body>
     <% include ../partial/student_drawer %>
-    <h1>student Index page</h1>
+    <h1 class="text-center my-3 font-bold text-2xl">Welcome <%= name %></h1>
+    <div class="grid lg:grid-cols-4 md:grid-cols-6 sm:grid-cols-12 gap-3 mx-2">
+      <% for(var i = 0; i < subjects.length;i++){ const data =
+      attendanceList.filter((item)=>{ return item.subjectId.toString()==
+      subjects[i]._id.toString()}); if(data.length == 0) continue; %>
+      <div class="card w-full shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title block text-center">
+            <%= subjects[i].name %> <small>(current month)</small>
+          </h2>
+          <p>Attendance Count : <%= data[0].attCount %></p>
+          <p>Total Count : <%= data[0].totalCount %></p>
+          <p>
+            Attendance (%) : <%=
+            Math.floor((data[0].attCount/data[0].totalCount)*100) + "%" %>
+          </p>
+        </div>
+      </div>
+      <%}%>
+    </div>
   </body>
 </html>

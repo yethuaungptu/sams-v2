@@ -18,7 +18,46 @@ const checkStudent = function (req, res, next) {
 };
 
 router.get("/", checkStudent, async function (req, res) {
-  res.render("student/index");
+  const d = new Date();
+  let id = mongoose.Types.ObjectId.createFromHexString(
+    req.session.student.classId
+  );
+  const attendance = await Attendance.aggregate([
+    { $match: { classId: id, month: d.getMonth() } },
+    {
+      $group: {
+        _id: { subjectId: "$subjectId" },
+        list: { $push: "$$ROOT" },
+      },
+    },
+  ]);
+  const attendanceList = [];
+  attendance.map((item) => {
+    let totalCount = 0;
+    let attCount = 0;
+    item.list.map((att) => {
+      totalCount++;
+      const data = att.list.filter((list) => {
+        return list.studentId.toString() == req.session.student.id.toString();
+      });
+      if (data[0].isAttendance) attCount++;
+    });
+    attendanceList.push({
+      subjectId: item._id.subjectId,
+      totalCount: totalCount,
+      attCount: attCount,
+    });
+  });
+  const subjects = await Subject.find({
+    classId: req.session.student.classId,
+    status: true,
+    name: { $ne: "Library" },
+  });
+  res.render("student/index", {
+    name: req.session.student.name,
+    attendanceList: attendanceList,
+    subjects: subjects,
+  });
 });
 
 router.get("/profile", checkStudent, async function (req, res) {

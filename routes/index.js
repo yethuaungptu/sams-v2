@@ -73,4 +73,12 @@ router.post("/alogin", function (req, res) {
     res.redirect("/alogin");
   }
 });
+
+router.get("/aboutus", function (req, res) {
+  res.render("aboutus");
+});
+
+router.get("/contactus", function (req, res) {
+  res.render("contactus");
+});
 module.exports = router;
