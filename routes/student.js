@@ -139,7 +139,7 @@ router.get("/attendance", checkStudent, async function (req, res) {
           student.studentId.toString() == req.session.student.id.toString()
         );
       });
-      if (attList[0].isAttendance) attCount++;
+      if (attList[0]?.isAttendance) attCount++;
     });
     attendanceList.push({
       month: item._id.month,
