@@ -181,6 +181,32 @@ router.post("/callAttendance", checkTeacher, async function (req, res) {
   }
 });
 
+router.get("/callLibraryAttendance", async function (req, res) {
+  console.log(req.query);
+  const timetable = await Timetable.findById(req.query.tid);
+  // console.log(timetable);
+  const timelist = timetable.times.filter((item) => {
+    return (
+      item.subjectId.toString() == req.query.sid &&
+      item.time.charAt(0) == req.query.day
+    );
+  });
+  const studentList = await Student.find({
+    classId: req.query.cid,
+    status: true,
+  }).select("_id");
+
+  for (var i = 0; i < timelist.length; i++) {
+    const list = [];
+    studentList.map(({ _id }) =>
+      list.push({ isAttendance: true, studentId: _id })
+    );
+    console.log(list, req.query.cid, req.query.tid, req.query.sid);
+  }
+
+  res.end("done");
+});
+
 router.get("/attendanceDetail/:id", checkTeacher, async function (req, res) {
   const attendance = await Attendance.findById(req.params.id)
     .populate("list.studentId", "name department roll")

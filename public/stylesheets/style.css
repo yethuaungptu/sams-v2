@@ -4504,6 +4504,11 @@ html:has(.drawer-toggle:checked) {
   margin-bottom: 0.75rem;
 }
 
+.my-36 {
+  margin-top: 9rem;
+  margin-bottom: 9rem;
+}
+
 .my-5 {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
@@ -4512,11 +4517,6 @@ html:has(.drawer-toggle:checked) {
 .my-auto {
   margin-top: auto;
   margin-bottom: auto;
-}
-
-.my-36 {
-  margin-top: 9rem;
-  margin-bottom: 9rem;
 }
 
 .-mt-20 {
@@ -4581,10 +4581,6 @@ html:has(.drawer-toggle:checked) {
 
 .mt-3 {
   margin-top: 0.75rem;
-}
-
-.mt-36 {
-  margin-top: 9rem;
 }
 
 .mt-5 {
@@ -5429,6 +5425,11 @@ html:has(.drawer-toggle:checked) {
   color: rgb(147 51 234 / var(--tw-text-opacity));
 }
 
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+
 .text-teal-600 {
   --tw-text-opacity: 1;
   color: rgb(13 148 136 / var(--tw-text-opacity));
@@ -5437,11 +5438,6 @@ html:has(.drawer-toggle:checked) {
 .text-violet-600 {
   --tw-text-opacity: 1;
   color: rgb(124 58 237 / var(--tw-text-opacity));
-}
-
-.text-red-500 {
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity));
 }
 
 .underline {
