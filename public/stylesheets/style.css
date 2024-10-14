@@ -4365,6 +4365,30 @@ html:has(.drawer-toggle:checked) {
   padding-bottom: 0.5rem;
 }
 
+.table-md :not(thead):not(tfoot) tr {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.table-md :where(th, td) {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.table-lg :not(thead):not(tfoot) tr {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.table-lg :where(th, td) {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
 .invisible {
   visibility: hidden;
 }
@@ -4752,6 +4776,26 @@ html:has(.drawer-toggle:checked) {
   width: 100%;
 }
 
+.min-w-\[12rem\] {
+  min-width: 12rem;
+}
+
+.min-w-\[10rem\] {
+  min-width: 10rem;
+}
+
+.min-w-\[5rem\] {
+  min-width: 5rem;
+}
+
+.min-w-\[7rem\] {
+  min-width: 7rem;
+}
+
+.min-w-\[8rem\] {
+  min-width: 8rem;
+}
+
 .max-w-2xl {
   max-width: 42rem;
 }
@@ -4790,6 +4834,10 @@ html:has(.drawer-toggle:checked) {
 
 .grow {
   flex-grow: 1;
+}
+
+.table-auto {
+  table-layout: auto;
 }
 
 .transform {
@@ -4926,6 +4974,10 @@ html:has(.drawer-toggle:checked) {
 
 .overflow-y-auto {
   overflow-y: auto;
+}
+
+.whitespace-normal {
+  white-space: normal;
 }
 
 .rounded {

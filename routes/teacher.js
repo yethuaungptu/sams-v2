@@ -12,6 +12,31 @@ const mongoose = require("mongoose");
 const _ = require("lodash");
 var moment = require("moment-timezone");
 
+const normalMonths = [
+  { no: 10, name: "November" },
+  { no: 11, name: "December" },
+  { no: 0, name: "January" },
+  { no: 1, name: "February" },
+  { no: 2, name: "March" },
+  { no: 5, name: "June" },
+  { no: 6, name: "July" },
+  { no: 7, name: "Auguest" },
+  { no: 8, name: "September" },
+  { no: 9, name: "October" },
+];
+const intervalMonths = [
+  { no: 5, name: "June" },
+  { no: 6, name: "July" },
+  { no: 7, name: "Auguest" },
+  { no: 8, name: "September" },
+  { no: 9, name: "October" },
+  { no: 10, name: "November" },
+  { no: 11, name: "December" },
+  { no: 0, name: "January" },
+  { no: 1, name: "February" },
+  { no: 2, name: "March" },
+];
+
 const checkTeacher = function (req, res, next) {
   if (req.session.teacher) {
     res.locals.teacher = req.session.teacher;
@@ -380,31 +405,8 @@ router.get(
       attendanceList.push({ month: month, stuAttendance: stuAttendance });
     });
     console.log(attendanceList);
-    const monthList = classData.isInterval
-      ? [
-          { no: 5, name: "June" },
-          { no: 6, name: "July" },
-          { no: 7, name: "Auguest" },
-          { no: 8, name: "September" },
-          { no: 9, name: "October" },
-          { no: 10, name: "November" },
-          { no: 11, name: "December" },
-          { no: 0, name: "January" },
-          { no: 1, name: "February" },
-          { no: 2, name: "March" },
-        ]
-      : [
-          { no: 10, name: "November" },
-          { no: 11, name: "December" },
-          { no: 0, name: "January" },
-          { no: 1, name: "February" },
-          { no: 2, name: "March" },
-          { no: 5, name: "June" },
-          { no: 6, name: "July" },
-          { no: 7, name: "Auguest" },
-          { no: 8, name: "September" },
-          { no: 9, name: "October" },
-        ];
+
+    const monthList = classData.isInterval ? intervalMonths : intervalMonths;
     console.log(attendanceList[0]);
     res.render("teacher/viewAttendanceDetailByMonth", {
       studentList: studentList,
@@ -458,6 +460,45 @@ router.get(
       attendanceList: result,
       subjects: subjects,
       students: students,
+    });
+  }
+);
+
+router.get(
+  "/viewAllAttendanceDetailByMonth/:id",
+  checkTeacher,
+  async function (req, res) {
+    const subjects = await Subject.find({
+      classId: req.params.id,
+      status: true,
+    });
+    const classData = await Class.findById(req.params.id);
+    const id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
+    const students = await Student.find({ classId: id, status: true }).populate(
+      "classId"
+    );
+    const data = await Attendance.aggregate([
+      { $match: { classId: id } },
+      {
+        $group: {
+          _id: {
+            month: "$month",
+            subjectId: "$subjectId",
+          },
+          list: { $push: "$$ROOT" },
+        },
+      },
+    ]);
+
+    const result = _.groupBy(data, function (n) {
+      return n._id.month;
+    });
+    const monthList = classData.isInterval ? intervalMonths : intervalMonths;
+    res.render("teacher/viewAllAttendanceDetailByMonth", {
+      attendanceList: result,
+      subjects: subjects,
+      students: students,
+      monthList: monthList,
     });
   }
 );
