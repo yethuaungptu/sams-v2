@@ -147,6 +147,7 @@ router.post("/:dept/class/add", checkDept, async function (req, res) {
   const classes = new Class();
   classes.name = req.body.name;
   classes.department = req.params.dept;
+  if (req.body.isInterval) classes.isInterval = true;
   const data = await classes.save();
   console.log(data);
   res.redirect("/admin/departments/" + req.params.dept + "/class");
@@ -166,6 +167,8 @@ router.post("/:dept/class/update", checkDept, async function (req, res) {
   const update = {
     name: req.body.name,
   };
+  if (req.body.isInterval) update.isInterval = true;
+  else update.isInterval = false;
   const data = await Class.findByIdAndUpdate(req.body.id, update);
   res.redirect("/admin/departments/" + req.params.dept + "/class");
 });

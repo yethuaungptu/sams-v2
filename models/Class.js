@@ -10,6 +10,10 @@ const ClassSchema = new Schema({
     type: String,
     required: true,
   },
+  isInterval: {
+    type: Boolean,
+    default: false,
+  },
   status: {
     type: Boolean,
     default: true,
