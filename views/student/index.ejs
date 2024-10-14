@@ -22,7 +22,7 @@
           <p>Total Count : <%= data[0].totalCount %></p>
           <p>
             Attendance (%) : <%=
-            Math.floor((data[0].attCount/data[0].totalCount)*100) + "%" %>
+            Math.ceil((data[0].attCount/data[0].totalCount)*100) + "%" %>
           </p>
         </div>
       </div>

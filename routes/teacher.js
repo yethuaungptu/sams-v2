@@ -342,6 +342,7 @@ router.get(
     const classData = await Class.findById(subject.classId);
     const studentList = await Student.find({
       classId: subject.classId,
+      status: true,
     }).populate("classId");
     const data = await Attendance.aggregate([
       { $match: { subjectId: id } },

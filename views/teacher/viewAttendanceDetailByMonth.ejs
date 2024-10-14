@@ -11,7 +11,9 @@
     <h1 class="text-2xl text-center font-bold my-5">
       Monthly Attendance for <%= subject.name %>
     </h1>
-    <div class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 m-2 gap-2">
+    <div
+      class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 m-2 gap-2 mb-3"
+    >
       <% const overall = [];
       studentList.map((item)=>{overall.push({studentId:item._id,allTotal:0,allAtt:0})});
       %> <% for(var i = 0; i < monthList.length;i++){ const data =
