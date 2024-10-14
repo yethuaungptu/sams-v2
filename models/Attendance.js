@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+var moment = require("moment-timezone");
 const Schema = mongoose.Schema;
 
 const AttendanceSchema = new Schema({
@@ -52,7 +53,7 @@ const AttendanceSchema = new Schema({
   },
   created: {
     type: Date,
-    default: Date.now(),
+    default: moment.utc(Date.now()).tz("Asia/Yangon").format(),
   },
   updated: {
     type: Date,

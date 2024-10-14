@@ -5739,6 +5739,10 @@ html:has(.drawer-toggle:checked) {
     grid-template-columns: repeat(8, minmax(0, 1fr));
   }
 
+  .lg\:grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
   .lg\:px-16 {
     padding-left: 4rem;
     padding-right: 4rem;

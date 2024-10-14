@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/dataTables.tailwindcss.css" />
+    <title>Call Attendance</title>
+  </head>
+  <body>
+    <% include ../partial/teacher_drawer %>
+    <h1 class="my-5 text-center text-xl font-bold">
+      Call Multi Attendance page
+    </h1>
+    <% if(status){%>
+    <div class="grid lg:grid-cols-8 md:grid-cols-1 sm:grid-cols-1 my-5">
+      <div></div>
+      <div class="overflow-x-auto border m-5 col-span-6">
+        <table class="display table my-3" style="width: 100%">
+          <!-- head -->
+          <thead>
+            <tr class="text-xl">
+              <th>No</th>
+              <th>Roll</th>
+              <th>Name</th>
+              <% for(var i = 0; i < query.mtime.length;i++){%>
+              <th>Time : <%= query.mtime[i] %></th>
+              <%}%>
+            </tr>
+          </thead>
+          <tbody id="tb">
+            <% for(var i = 0; i < students.length;i++){%>
+            <tr>
+              <td class="text-lg"><%= i+1 %></td>
+              <td class="text-lg">
+                <% let year = students[i].classId.name.charAt(0); %> <%= (year
+                == '1')? 'I' : (year == '2')?'II':(year == '3')? 'III' : (year
+                == '4')? 'IV': (year == '5')? 'V' : 'VI'%>-<%=
+                students[i].department %>-<%= students[i].roll %>
+              </td>
+              <td class="text-lg" data-id="<%= students[i]._id %>">
+                <%= students[i].name %>
+              </td>
+              <% for(var j = 0; j < query.mtime.length;j++){%>
+              <td>
+                <label class="cursor-pointer label">
+                  <input type="checkbox" class="checkbox checkbox-success" />
+                </label>
+              </td>
+              <%}%>
+            </tr>
+            <%}%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-primary" id="btnSubmit">Submit Attendance</button>
+    </div>
+    <%}else{%>
+    <h1>Not avaliable</h1>
+    <%}%>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/dataTables.js"></script>
+  <script src="/javascripts/dataTables.tailwindcss.js"></script>
+  <script>
+    new DataTable("#example");
+    console.log("<%= query.cid %>");
+    const mtime = "<%= query.mtime %>";
+    $("#btnSubmit").click(function () {
+      let multi = [];
+      // console.log($("#tb").children()[0].children[4]);
+      for (var j = 0; j < mtime.length; j++) {
+        let list = [];
+        for (var i = 0; i < $("#tb").children().length; i++) {
+          list.push({
+            studentId: $($("#tb").children()[i].children[2]).data("id"),
+            isAttendance: $(
+              $("#tb").children()[i].children[3 + j].children[0].children[0]
+            ).is(":checked"),
+          });
+        }
+        multi.push({ time: mtime[j], list: list });
+      }
+      console.log(multi);
+      const data = {
+        classId: "<%= query.cid %>",
+        timetableId: "<%= query.tid %>",
+        subjectId: "<%= query.sid %>",
+        day: "<%= query.day %>",
+        multi: JSON.stringify(multi),
+      };
+      console.log(data);
+      $.ajax("/teacher/callMultiAttendance", {
+        type: "POST",
+        data: data,
+        success: function (result) {
+          if (result.status == false) {
+            alert("Somethings was wrong");
+          } else {
+            location.href = "/teacher/todayattendance";
+          }
+        },
+      });
+    });
+  </script>
+</html>

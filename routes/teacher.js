@@ -10,6 +10,7 @@ const Class = require("../models/Class");
 const Subject = require("../models/Subject");
 const mongoose = require("mongoose");
 const _ = require("lodash");
+var moment = require("moment-timezone");
 
 const checkTeacher = function (req, res, next) {
   if (req.session.teacher) {
@@ -103,7 +104,11 @@ router.get("/timetable", checkTeacher, async function (req, res) {
 });
 
 router.get("/todayattendance", checkTeacher, async function (req, res) {
-  const d = new Date();
+  var now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const starttz = moment.utc(now).tz("Asia/Yangon").startOf("day").format();
+  const end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const endtz = moment.utc(now).tz("Asia/Yangon").endOf("day").format();
   const timetables = await Timetable.find({
     status: true,
     times: { $elemMatch: { teacherId: req.session.teacher.id } },
@@ -116,7 +121,7 @@ router.get("/todayattendance", checkTeacher, async function (req, res) {
     for (var j = 0; j < timetables[i].times.length; j++) {
       if (
         timetables[i].times[j].teacherId.equals(req.session.teacher.id) &&
-        timetables[i].times[j].time.charAt(0) == d.getDay()
+        timetables[i].times[j].time.charAt(0) == moment(starttz).day()
       ) {
         subList.push(timetables[i].times[j]);
       }
@@ -128,13 +133,11 @@ router.get("/todayattendance", checkTeacher, async function (req, res) {
         timetableId: timetables[i]._id,
       });
   }
-  var now = new Date();
-  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-  console.log(start);
+
+  console.log(starttz, endtz);
   const attendances = await Attendance.find({
     teacherId: req.session.teacher.id,
-    created: { $gte: start, $lte: end },
+    created: { $gte: starttz, $lte: endtz },
     status: true,
   })
     .populate("classId", "name")
@@ -181,30 +184,78 @@ router.post("/callAttendance", checkTeacher, async function (req, res) {
   }
 });
 
-router.get("/callLibraryAttendance", async function (req, res) {
-  console.log(req.query);
-  const timetable = await Timetable.findById(req.query.tid);
-  // console.log(timetable);
-  const timelist = timetable.times.filter((item) => {
-    return (
-      item.subjectId.toString() == req.query.sid &&
-      item.time.charAt(0) == req.query.day
-    );
-  });
-  const studentList = await Student.find({
-    classId: req.query.cid,
-    status: true,
-  }).select("_id");
+router.get("/callLibraryAttendance", checkTeacher, async function (req, res) {
+  try {
+    const timetable = await Timetable.findById(req.query.tid);
+    const timelist = timetable.times.filter((item) => {
+      return (
+        item.subjectId.toString() == req.query.sid &&
+        item.time.charAt(0) == req.query.day
+      );
+    });
+    const studentList = await Student.find({
+      classId: req.query.cid,
+      status: true,
+    }).select("_id");
 
-  for (var i = 0; i < timelist.length; i++) {
-    const list = [];
-    studentList.map(({ _id }) =>
-      list.push({ isAttendance: true, studentId: _id })
-    );
-    console.log(list, req.query.cid, req.query.tid, req.query.sid);
+    for (var i = 0; i < timelist.length; i++) {
+      const list = [];
+      studentList.map(({ _id }) =>
+        list.push({ isAttendance: true, studentId: _id })
+      );
+      const attendance = new Attendance();
+      attendance.classId = req.query.cid;
+      attendance.timetableId = req.query.tid;
+      attendance.subjectId = req.query.sid;
+      attendance.teacherId = req.session.teacher.id;
+      attendance.time = timelist[i].time.charAt(1);
+      attendance.day = timelist[i].time.charAt(0);
+      attendance.list = list;
+      attendance.department = timetable.department;
+      const data = await attendance.save();
+    }
+    res.redirect("/teacher/todayattendance");
+  } catch (e) {
+    throw e;
   }
+});
 
-  res.end("done");
+router.get("/callMultiAttendance", checkTeacher, async function (req, res) {
+  try {
+    const students = await Student.find({
+      classId: req.query.cid,
+      status: true,
+    }).populate("classId", "name");
+    res.render("teacher/callMultiAttendance", {
+      status: true,
+      students: students,
+      query: req.query,
+    });
+  } catch (e) {
+    res.render("teacher/callAttendance", { status: false });
+  }
+});
+
+router.post("/callMultiAttendance", checkTeacher, async function (req, res) {
+  try {
+    const multi = JSON.parse(req.body.multi);
+    const classData = await Class.findById(req.body.classId);
+    for (var i = 0; i < multi.length; i++) {
+      const attendance = new Attendance();
+      attendance.classId = req.body.classId;
+      attendance.timetableId = req.body.timetableId;
+      attendance.subjectId = req.body.subjectId;
+      attendance.teacherId = req.session.teacher.id;
+      attendance.time = multi[i].time;
+      attendance.day = req.body.day;
+      attendance.list = multi[i].list;
+      attendance.department = classData.department;
+      const data = await attendance.save();
+    }
+    res.json({ status: true });
+  } catch (e) {
+    res.json({ status: false });
+  }
 });
 
 router.get("/attendanceDetail/:id", checkTeacher, async function (req, res) {

@@ -26,7 +26,7 @@ const deptArr = [
   { key: "Civil", name: "Civil", type: "major" },
   { key: "EC", name: "Electronic", type: "major" },
   { key: "EP", name: "Electrical Power", type: "major" },
-  { key: "MP", name: "Michemical Power", type: "major" },
+  { key: "MP", name: "Mechanical Power", type: "major" },
   { key: "Eng", name: "English", type: "minor" },
   { key: "Myan", name: "Myanmar", type: "minor" },
   { key: "Math", name: "Mathematic", type: "minor" },
