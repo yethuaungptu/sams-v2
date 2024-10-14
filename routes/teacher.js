@@ -333,6 +333,87 @@ router.get(
   }
 );
 
+router.get(
+  "/viewAttendanceDetailByMonth/:id",
+  checkTeacher,
+  async function (req, res) {
+    let id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
+    const subject = await Subject.findById(req.params.id);
+    const classData = await Class.findById(subject.classId);
+    const studentList = await Student.find({
+      classId: subject.classId,
+    }).populate("classId");
+    const data = await Attendance.aggregate([
+      { $match: { subjectId: id } },
+      {
+        $group: {
+          _id: { month: "$month", studentId: "$list.studentId" },
+          list: { $push: "$$ROOT" },
+        },
+      },
+    ]);
+    const attendanceList = [];
+    data.map((item) => {
+      const studentIdList = item._id.studentId;
+      let stuAttendance = [];
+      studentIdList.map((itemStu) => {
+        stuAttendance.push({ studentId: itemStu, attCount: 0, totalCount: 0 });
+      });
+      const month = item._id.month;
+      item.list.map((innerItem) => {
+        innerItem.list.map((attendance) => {
+          studentIdList.map((itemId) => {
+            let objIndex = stuAttendance.findIndex(
+              (obj) => obj.studentId == itemId
+            );
+
+            if (itemId.toString() == attendance.studentId.toString()) {
+              stuAttendance[objIndex].totalCount += 1;
+              if (attendance.isAttendance) {
+                stuAttendance[objIndex].attCount += 1;
+              }
+            }
+          });
+        });
+      });
+      attendanceList.push({ month: month, stuAttendance: stuAttendance });
+    });
+    console.log(attendanceList);
+    const monthList = classData.isInterval
+      ? [
+          { no: 5, name: "June" },
+          { no: 6, name: "July" },
+          { no: 7, name: "Auguest" },
+          { no: 8, name: "September" },
+          { no: 9, name: "October" },
+          { no: 10, name: "November" },
+          { no: 11, name: "December" },
+          { no: 0, name: "January" },
+          { no: 1, name: "February" },
+          { no: 2, name: "March" },
+        ]
+      : [
+          { no: 10, name: "November" },
+          { no: 11, name: "December" },
+          { no: 0, name: "January" },
+          { no: 1, name: "February" },
+          { no: 2, name: "March" },
+          { no: 5, name: "June" },
+          { no: 6, name: "July" },
+          { no: 7, name: "Auguest" },
+          { no: 8, name: "September" },
+          { no: 9, name: "October" },
+        ];
+    console.log(attendanceList[0]);
+    res.render("teacher/viewAttendanceDetailByMonth", {
+      studentList: studentList,
+      attendanceList: attendanceList,
+      subject: subject,
+      monthList: monthList,
+    });
+  }
+);
+
 router.get("/allAttendance", checkTeacher, async function (req, res) {
   const teacher = await Teacher.findById(req.session.teacher.id);
   var reg = new RegExp(String.raw`${teacher.familyClass}`, "i");

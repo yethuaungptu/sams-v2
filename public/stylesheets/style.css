@@ -4595,6 +4595,10 @@ html:has(.drawer-toggle:checked) {
   margin-top: 2rem;
 }
 
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
 .block {
   display: block;
 }

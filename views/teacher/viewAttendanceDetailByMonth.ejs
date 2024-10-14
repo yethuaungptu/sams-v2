@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>View Attendance Detail</title>
+  </head>
+  <body>
+    <% include ../partial/teacher_drawer %>
+    <h1 class="text-2xl text-center font-bold my-5">
+      Monthly Attendance for <%= subject.name %>
+    </h1>
+    <div class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 m-2 gap-2">
+      <% const overall = [];
+      studentList.map((item)=>{overall.push({studentId:item._id,allTotal:0,allAtt:0})});
+      %> <% for(var i = 0; i < monthList.length;i++){ const data =
+      attendanceList.filter((item)=> {return item.month == monthList[i].no});
+      if(data.length == 0){continue;} %>
+      <div class="card glass w-full mx-auto">
+        <div class="card-body">
+          <h1 class="text-xl text-center font-bold">
+            <%= monthList[i].name %>
+          </h1>
+          <table class="table">
+            <thead>
+              <th>Roll</th>
+              <th>Name</th>
+              <th>Att</th>
+              <th>Total</th>
+              <th>Percent</th>
+              <th>Overall</th>
+            </thead>
+            <tbody>
+              <% for(var j = 0; j < studentList.length;j++){ const student =
+              data[0].stuAttendance.filter((stu)=> stu.studentId.toString() ==
+              studentList[j]._id.toString()); const dataStudent =
+              overall.find((s) => s.studentId.toString() ===
+              studentList[j]._id.toString());
+              if(dataStudent){dataStudent.allTotal += student[0].totalCount;
+              dataStudent.allAtt += student[0].attCount; } const currentOverall
+              = overall.filter((sub)=>{return sub.studentId.toString() ==
+              studentList[j]._id.toString()}) %>
+              <tr>
+                <td>
+                  <% let year = studentList[j].classId.name.charAt(0); %> <%=
+                  (year == '1')? 'I' : (year == '2')?'II':(year == '3')? 'III' :
+                  (year == '4')? 'IV': (year == '5')? 'V' : 'VI'%>-<%=
+                  studentList[j].department %>-<%= studentList[j].roll %>
+                </td>
+                <td><%= studentList[j].name %></td>
+                <td><%= student[0].attCount %></td>
+                <td><%= student[0].totalCount %></td>
+                <td>
+                  <%= Math.ceil(student[0].attCount / student[0].totalCount
+                  *100) %>
+                </td>
+                <td>
+                  <%= Math.ceil(currentOverall[0].allAtt /
+                  currentOverall[0].allTotal * 100) %>
+                </td>
+              </tr>
+              <%}%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <%} console.log(overall)%>
+    </div>
+  </body>
+  <script>
+    console.log("<%= monthList %>");
+  </script>
+</html>
