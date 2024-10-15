@@ -406,7 +406,7 @@ router.get(
     });
     console.log(attendanceList);
 
-    const monthList = classData.isInterval ? intervalMonths : intervalMonths;
+    const monthList = classData.isInterval ? intervalMonths : normalMonths;
     console.log(attendanceList[0]);
     res.render("teacher/viewAttendanceDetailByMonth", {
       studentList: studentList,
@@ -493,7 +493,7 @@ router.get(
     const result = _.groupBy(data, function (n) {
       return n._id.month;
     });
-    const monthList = classData.isInterval ? intervalMonths : intervalMonths;
+    const monthList = classData.isInterval ? intervalMonths : normalMonths;
     res.render("teacher/viewAllAttendanceDetailByMonth", {
       attendanceList: result,
       subjects: subjects,

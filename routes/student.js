@@ -5,9 +5,36 @@ const Academic = require("../models/Academic");
 const Teacher = require("../models/Teacher");
 const Subject = require("../models/Subject");
 const Attendance = require("../models/Attendance");
+const Class = require("../models/Class");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const _ = require("lodash");
 const mongoose = require("mongoose");
+
+const normalMonths = [
+  { no: 10, name: "November" },
+  { no: 11, name: "December" },
+  { no: 0, name: "January" },
+  { no: 1, name: "February" },
+  { no: 2, name: "March" },
+  { no: 5, name: "June" },
+  { no: 6, name: "July" },
+  { no: 7, name: "Auguest" },
+  { no: 8, name: "September" },
+  { no: 9, name: "October" },
+];
+const intervalMonths = [
+  { no: 5, name: "June" },
+  { no: 6, name: "July" },
+  { no: 7, name: "Auguest" },
+  { no: 8, name: "September" },
+  { no: 9, name: "October" },
+  { no: 10, name: "November" },
+  { no: 11, name: "December" },
+  { no: 0, name: "January" },
+  { no: 1, name: "February" },
+  { no: 2, name: "March" },
+];
 
 const checkStudent = function (req, res, next) {
   if (req.session.student) {
@@ -152,6 +179,49 @@ router.get("/attendance", checkStudent, async function (req, res) {
     subjects: subjects,
     attendanceList: attendanceList,
   });
+});
+
+router.get("/attendanceMonthly", async function (req, res) {
+  const testId = "66c2d79a8b70d8b75d83282e";
+  const sid = "66cc5789565d0e79710cef09";
+  const subjects = await Subject.find({
+    classId: testId,
+    status: true,
+  });
+  const classData = await Class.findById(testId);
+  let id = mongoose.Types.ObjectId.createFromHexString(testId);
+  const data = await Attendance.aggregate([
+    { $match: { classId: id } },
+    {
+      $group: {
+        _id: { month: "$month", subjectId: "$subjectId" },
+        list: { $push: "$$ROOT" },
+      },
+    },
+  ]);
+  const attendanceList = [];
+  data.map((item) => {
+    let totalCount = 0;
+    let attCount = 0;
+    item.list.map((att) => {
+      totalCount++;
+      const attList = att.list.filter((student) => {
+        return student.studentId.toString() == sid.toString();
+      });
+      if (attList[0]?.isAttendance) attCount++;
+    });
+    attendanceList.push({
+      month: item._id.month,
+      subjectId: item._id.subjectId,
+      totalCount,
+      attCount,
+    });
+  });
+  const result = _.groupBy(data, function (n) {
+    return n._id.subjectId;
+  });
+  console.log(result);
+  res.end("Done");
 });
 
 router.get("/logout", checkStudent, function (req, res) {

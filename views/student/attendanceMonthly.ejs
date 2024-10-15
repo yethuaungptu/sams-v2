@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Attendance</title>
+  </head>
+  <body>
+    <% include ../partial/student_drawer %>
+    <h1 class="my-5 text-center font-bold text-xl">Your Attendance List</h1>
+    <div class="overflow-x-auto mx-1 lg:mx-5">
+      <table class="table">
+        <!-- head -->
+        <thead>
+          <tr class="text-lg">
+            <th>Subj\Month</th>
+            <th>December</th>
+            <th>January</th>
+            <th>February</th>
+            <th>March</th>
+            <th>June</th>
+            <th>July</th>
+            <th>Auguest</th>
+            <th>Setpember</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(var i = 0; i < subjects.length;i++){ const data =
+          attendanceList.filter((item)=> {return item.subjectId.toString() ==
+          subjects[i]._id.toString()}); let allAtt = 0; let allTotal = 0;%>
+          <tr class="text-center">
+            <th class="text-left"><%= subjects[i].name %></th>
+            <td>
+              <% let res11 = data.filter((subject)=>{ return subject.month ==
+              '11'}); if(res11.length > 0){ allAtt += res11[0].attCount;
+              allTotal += res11[0].totalCount }%><%= res11.length > 0 ?
+              Math.floor((res11[0].attCount/res11[0].totalCount)*100)+ '%': 0 %>
+            </td>
+            <td>
+              <% let res0 = data.filter((subject)=>{ return subject.month ==
+              '0'}); if(res0.length > 0){ allAtt += res0[0].attCount; allTotal
+              += res0[0].totalCount} %><%= res0.length > 0 ?
+              Math.floor((res0[0].attCount/res0[0].totalCount)*100)+ '%': 0 %>
+            </td>
+            <td>
+              <% let res1 = data.filter((subject)=>{ return subject.month ==
+              '1'}); if(res1.length > 0){ allAtt += res1[0].attCount; allTotal
+              += res1[0].totalCount} %><%= res0.length > 0 ?
+              Math.floor((res1[0].attCount/res1[0].totalCount)*100)+ '%': 0 %>
+            </td>
+            <td>
+              <% let res2 = data.filter((subject)=>{ return subject.month ==
+              '2'}); if(res2.length > 0){ allAtt += res2[0].attCount; allTotal
+              += res2[0].totalCount} %><%= res2.length > 0 ?
+              Math.floor((res2[0].attCount/res2[0].totalCount)*100)+ '%': 0 %>
+            </td>
+            <td>
+              <% let res5 = data.filter((subject)=>{ return subject.month ==
+              '5'}); if(res5.length > 0){ allAtt += res5[0].attCount; allTotal
+              += res5[0].totalCount} %><%= res5.length > 0 ?
+              Math.floor((res5[0].attCount/res5[0].totalCount)*100)+ '%': 0 %>
+            </td>
+            <td>
+              <% let res6 = data.filter((subject)=>{ return subject.month ==
+              '6'}); if(res6.length > 0){ allAtt += res6[0].attCount; allTotal
+              += res6[0].totalCount} %><%= res6.length > 0 ?
+              Math.floor((res6[0].attCount/res6[0].totalCount)*100)+ '%': 0 %>
+            </td>
+            <td>
+              <% let res7 = data.filter((subject)=>{ return subject.month ==
+              '7'}); if(res7.length > 0){ allAtt += res7[0].attCount; allTotal
+              += res7[0].totalCount} %><%= res7.length > 0 ?
+              Math.floor((res7[0].attCount/res7[0].totalCount)*100)+ '%': 0 %>
+            </td>
+            <td>
+              <% let res8 = data.filter((subject)=>{ return subject.month ==
+              '8'}); if(res8.length > 0){ allAtt += res8[0].attCount; allTotal
+              += res8[0].totalCount} %><%= res8.length > 0 ?
+              Math.floor((res8[0].attCount/res8[0].totalCount)*100)+ '%': 0 %>
+            </td>
+            <td>
+              <%= allTotal > 0 ? Math.floor((allAtt/allTotal)*100) + "%" : '0 %'
+              %>
+            </td>
+          </tr>
+          <%}%>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
