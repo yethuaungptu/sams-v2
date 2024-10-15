@@ -20,21 +20,25 @@
           </figure>
           <div class="card-body">
             <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1">
-              <div></div>
               <div class="grid grid-cols-1 col-span-2 gap-5">
                 <div class="text-lg">
-                  <p class="font-semibold mb-2">
-                    Academic-ID : <%= academic.name %>
+                  <p class="font-semibold mb-2 grid grid-cols-2">
+                    <span class="text-right">Academic-ID :</span>
+                    <span><%= academic.name %></span>
                   </p>
                 </div>
                 <div class="text-lg">
-                  <p class="font-semibold mb-2">
-                    Year : <%= academic.fromYear %> - <%= academic.toYear %>
+                  <p class="font-semibold mb-2 grid grid-cols-2">
+                    <span class="text-right">Year :</span>
+                    <span
+                      ><%= academic.fromYear %> - <%= academic.toYear %></span
+                    >
                   </p>
                 </div>
                 <div class="text-lg">
-                  <p class="font-semibold mb-2">
-                    Class : <%= academic.classId.name %>
+                  <p class="font-semibold mb-2 grid grid-cols-2">
+                    <span class="text-right">Class :</span>
+                    <span><%= academic.classId.name %></span>
                   </p>
                 </div>
               </div>

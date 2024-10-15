@@ -4877,6 +4877,10 @@ html:has(.drawer-toggle:checked) {
   grid-template-columns: subgrid;
 }
 
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .grid-rows-3 {
   grid-template-rows: repeat(3, minmax(0, 1fr));
 }
@@ -5340,6 +5344,10 @@ html:has(.drawer-toggle:checked) {
 
 .text-center {
   text-align: center;
+}
+
+.text-right {
+  text-align: right;
 }
 
 .text-start {
