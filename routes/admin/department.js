@@ -26,10 +26,10 @@ const deptArr = [
   { key: "Civil", name: "Civil", type: "major" },
   { key: "EC", name: "Electronic", type: "major" },
   { key: "EP", name: "Electrical Power", type: "major" },
-  { key: "MP", name: "Mechanical Power", type: "major" },
+  { key: "MP", name: "Mechanical", type: "major" },
   { key: "Eng", name: "English", type: "minor" },
   { key: "Myan", name: "Myanmar", type: "minor" },
-  { key: "Math", name: "Mathematic", type: "minor" },
+  { key: "Math", name: "Mathematics", type: "minor" },
   { key: "Phy", name: "Physics", type: "minor" },
   { key: "Chem", name: "Chemistry", type: "minor" },
 ];
@@ -431,6 +431,7 @@ router.get("/:dept/subject", checkDept, async function (req, res) {
     },
     { $unwind: { path: "$classId" } },
   ]);
+  console.log(subjects);
   res.render("admin/department/subject", { subjects: subjects });
 });
 

@@ -8,9 +8,32 @@
   </head>
   <body>
     <% include ../partial/teacher_drawer %>
-    <div class="h-screen content-center">
-      <h1 class="text-xl font-bold text-center my-3">Welcome Teacher!!</h1>
-      <div class="stats stats-vertical lg:stats-horizontal shadow grid mx-2">
+    <div class="h-screen">
+      <h1 class="text-3xl font-bold text-center mt-20 mb-10">
+        Welcome Teacher!
+      </h1>
+      <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 mx-2 gap-3">
+        <div class="card glass bg-primary text-primary-content">
+          <div class="card-body">
+            <div class="text-2xl text-center font-bold">Total Subject</div>
+            <div class="text-xl text-center font-bold"><%= subjectCount %></div>
+          </div>
+        </div>
+        <div class="card glass bg-secondary text-secondary-content">
+          <div class="card-body">
+            <div class="text-2xl text-center font-bold">Total Times</div>
+            <div class="text-xl text-center font-bold"><%= timeCount %></div>
+          </div>
+        </div>
+        <div class="card glass bg-success text-success-content">
+          <div class="card-body">
+            <div class="text-2xl text-center font-bold">Total Class</div>
+            <div class="text-xl text-center font-bold"><%= classCount %></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="stats stats-vertical lg:stats-horizontal shadow grid mx-2">
         <div class="stat">
           <div class="stat-title">Total Subject</div>
           <div class="stat-value"><%= subjectCount %></div>
@@ -25,7 +48,7 @@
           <div class="stat-title">Total Class</div>
           <div class="stat-value"><%= classCount %></div>
         </div>
-      </div>
+      </div> -->
     </div>
   </body>
 </html>

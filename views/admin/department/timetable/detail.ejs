@@ -17,10 +17,10 @@
     <h1 class="my-5 text-center text-2xl font-bold text-base-content">
       <%= academic.fromYear %> - <%= academic.toYear %> Academic Year
     </h1>
-    <div class="grid grid-cols-2 mx-2 lg:mx-10">
-      <p><%= timetable.classId.name %></p>
-      <p class="ms-auto">
-        Room No : <%= timetable.building %> - <%= timetable.room %>
+    <div class="grid grid-cols-2 mx-2 lg:mx-10 font-bold">
+      <p class="text-lg"><%= timetable.classId.name %></p>
+      <p class="ms-auto text-lg">
+        Room No : <%= timetable.building %>-<%= timetable.room %>
       </p>
     </div>
     <div
@@ -39,8 +39,8 @@
         value="<%= JSON.stringify(teachers) %>"
       /> -->
       <div class="grid gap-4 lg:col-span-12">
-        <table class="table">
-          <thead class="text-lg">
+        <table class="table font-bold">
+          <thead class="text-lg text-base-content">
             <th class="border-4 border-base-content">Day\Time</th>
             <th class="border-4 border-base-content">9:00-10:00AM</th>
             <th class="border-4 border-base-content">10:00-11:00AM</th>
@@ -116,18 +116,18 @@
     <div
       class="grid lg:grid-cols-12 md:grid-cols-1 sm:grid-cols-1 mx-1 lg:mx-10 mt-5 mb-32"
     >
-      <div class="grid-cols-1 col-span-3">
+      <div class="grid-cols-1 col-span-3 font-bold">
         <p>Family Teacher -</p>
         <p id="tname"></p>
       </div>
       <div class="col-span-9 overflow-x-auto">
-        <table class="table border-2 border-base-content">
-          <thead class="text-lg">
+        <table class="table border-2 border-base-content font-bold">
+          <thead class="text-lg text-base-content">
             <th class="border-2 border-base-content">Subject Code</th>
             <th class="border-2 border-base-content">Subject Name</th>
             <th class="border-2 border-base-content">Teacher Name</th>
           </thead>
-          <tbody>
+          <tbody class="text-lg">
             <% for(var i = 0; i < academic.combination.length;i++){
             if(academic.combination[i].subjectId.name == "Library") continue;%>
             <tr class="border-2 border-base-content">
