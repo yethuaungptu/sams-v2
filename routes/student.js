@@ -181,15 +181,14 @@ router.get("/attendance", checkStudent, async function (req, res) {
   });
 });
 
-router.get("/attendanceMonthly", async function (req, res) {
-  const testId = "66c2d79a8b70d8b75d83282e";
-  const sid = "66cc5789565d0e79710cef09";
+router.get("/attendanceMonthly", checkStudent, async function (req, res) {
   const subjects = await Subject.find({
-    classId: testId,
+    classId: req.session.student.classId,
     status: true,
   });
-  const classData = await Class.findById(testId);
-  let id = mongoose.Types.ObjectId.createFromHexString(testId);
+  let id = mongoose.Types.ObjectId.createFromHexString(
+    req.session.student.classId
+  );
   const data = await Attendance.aggregate([
     { $match: { classId: id } },
     {
@@ -206,7 +205,9 @@ router.get("/attendanceMonthly", async function (req, res) {
     item.list.map((att) => {
       totalCount++;
       const attList = att.list.filter((student) => {
-        return student.studentId.toString() == sid.toString();
+        return (
+          student.studentId.toString() == req.session.student.id.toString()
+        );
       });
       if (attList[0]?.isAttendance) attCount++;
     });
@@ -217,11 +218,16 @@ router.get("/attendanceMonthly", async function (req, res) {
       attCount,
     });
   });
-  const result = _.groupBy(data, function (n) {
-    return n._id.subjectId;
+
+  const classData = await Class.findById(req.session.student.classId);
+  const monthList = classData.isInterval ? intervalMonths : normalMonths;
+  console.log(attendanceList);
+  // res.end("Done");
+  res.render("student/attendanceMonthly", {
+    attendanceList: attendanceList,
+    subjects: subjects,
+    monthList: monthList,
   });
-  console.log(result);
-  res.end("Done");
 });
 
 router.get("/logout", checkStudent, function (req, res) {

@@ -85,7 +85,7 @@
               <td class="border border-base-content"><%= attCount %></td>
               <td class="border border-base-content"><%= totalCount %></td>
               <td class="border border-base-content">
-                <%= Math.ceil(attCount/totalCount *100) %>
+                <%= Math.round(attCount/totalCount *100) %>
               </td>
               <%}%> <%} const dataStudent = overall.find((s) =>
               s.studentId.toString() === students[k]._id.toString());
@@ -96,7 +96,7 @@
               <td class="border border-base-content"><%= stuAllAtt %></td>
               <td class="border border-base-content"><%= stuAllTotal %></td>
               <td class="border border-base-content">
-                <%= Math.ceil(stuAllAtt/stuAllTotal *100) %>
+                <%= Math.round(stuAllAtt/stuAllTotal *100) %>
               </td>
               <td class="border border-base-content">
                 <%= currentOverall[0].allAtt %>
@@ -105,7 +105,7 @@
                 <%= currentOverall[0].allTotal %>
               </td>
               <td class="border border-base-content">
-                <%= Math.ceil(currentOverall[0].allAtt /
+                <%= Math.round(currentOverall[0].allAtt /
                 currentOverall[0].allTotal * 100) %>
               </td>
             </tr>

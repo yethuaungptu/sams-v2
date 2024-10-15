@@ -54,11 +54,11 @@
                 <td><%= student[0].attCount %></td>
                 <td><%= student[0].totalCount %></td>
                 <td>
-                  <%= Math.ceil(student[0].attCount / student[0].totalCount
+                  <%= Math.round(student[0].attCount / student[0].totalCount
                   *100) %>
                 </td>
                 <td>
-                  <%= Math.ceil(currentOverall[0].allAtt /
+                  <%= Math.round(currentOverall[0].allAtt /
                   currentOverall[0].allTotal * 100) %>
                 </td>
               </tr>
