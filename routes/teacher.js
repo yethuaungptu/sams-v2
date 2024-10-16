@@ -383,7 +383,12 @@ router.get(
       const studentIdList = item._id.studentId;
       let stuAttendance = [];
       studentIdList.map((itemStu) => {
-        stuAttendance.push({ studentId: itemStu, attCount: 0, totalCount: 0 });
+        stuAttendance.push({
+          studentId: itemStu,
+          attCount: 0,
+          totalCount: 0,
+          list: [],
+        });
       });
       const month = item._id.month;
       item.list.map((innerItem) => {
@@ -392,9 +397,15 @@ router.get(
             let objIndex = stuAttendance.findIndex(
               (obj) => obj.studentId == itemId
             );
-
             if (itemId.toString() == attendance.studentId.toString()) {
               stuAttendance[objIndex].totalCount += 1;
+
+              stuAttendance[objIndex].list.push({
+                date: moment(innerItem.created).format("DD/MM/YYYY"),
+                attCount: attendance.isAttendance ? 1 : 0,
+                totalCount: 1,
+                time: innerItem.time,
+              });
               if (attendance.isAttendance) {
                 stuAttendance[objIndex].attCount += 1;
               }
@@ -404,10 +415,9 @@ router.get(
       });
       attendanceList.push({ month: month, stuAttendance: stuAttendance });
     });
-    console.log(attendanceList);
 
     const monthList = classData.isInterval ? intervalMonths : normalMonths;
-    console.log(attendanceList[0]);
+
     res.render("teacher/viewAttendanceDetailByMonth", {
       studentList: studentList,
       attendanceList: attendanceList,
