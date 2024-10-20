@@ -126,7 +126,7 @@ router.get("/:dept/class", checkDept, async function (req, res) {
   const classes = await Class.find({
     status: true,
     department: req.params.dept,
-  });
+  }).sort({ name: 1 });
   res.render("admin/department/class", { classes: classes });
 });
 
@@ -290,6 +290,7 @@ router.get("/:dept/student", checkDept, async function (req, res) {
       },
     },
     { $unwind: { path: "$classId" } },
+    { $sort: { "classId.name": 1 } },
   ]);
   console.log(students);
   res.render("admin/department/student", { students: students });
@@ -430,6 +431,7 @@ router.get("/:dept/subject", checkDept, async function (req, res) {
       },
     },
     { $unwind: { path: "$classId" } },
+    { $sort: { "classId.name": 1 } },
   ]);
   console.log(subjects);
   res.render("admin/department/subject", { subjects: subjects });

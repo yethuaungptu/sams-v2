@@ -8,9 +8,16 @@
   </head>
   <body>
     <% include ../partial/teacher_drawer %>
-    <h1 class="text-2xl text-center font-bold my-5">
+    <h1 class="text-2xl text-center font-bold my-3">
       All Subject Attendance By Monthly
     </h1>
+    <div class="card mx-auto glass sm:w-full md:w-full lg:w-1/2">
+      <div class="card-body">
+        <h2 class="text-center font-bold">
+          T = Total Attendance , P = Present, A = Absent, P(%) = Percent
+        </h2>
+      </div>
+    </div>
     <div class="grid grid-cols-1 m-2 gap-2 mb-5">
       <% const overall = [];
       students.map((item)=>{overall.push({studentId:item._id,allTotal:0,allAtt:0})});
@@ -28,26 +35,29 @@
               <th rowspan="2" class="border border-base-content">Roll</th>
               <th rowspan="2" class="border border-base-content">Name</th>
               <% for(var i = 0; i < subjects.length;i++){%>
-              <th colspan="3" class="border border-base-content">
+              <th colspan="4" class="border border-base-content">
                 <%= subjects[i].name %>
               </th>
               <%}%>
-              <th colspan="3" class="border border-base-content">All</th>
-              <th colspan="3" class="border border-base-content">
+              <th colspan="4" class="border border-base-content">All</th>
+              <th colspan="4" class="border border-base-content">
                 OverAll(carry)
               </th>
             </tr>
             <tr>
               <% for(var i = 0; i < subjects.length;i++){ %>
-              <th class="border border-base-content">A</th>
               <th class="border border-base-content">T</th>
+              <th class="border border-base-content">P</th>
+              <th class="border border-base-content">A</th>
               <th class="border border-base-content">P(%)</th>
               <%}%>
-              <th class="border border-base-content">A</th>
               <th class="border border-base-content">T</th>
+              <th class="border border-base-content">P</th>
+              <th class="border border-base-content">A</th>
               <th class="border border-base-content">P(%)</th>
-              <th class="border border-base-content">A</th>
               <th class="border border-base-content">T</th>
+              <th class="border border-base-content">P</th>
+              <th class="border border-base-content">A</th>
               <th class="border border-base-content">P(%)</th>
             </tr>
           </thead>
@@ -76,14 +86,18 @@
               <td class="border border-base-content">0</td>
               <td class="border border-base-content">0</td>
               <td class="border border-base-content">0</td>
+              <td class="border border-base-content">0</td>
               <%}else{ let attCount = 0; let totalCount = 0;
               att[0].list.map((stuList)=>{totalCount++;const stuAtt =
               stuList.list.filter((detail)=>{return detail.studentId.toString()
               == students[k]._id.toString()});
               if(stuAtt[0].isAttendance){attCount++}}); stuAllAtt +=
               attCount;stuAllTotal += totalCount;%>
-              <td class="border border-base-content"><%= attCount %></td>
               <td class="border border-base-content"><%= totalCount %></td>
+              <td class="border border-base-content"><%= attCount %></td>
+              <td class="border border-base-content">
+                <%= totalCount-attCount %>
+              </td>
               <td class="border border-base-content">
                 <%= Math.round(attCount/totalCount *100) %>
               </td>
@@ -93,16 +107,22 @@
               dataStudent.allAtt += stuAllAtt; } const currentOverall =
               overall.filter((sub)=>{return sub.studentId.toString() ==
               students[k]._id.toString()})%>
-              <td class="border border-base-content"><%= stuAllAtt %></td>
               <td class="border border-base-content"><%= stuAllTotal %></td>
+              <td class="border border-base-content"><%= stuAllAtt %></td>
+              <td class="border border-base-content">
+                <%= stuAllTotal - stuAllAtt %>
+              </td>
               <td class="border border-base-content">
                 <%= Math.round(stuAllAtt/stuAllTotal *100) %>
+              </td>
+              <td class="border border-base-content">
+                <%= currentOverall[0].allTotal %>
               </td>
               <td class="border border-base-content">
                 <%= currentOverall[0].allAtt %>
               </td>
               <td class="border border-base-content">
-                <%= currentOverall[0].allTotal %>
+                <%= currentOverall[0].allTotal - currentOverall[0].allAtt %>
               </td>
               <td class="border border-base-content">
                 <%= Math.round(currentOverall[0].allAtt /

@@ -513,6 +513,50 @@ router.get(
   }
 );
 
+router.get("/searchAttendance", checkTeacher, async function (req, res) {
+  const teacher = await Teacher.findById(req.session.teacher.id);
+  let classData;
+  if (teacher.familyClass === "IBE") {
+    classData = await Class.findOne({
+      isInterval: true,
+      department: req.session.teacher.department,
+    });
+  } else {
+    var reg = new RegExp(String.raw`${teacher.familyClass}`, "i");
+    classData = await Class.findOne({
+      name: reg,
+      status: true,
+      department: teacher.department,
+    });
+  }
+  const subjectList = await Subject.find({
+    status: true,
+    classId: classData._id,
+    name: { $ne: "Library" },
+  });
+  res.render("teacher/searchAttendance", { subjectList: subjectList });
+});
+
+router.post("/getAttendanceList", checkTeacher, async function (req, res) {
+  try {
+    var now = new Date(req.body.attDate);
+    const starttz = moment.utc(now).tz("Asia/Yangon").startOf("day").format();
+    const endtz = moment.utc(now).tz("Asia/Yangon").endOf("day").format();
+    const attendances = await Attendance.find({
+      status: true,
+      subjectId: req.body.subjectId,
+      created: { $gte: starttz, $lte: endtz },
+    })
+      .populate("classId", "name")
+      .populate("subjectId", "name");
+    console.log(attendances);
+    res.json({ status: true, attendances: attendances });
+  } catch (e) {
+    console.log(e);
+    res.json({ status: false });
+  }
+});
+
 router.get("/logout", checkTeacher, async function (req, res) {
   req.session.destroy(function () {
     res.redirect("/");

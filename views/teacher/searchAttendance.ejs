@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Index</title>
+  </head>
+  <body>
+    <% include ../partial/teacher_drawer %>
+    <div class="mt-5 text-center text-xl font-bold">Attendace Search Date</div>
+    <div
+      class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 mx-2 mt-3 gap-3"
+    >
+      <label class="input input-bordered flex items-center gap-2">
+        Subject
+        <select
+          class="select select-ghost w-full"
+          name="subjectId"
+          id="subjectId"
+        >
+          <% for(var i = 0 ; i < subjectList.length; i++){%>
+          <option value="<%= subjectList[i]._id %>">
+            <%= subjectList[i].name %>
+          </option>
+          <%}%>
+        </select>
+      </label>
+      <label class="input input-bordered flex items-center gap-2">
+        Date
+        <input
+          type="date"
+          name="attDate"
+          id="attDate"
+          class="grow"
+          placeholder="Daisy"
+        />
+      </label>
+      <button class="btn btn-primary btn-block" id="btnSearch">Search</button>
+    </div>
+    <div class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 my-3">
+      <div></div>
+      <div class="col-span-2">
+        <table class="table border-2 border-base-content table-sm">
+          <thead class="text-lg">
+            <td class="border-2 border-base-content">No</td>
+            <td class="border-2 border-base-content">Class</td>
+            <td class="border-2 border-base-content">Subject</td>
+            <td class="border-2 border-base-content">Time</td>
+            <td class="border-2 border-base-content">Action</td>
+          </thead>
+          <tbody id="tb1"></tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script>
+    $("#btnSearch").click(function () {
+      const data = {
+        subjectId: $("#subjectId").val(),
+        attDate: $("#attDate").val(),
+      };
+      if (data.subjectId && data.attDate) {
+        $.ajax("/teacher/getAttendanceList", {
+          type: "POST",
+          data: data,
+          success: function (result) {
+            if (result.status == false) {
+              alert(result.msg);
+            } else {
+              var html = "";
+              $("#tb").empty();
+              for (var i = 0; i < result.attendances.length; i++) {
+                html += `<tr class="border-2 border-base-content">
+                          <td class="border-2 border-base-content">${i + 1}</td>
+                          <td class="border-2 border-base-content">
+                            ${result.attendances[i].classId.name}
+                          </td>
+                          <td class="border-2 border-base-content">
+                            ${result.attendances[i].subjectId.name}
+                          </td>
+                          <td class="border-2 border-base-content">
+                            ${result.attendances[i].time}
+                          </td>
+                          <td class="border-2 border-base-content">
+                              <a
+                                href="/teacher/attendanceDetail/${
+                                  result.attendances[i]._id
+                                }"
+                                class="btn btn-sm btn-primary"
+                                >Detail</a
+                              >
+                            </td>
+                          </tr>`;
+              }
+              $("#tb1").append(html);
+            }
+          },
+        });
+      } else {
+        alert("Please fill all fields");
+      }
+    });
+  </script>
+</html>

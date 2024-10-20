@@ -4772,6 +4772,14 @@ html:has(.drawer-toggle:checked) {
   width: 100%;
 }
 
+.w-96 {
+  width: 24rem;
+}
+
+.w-auto {
+  width: auto;
+}
+
 .min-w-\[10rem\] {
   min-width: 10rem;
 }
@@ -5645,6 +5653,10 @@ html:has(.drawer-toggle:checked) {
     display: inline-block;
   }
 
+  .sm\:w-full {
+    width: 100%;
+  }
+
   .sm\:grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
@@ -5679,6 +5691,10 @@ html:has(.drawer-toggle:checked) {
 
   .md\:hidden {
     display: none;
+  }
+
+  .md\:w-full {
+    width: 100%;
   }
 
   .md\:grid-cols-1 {
@@ -5760,6 +5776,10 @@ html:has(.drawer-toggle:checked) {
 
   .lg\:w-\[600px\] {
     width: 600px;
+  }
+
+  .lg\:w-1\/2 {
+    width: 50%;
   }
 
   .lg\:grid-cols-10 {

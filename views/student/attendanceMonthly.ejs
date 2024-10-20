@@ -26,16 +26,16 @@
             <thead class="text-lg">
               <tr>
                 <th class="border border-base-content" rowspan="2">Subject</th>
-                <th class="border border-base-content" rowspan="2">Att</th>
+                <th class="border border-base-content" rowspan="2">Present</th>
                 <th class="border border-base-content" rowspan="2">Total</th>
                 <th class="border border-base-content" rowspan="2">Percent</th>
-                <th class="border border-base-content" colspan="3">Overall</th>
+                <!-- <th class="border border-base-content" colspan="3">Overall</th> -->
               </tr>
-              <tr>
+              <!-- <tr>
                 <th class="border border-base-content">A</th>
                 <th class="border border-base-content">T</th>
                 <th class="border border-base-content">P</th>
-              </tr>
+              </tr> -->
             </thead>
             <tbody>
               <% for(var j = 0; j < subjects.length; j++){const subjData =
@@ -64,7 +64,8 @@
                   <%= Math.round(subjData[0].attCount/subjData[0].totalCount
                   *100) %>
                 </td>
-                <%}const currentOverall = overall.filter((sub)=>{const oSid =
+                <%}%>
+                <!-- <% const currentOverall = overall.filter((sub)=>{const oSid =
                 sub.subjectId.toString();const sid =
                 subjects[j]._id.toString();return oSid == sid}); %> <%
                 if(currentOverall.length ==0){%>
@@ -84,7 +85,7 @@
                   Math.round(currentOverall[0].allAtt /
                   currentOverall[0].allTotal *100) : 0 %>
                 </td>
-                <%}%>
+                <%}%> -->
               </tr>
               <%}%>
               <tr>
@@ -94,7 +95,7 @@
                 <td class="border border-base-content">
                   <%= Math.round(sAtt / sTotal *100) %>
                 </td>
-                <td class="border border-base-content">
+                <!-- <td class="border border-base-content">
                   <%= overall.reduce((n,{allAtt}) => n + allAtt,0 ) %>
                 </td>
                 <td class="border border-base-content">
@@ -103,7 +104,7 @@
                 <td class="border border-base-content">
                   <%= Math.round(overall.reduce((n,{allAtt}) => n + allAtt,0
                   )/overall.reduce((n,{allTotal}) => n + allTotal,0 ) *100) %>
-                </td>
+                </td> -->
               </tr>
             </tbody>
           </table>
