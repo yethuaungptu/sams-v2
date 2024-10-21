@@ -26,8 +26,8 @@
             <thead class="text-lg">
               <tr>
                 <th class="border border-base-content" rowspan="2">Subject</th>
-                <th class="border border-base-content" rowspan="2">Present</th>
-                <th class="border border-base-content" rowspan="2">Total</th>
+                <!-- <th class="border border-base-content" rowspan="2">Present</th>
+                <th class="border border-base-content" rowspan="2">Total</th> -->
                 <th class="border border-base-content" rowspan="2">Percent</th>
                 <!-- <th class="border border-base-content" colspan="3">Overall</th> -->
               </tr>
@@ -40,26 +40,26 @@
             <tbody>
               <% for(var j = 0; j < subjects.length; j++){const subjData =
               data.filter((sub)=>{return sub.subjectId.toString()==
-              subjects[j]._id.toString()})%>
+              subjects[j]._id.toString()});%>
               <tr>
                 <td class="border border-base-content">
                   <%= subjects[j].name %>
                 </td>
                 <% if(subjData.length == 0){%>
-                <td class="border border-base-content">0</td>
-                <td class="border border-base-content">0</td>
+                <!-- <td class="border border-base-content">0</td>
+                <td class="border border-base-content">0</td> -->
                 <td class="border border-base-content">0</td>
                 <%}else{ sAtt += subjData[0].attCount; sTotal +=
                 subjData[0].totalCount; const dataSubject = overall.find((s) =>
                 s.subjectId.toString() === subjects[j]._id.toString());
                 if(dataSubject){dataSubject.allTotal += subjData[0].totalCount;
                 dataSubject.allAtt += subjData[0].attCount; } %>
-                <td class="border border-base-content">
+                <!-- <td class="border border-base-content">
                   <%= subjData[0].attCount %>
                 </td>
                 <td class="border border-base-content">
                   <%= subjData[0].totalCount %>
-                </td>
+                </td> -->
                 <td class="border border-base-content">
                   <%= Math.round(subjData[0].attCount/subjData[0].totalCount
                   *100) %>
@@ -90,8 +90,8 @@
               <%}%>
               <tr>
                 <td class="border border-base-content">Summary</td>
-                <td class="border border-base-content"><%= sAtt %></td>
-                <td class="border border-base-content"><%= sTotal %></td>
+                <!-- <td class="border border-base-content"><%= sAtt %></td>
+                <td class="border border-base-content"><%= sTotal %></td> -->
                 <td class="border border-base-content">
                   <%= Math.round(sAtt / sTotal *100) %>
                 </td>
@@ -113,4 +113,10 @@
       <%} %>
     </div>
   </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script>
+    $(function () {
+      $('tr > td:contains("Library")').parent().remove();
+    });
+  </script>
 </html>

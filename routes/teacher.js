@@ -54,7 +54,7 @@ router.get("/", checkTeacher, async function (req, res) {
   const timetables = await Timetable.find({
     status: true,
     "times.teacherId": req.session.teacher.id,
-  });
+  }).populate("times.subjectId", "name");
   let subjectCount = 0;
   let timeCount = 0;
   academics.map((item) => {
@@ -64,7 +64,11 @@ router.get("/", checkTeacher, async function (req, res) {
   });
   timetables.map((item) => {
     item.times.map((time) => {
-      if (time.teacherId.equals(req.session.teacher.id)) timeCount++;
+      if (
+        time.teacherId.equals(req.session.teacher.id) &&
+        time.subjectId.name != "Library"
+      )
+        timeCount++;
     });
   });
   console.log(academics.length, subjectCount, timeCount);

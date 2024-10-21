@@ -35,21 +35,23 @@
               <th rowspan="2" class="border border-base-content">Roll</th>
               <th rowspan="2" class="border border-base-content">Name</th>
               <% for(var i = 0; i < subjects.length;i++){%>
-              <th colspan="4" class="border border-base-content">
+              <th class="border border-base-content">
                 <%= subjects[i].name %>
               </th>
               <%}%>
-              <th colspan="4" class="border border-base-content">All</th>
               <th colspan="4" class="border border-base-content">
-                OverAll(carry)
+                Current Month
+              </th>
+              <th colspan="4" class="border border-base-content">
+                Previous Month + Current Month
               </th>
             </tr>
             <tr>
               <% for(var i = 0; i < subjects.length;i++){ %>
-              <th class="border border-base-content">T</th>
+              <!-- <th class="border border-base-content">T</th> -->
               <th class="border border-base-content">P</th>
-              <th class="border border-base-content">A</th>
-              <th class="border border-base-content">P(%)</th>
+              <!-- <th class="border border-base-content">A</th>
+              <th class="border border-base-content">P(%)</th> -->
               <%}%>
               <th class="border border-base-content">T</th>
               <th class="border border-base-content">P</th>
@@ -84,23 +86,23 @@
               return nid == sid }); console.log(att) %> <% if(att.length ==
               0){%>
               <td class="border border-base-content">0</td>
+              <!-- <td class="border border-base-content">0</td>
               <td class="border border-base-content">0</td>
-              <td class="border border-base-content">0</td>
-              <td class="border border-base-content">0</td>
+              <td class="border border-base-content">0</td> -->
               <%}else{ let attCount = 0; let totalCount = 0;
               att[0].list.map((stuList)=>{totalCount++;const stuAtt =
               stuList.list.filter((detail)=>{return detail.studentId.toString()
               == students[k]._id.toString()});
               if(stuAtt[0].isAttendance){attCount++}}); stuAllAtt +=
               attCount;stuAllTotal += totalCount;%>
-              <td class="border border-base-content"><%= totalCount %></td>
+              <!-- <td class="border border-base-content"><%= totalCount %></td> -->
               <td class="border border-base-content"><%= attCount %></td>
-              <td class="border border-base-content">
+              <!-- <td class="border border-base-content">
                 <%= totalCount-attCount %>
               </td>
               <td class="border border-base-content">
                 <%= Math.round(attCount/totalCount *100) %>
-              </td>
+              </td> -->
               <%}%> <%} const dataStudent = overall.find((s) =>
               s.studentId.toString() === students[k]._id.toString());
               if(dataStudent){dataStudent.allTotal += stuAllTotal;

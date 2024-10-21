@@ -30,26 +30,34 @@
             existing.time += ','+current.time; } else { acc.push({ ...current
             }); } return acc; }, []); %>
             <thead>
-              <tr>
+              <tr class="text-center">
                 <th class="border border-base-content" rowspan="2">Roll</th>
                 <th class="border border-base-content" rowspan="2">Name</th>
                 <% listDate.map((item)=>{%>
-                <th class="border border-base-content text-center" colspan="3">
+                <th class="border border-base-content text-center">
                   <%= item.date %>(<%= item.time %>)
                 </th>
                 <%})%>
-                <th class="border border-base-content" rowspan="2">Present</th>
-                <th class="border border-base-content" rowspan="2">Total</th>
-                <th class="border border-base-content" rowspan="2">Percent</th>
+                <th class="border border-base-content" colspan="4">
+                  Current Month
+                </th>
+                <th class="border border-base-content" colspan="4">
+                  Previous Month + Current Month
+                </th>
               </tr>
-              <tr>
+              <tr class="text-center">
                 <% listDate.map((item)=>{%>
+                <th class="border border-base-content">P</th>
+                <%})%>
                 <th class="border border-base-content">T</th>
                 <th class="border border-base-content">P</th>
                 <th class="border border-base-content">A</th>
-                <%})%>
+                <th class="border border-base-content">P(%)</th>
+                <th class="border border-base-content">T</th>
+                <th class="border border-base-content">P</th>
+                <th class="border border-base-content">A</th>
+                <th class="border border-base-content">P(%)</th>
               </tr>
-              <!-- <th>Overall</th> -->
             </thead>
             <tbody>
               <% for(var j = 0; j < studentList.length;j++){ const student =
@@ -67,7 +75,7 @@
               existing.totalCount += current.totalCount; existing.time +=
               ','+current.time; } else { acc.push({ ...current }); } return acc;
               }, [])); %>
-              <tr>
+              <tr class="text-center">
                 <td class="border border-base-content">
                   <% let year = studentList[j].classId.name.charAt(0); %> <%=
                   (year == '1')? 'I' : (year == '2')?'II':(year == '3')? 'III' :
@@ -78,30 +86,42 @@
                   <%= studentList[j].name %>
                 </td>
                 <% info.map((infoAtt)=>{%>
-                <td class="border border-base-content">
+                <!-- <td class="border border-base-content">
                   <%= infoAtt.totalCount %>
-                </td>
+                </td> -->
                 <td class="border border-base-content">
                   <%= infoAtt.attCount %>
                 </td>
-                <td class="border border-base-content">
+                <!-- <td class="border border-base-content">
                   <%= infoAtt.totalCount- infoAtt.attCount %>
-                </td>
+                </td> -->
                 <%})%>
-                <td class="border border-base-content">
-                  <%= student[0].attCount %>
-                </td>
                 <td class="border border-base-content">
                   <%= student[0].totalCount %>
                 </td>
                 <td class="border border-base-content">
-                  <%= Math.round(student[0].attCount / student[0].totalCount
-                  *100) %>
+                  <%= student[0].attCount %>
                 </td>
-                <!-- <td class="border border-base-content">
-                  <%= Math.round(currentOverall[0].allAtt /
+                <td class="border border-base-content">
+                  <%= student[0].attCount - student[0].attCount %>
+                </td>
+                <td class="border border-base-content">
+                  <%= Math.ceil(student[0].attCount/student[0].totalCount * 100)
+                  %>
+                </td>
+                <td class="border border-base-content">
+                  <%= currentOverall[0].allTotal %>
+                </td>
+                <td class="border border-base-content">
+                  <%= currentOverall[0].allAtt %>
+                </td>
+                <td class="border border-base-content">
+                  <%= currentOverall[0].allTotal - currentOverall[0].allAtt %>
+                </td>
+                <td class="border border-base-content">
+                  <%= Math.ceil(currentOverall[0].allAtt /
                   currentOverall[0].allTotal * 100) %>
-                </td> -->
+                </td>
               </tr>
               <%}%>
             </tbody>
