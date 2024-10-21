@@ -4772,14 +4772,6 @@ html:has(.drawer-toggle:checked) {
   width: 100%;
 }
 
-.w-96 {
-  width: 24rem;
-}
-
-.w-auto {
-  width: auto;
-}
-
 .min-w-\[10rem\] {
   min-width: 10rem;
 }
@@ -5766,6 +5758,10 @@ html:has(.drawer-toggle:checked) {
     height: 35rem;
   }
 
+  .lg\:w-1\/2 {
+    width: 50%;
+  }
+
   .lg\:w-10 {
     width: 2.5rem;
   }
@@ -5776,10 +5772,6 @@ html:has(.drawer-toggle:checked) {
 
   .lg\:w-\[600px\] {
     width: 600px;
-  }
-
-  .lg\:w-1\/2 {
-    width: 50%;
   }
 
   .lg\:grid-cols-10 {

@@ -12,7 +12,7 @@
     <div
       class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 mx-3 lg:mx-10 gap-3"
     >
-      <% for(var i = 0; i < list.length;i++){ let isLibrary = false; for(var j = 0; j <
+      <% const timeList = [{start:9,end:10},{start:10,end:11},{start:11,end:12},{start:13,end:14},{start:14,end:15},{start:15,end:16}]; for(var i = 0; i < list.length;i++){ let isLibrary = false; for(var j = 0; j <
       list[i].subList.length;j++){ console.log(attendances);%>
         <% if(list[i].subList[j].subjectId.name == 'Library'){%>
             <% if(!isLibrary){%>
@@ -30,8 +30,8 @@
                 </div>
               </div>
             <% isLibrary=true }else{ continue; }%>
-        <% }else{ let multi=''; if(j+1 != list[i].subList.length && list[i].subList[j].subjectId._id.toString()== list[i].subList[j+1].subjectId._id.toString()){multi += list[i].subList[j].time.charAt(1);multi += list[i].subList[j+1].time.charAt(1); if(j+2 != list[i].subList.length && list[i].subList[j].subjectId._id.toString()== list[i].subList[j+2].subjectId._id.toString()){multi += list[i].subList[j+2].time.charAt(1); if(j+3 != list[i].subList.length && list[i].subList[j].subjectId._id.toString()== list[i].subList[j+3].subjectId._id.toString()){multi += list[i].subList[j+3].time.charAt(1); if(j+4 != list[i].subList.length && list[i].subList[j].subjectId._id.toString()== list[i].subList[j+4].subjectId._id.toString()){multi += list[i].subList[j+4].time.charAt(1);if(j+5 != list[i].subList.length && list[i].subList[j].subjectId._id.toString()== list[i].subList[j+5].subjectId._id.toString()){multi += list[i].subList[j+5].time.charAt(1); j= j+5;}else{j= j+4}}else{j= j+3}}else{j= j+2} }else{j++;} %> 
-          <div class="card glass w-full">
+        <% }else{ let multi=''; if(j+1 != list[i].subList.length && list[i].subList[j].subjectId._id.toString()== list[i].subList[j+1].subjectId._id.toString()){multi += list[i].subList[j].time.charAt(1);multi += list[i].subList[j+1].time.charAt(1); if(j+2 != list[i].subList.length && list[i].subList[j].subjectId._id.toString()== list[i].subList[j+2].subjectId._id.toString()){multi += list[i].subList[j+2].time.charAt(1); if(j+3 != list[i].subList.length && list[i].subList[j].subjectId._id.toString()== list[i].subList[j+3].subjectId._id.toString()){multi += list[i].subList[j+3].time.charAt(1); if(j+4 != list[i].subList.length && list[i].subList[j].subjectId._id.toString()== list[i].subList[j+4].subjectId._id.toString()){multi += list[i].subList[j+4].time.charAt(1);if(j+5 != list[i].subList.length && list[i].subList[j].subjectId._id.toString()== list[i].subList[j+5].subjectId._id.toString()){multi += list[i].subList[j+5].time.charAt(1); j= j+5;}else{j= j+4}}else{j= j+3}}else{j= j+2} }else{j++;}; let isHide; if(timeList[multi.charAt(0)-1].start <= moment().hour() &&  timeList[multi.charAt(multi.length-1)-1].start <= moment().hour()){isHide = false;}else{isHide=true} %> 
+          <div class="card glass w-full <%= isHide ? 'hidden': '' %>" >
           <div class="card-body">
             <div class="card-title"><%= list[i].class.name %></div>
             <p class="text-2xl font-bold text-center">
@@ -46,9 +46,9 @@
               >Call Multi Attendance</a
             >
           </div>
-        </div> <%}else{%>
+        </div> <%}else{ let isHide; if(timeList[list[i].subList[j].time.charAt(1)-1].start == moment().hour()){isHide = false;}else{isHide=true}%>
           
-          <div class="card glass w-full">
+          <div class="card glass w-full <%= isHide ? 'hidden': '' %>">
             <div class="card-body">
               <div class="card-title"><%= list[i].class.name %></div>
               <p class="text-2xl font-bold text-center">

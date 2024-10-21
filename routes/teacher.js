@@ -169,6 +169,7 @@ router.get("/todayattendance", checkTeacher, async function (req, res) {
     .populate("subjectId", "name");
   res.render("teacher/todayAttendance", {
     list: list,
+    moment: moment,
     attendances: attendances,
   });
 });
