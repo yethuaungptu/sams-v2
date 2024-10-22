@@ -4780,6 +4780,10 @@ html:has(.drawer-toggle:checked) {
   min-width: 8rem;
 }
 
+.min-w-\[6rem\] {
+  min-width: 6rem;
+}
+
 .max-w-2xl {
   max-width: 42rem;
 }
@@ -5169,6 +5173,11 @@ html:has(.drawer-toggle:checked) {
   background-color: rgb(221 214 254 / var(--tw-bg-opacity));
 }
 
+.bg-error {
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-er,oklch(var(--er)/var(--tw-bg-opacity)));
+}
+
 .bg-opacity-10 {
   --tw-bg-opacity: 0.1;
 }
@@ -5489,6 +5498,11 @@ html:has(.drawer-toggle:checked) {
 .text-violet-600 {
   --tw-text-opacity: 1;
   color: rgb(124 58 237 / var(--tw-text-opacity));
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .underline {

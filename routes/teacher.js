@@ -562,6 +562,47 @@ router.post("/getAttendanceList", checkTeacher, async function (req, res) {
   }
 });
 
+router.get(
+  "/attendanceSummaryByMonth/:id",
+  checkTeacher,
+  async function (req, res) {
+    const subjects = await Subject.find({
+      classId: req.params.id,
+      status: true,
+      name: { $ne: "Library" },
+    });
+    const classData = await Class.findById(req.params.id);
+    const id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
+    const students = await Student.find({ classId: id, status: true }).populate(
+      "classId"
+    );
+    const data = await Attendance.aggregate([
+      { $match: { classId: id } },
+      {
+        $group: {
+          _id: {
+            month: "$month",
+            subjectId: "$subjectId",
+          },
+          list: { $push: "$$ROOT" },
+        },
+      },
+    ]);
+
+    const result = _.groupBy(data, function (n) {
+      return n._id.month;
+    });
+    const monthList = classData.isInterval ? intervalMonths : normalMonths;
+    console.log(result, subjects, students, monthList);
+    res.render("teacher/attendanceSummaryMonthly", {
+      attendanceList: result,
+      subjects: subjects,
+      students: students,
+      monthList: monthList,
+    });
+  }
+);
+
 router.get("/logout", checkTeacher, async function (req, res) {
   req.session.destroy(function () {
     res.redirect("/");

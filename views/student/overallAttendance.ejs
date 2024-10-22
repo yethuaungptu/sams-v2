@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Attendance</title>
+  </head>
+  <body>
+    <% include ../partial/student_drawer %>
+    <h1 class="my-5 text-center font-bold text-xl">
+      Overall Attendance Monthly
+    </h1>
+    <div
+      class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 m-2 gap-2 mb-3"
+    >
+      <% let oatt = 0; let ototal = 0;for(var i = 0; i < monthList.length;i++){
+      const data = attendanceList.filter((item)=> {return item.month ==
+      monthList[i].no}); if(data.length == 0){continue;}; oatt +=
+      data[0].attCount; ototal += data[0].totalCount; %>
+      <div class="card glass w-full mx-auto">
+        <div class="card-body">
+          <h1 class="text-xl text-center font-bold">
+            <%= monthList[i].name %>
+          </h1>
+          <table class="table text-center font-bold">
+            <thead class="text-lg">
+              <tr>
+                <th class="border border-base-content" colspan="2">
+                  <%= monthList[i].name %> Attendance
+                </th>
+                <th class="border border-base-content" colspan="2">
+                  Previous + Current Month Attendance
+                </th>
+              </tr>
+              <tr>
+                <th class="border border-base-content">Attendance</th>
+                <th class="border border-base-content">Percent</th>
+                <th class="border border-base-content">Attendance</th>
+                <th class="border border-base-content">Percent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border border-base-content">
+                  <%= data[0].attCount %>
+                </td>
+                <td class="border border-base-content">
+                  <%= Math.ceil(data[0].attCount/data[0].totalCount *100) %>
+                </td>
+                <td class="border border-base-content"><%= oatt %></td>
+                <td class="border border-base-content">
+                  <%= Math.ceil(oatt/ototal *100) %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <%} %>
+    </div>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+</html>

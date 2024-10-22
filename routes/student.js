@@ -230,6 +230,53 @@ router.get("/attendanceMonthly", checkStudent, async function (req, res) {
   });
 });
 
+router.get("/overallAttendance", checkStudent, async function (req, res) {
+  const subjects = await Subject.find({
+    classId: req.session.student.classId,
+    status: true,
+  });
+  let id = mongoose.Types.ObjectId.createFromHexString(
+    req.session.student.classId
+  );
+  const data = await Attendance.aggregate([
+    { $match: { classId: id } },
+    {
+      $group: {
+        _id: { month: "$month" },
+        list: { $push: "$$ROOT" },
+      },
+    },
+  ]);
+  const attendanceList = [];
+  data.map((item) => {
+    let totalCount = 0;
+    let attCount = 0;
+    item.list.map((att) => {
+      totalCount++;
+      const attList = att.list.filter((student) => {
+        return (
+          student.studentId.toString() == req.session.student.id.toString()
+        );
+      });
+      if (attList[0]?.isAttendance) attCount++;
+    });
+    attendanceList.push({
+      month: item._id.month,
+      totalCount,
+      attCount,
+    });
+  });
+
+  const classData = await Class.findById(req.session.student.classId);
+  const monthList = classData.isInterval ? intervalMonths : normalMonths;
+  console.log(attendanceList);
+  res.render("student/overallAttendance", {
+    attendanceList: attendanceList,
+    subjects: subjects,
+    monthList: monthList,
+  });
+});
+
 router.get("/logout", checkStudent, function (req, res) {
   req.session.destroy(function () {
     res.redirect("/login");

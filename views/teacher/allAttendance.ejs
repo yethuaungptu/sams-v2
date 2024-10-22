@@ -29,6 +29,24 @@
       </div>
       <%}%>
     </div>
+    <div
+      class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 mx-3 lg:mx-10 gap-3 mb-3"
+    >
+      <% for(var i = 0; i < classList.length;i++){ %>
+      <div class="card glass w-full">
+        <div class="card-body">
+          <div class="card-title"><%= classList[i].name %></div>
+
+          <p class="text-xl font-bold text-center">All Subject Summary</p>
+          <a
+            href="/teacher/attendanceSummaryByMonth/<%= classList[i]._id%>"
+            class="btn btn-secondary btn-sm"
+            >View Attendance Summary</a
+          >
+        </div>
+      </div>
+      <%}%>
+    </div>
   </body>
   <script src="/javascripts/jquery.min.js"></script>
 </html>
