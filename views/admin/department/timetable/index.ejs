@@ -11,9 +11,11 @@
     <h1 class="my-5 text-center text-2xl font-bold text-base-content">
       <%= locals.dept.name %> Department's Timetable List
     </h1>
-    <div class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 mb-5">
-      <div></div>
-      <div class="overflow-x-auto border m-5 col-span-2">
+    <div class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mb-5">
+      <div
+        class="overflow-x-auto border border-base-content p-2 rounded-lg m-5"
+      >
+        <div class="text-center font-bold text-xl">Active Timetable</div>
         <table class="table font-bold">
           <!-- head -->
           <thead>
@@ -46,6 +48,40 @@
           class="btn btn-block btn-primary my-5"
           >Add Timetable</a
         >
+      </div>
+      <div
+        class="overflow-x-auto border border-base-content p-2 rounded-lg m-5"
+      >
+        <div class="text-center font-bold text-xl">Backup Timetable</div>
+        <table class="table font-bold">
+          <!-- head -->
+          <thead>
+            <tr class="text-xl">
+              <th>No</th>
+              <th>Academic-ID</th>
+              <th>Class Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(var i = 0; i < timetableBackups.length;i++){%>
+            <tr>
+              <th><%= i+1 %></th>
+              <td class="text-lg">
+                <%= timetableBackups[i].academicId.name %>
+              </td>
+              <td class="text-lg"><%= timetableBackups[i].class %></td>
+              <td>
+                <a
+                  href="/admin/departments/<%= locals.dept.key %>/timetable/backupDetail/<%= timetableBackups[i]._id%>"
+                  class="btn btn-sm btn-primary m-1"
+                  >Detail</a
+                >
+              </td>
+            </tr>
+            <%}%>
+          </tbody>
+        </table>
       </div>
     </div>
     <% include ../../partial/footerbar %>

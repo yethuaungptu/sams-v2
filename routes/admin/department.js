@@ -7,6 +7,7 @@ const Student = require("../../models/Student");
 const Subject = require("../../models/Subject");
 const Academic = require("../../models/Academic");
 const Timetable = require("../../models/Timetable");
+const TimetableBackup = require("../../models/TimetableBackup");
 
 /* GET users listing. */
 const deptList = [
@@ -637,7 +638,14 @@ router.get("/:dept/timetable", checkDept, async function (req, res) {
   })
     .populate("academicId", "name")
     .populate("classId", "name");
-  res.render("admin/department/timetable", { timetables: timetables });
+  const timetableBackups = await TimetableBackup.find({
+    status: true,
+    department: req.params.dept,
+  }).populate("academicId", "name");
+  res.render("admin/department/timetable", {
+    timetables: timetables,
+    timetableBackups: timetableBackups,
+  });
 });
 
 router.get("/:dept/timetable/add", checkDept, async function (req, res) {
@@ -728,6 +736,37 @@ router.get("/:dept/timetable/delete/:id", checkDept, async function (req, res) {
     status: false,
   });
   res.redirect("/admin/departments/" + req.params.dept + "/timetable");
+});
+
+router.get("/:dept/timetable/backup/:id", checkDept, async function (req, res) {
+  const timetable = await Timetable.findById(req.params.id)
+    .populate("classId", "name")
+    .populate("times.teacherId", "name")
+    .populate("times.subjectId", "name");
+
+  const timeData = [];
+  timetable.times.map((item) => {
+    timeData.push({
+      time: item.time,
+      teacher: item.teacherId.name,
+      subject: item.subjectId.name,
+    });
+  });
+
+  const backup = new TimetableBackup();
+  backup.academicId = timetable.academicId;
+  backup.building = timetable.building;
+  backup.room = timetable.room;
+  backup.times = timeData;
+  backup.department = timetable.department;
+  backup.class = timetable.classId.name;
+  const data = await backup.save();
+  res.redirect(
+    "/admin/department/" +
+      req.params.dept +
+      "/timetable/backupDetail/" +
+      data._id
+  );
 });
 
 module.exports = router;
