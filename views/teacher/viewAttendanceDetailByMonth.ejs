@@ -31,7 +31,8 @@
             }); } return acc; }, []); %>
             <thead>
               <tr class="text-center">
-                <th class="border border-base-content" rowspan="2">Roll</th>
+                <th class="border border-base-content" rowspan="2">No</th>
+                <th class="border border-base-content" rowspan="2">Roll.No</th>
                 <th class="border border-base-content" rowspan="2">Name</th>
                 <% listDate.map((item)=>{%>
                 <th class="border border-base-content text-center">
@@ -76,6 +77,7 @@
               ','+current.time; } else { acc.push({ ...current }); } return acc;
               }, [])); %>
               <tr class="text-center">
+                <td class="border border-base-content"><%= j+1 %></td>
                 <td class="border border-base-content">
                   <% let year = studentList[j].classId.name.charAt(0); %> <%=
                   (year == '1')? 'I' : (year == '2')?'II':(year == '3')? 'III' :

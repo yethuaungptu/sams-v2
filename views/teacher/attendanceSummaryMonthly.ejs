@@ -9,7 +9,7 @@
   <body>
     <% include ../partial/teacher_drawer %>
     <h1 class="text-2xl text-center font-bold my-3">
-      Attendance Summary Monthly
+      Attendance Percent Monthly
     </h1>
     <div class="grid grid-cols-1 m-2 gap-2 mb-5">
       <% for(var j = 0; j < monthList.length;j++){const checkM =
@@ -23,13 +23,14 @@
         <table class="table table-md">
           <thead>
             <tr>
+              <th class="border border-base-content" rowspan="2">No</th>
+              <th class="border border-base-content" rowspan="2">Roll.No</th>
               <th class="border border-base-content" rowspan="2">Name</th>
-              <th class="border border-base-content" rowspan="2">Roll</th>
               <th
                 class="border border-base-content text-center"
                 colspan="<%= subjects.length %>"
               >
-                All Subject Percent Summary
+                All Subject Percent
               </th>
             </tr>
             <tr class="text-center">
@@ -42,7 +43,9 @@
           </thead>
           <tbody class="border border-base-content">
             <% for(var k = 0; k < students.length; k++){ %>
+
             <tr>
+              <td class="border border-base-content"><%= k+1 %></td>
               <td
                 class="whitespace-normal min-w-[6rem] border border-base-content"
               >

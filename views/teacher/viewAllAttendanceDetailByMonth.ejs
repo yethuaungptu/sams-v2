@@ -32,6 +32,7 @@
         <table class="table table-md">
           <thead>
             <tr class="text-center">
+              <th rowspan="2" class="border border-base-content">No</th>
               <th rowspan="2" class="border border-base-content">Roll</th>
               <th rowspan="2" class="border border-base-content">Name</th>
               <% for(var i = 0; i < subjects.length;i++){%>
@@ -67,6 +68,7 @@
             <% for(var k = 0; k < students.length; k++){let stuAllAtt = 0; let
             stuAllTotal = 0; %>
             <tr>
+              <td class="border border-base-content"><%= k+1 %></td>
               <td
                 class="whitespace-normal min-w-[8rem] border border-base-content"
               >

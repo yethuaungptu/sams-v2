@@ -50,7 +50,7 @@ router.get("/", checkTeacher, async function (req, res) {
   const academics = await Academic.find({
     status: true,
     "combination.teacherId": req.session.teacher.id,
-  });
+  }).populate("combination.subjectId", "name");
   const timetables = await Timetable.find({
     status: true,
     "times.teacherId": req.session.teacher.id,
@@ -59,7 +59,12 @@ router.get("/", checkTeacher, async function (req, res) {
   let timeCount = 0;
   academics.map((item) => {
     item.combination.map((com) => {
-      if (com.teacherId.equals(req.session.teacher.id)) subjectCount++;
+      console.log(com);
+      if (
+        com.teacherId.equals(req.session.teacher.id) &&
+        com.subjectId.name != "Library"
+      )
+        subjectCount++;
     });
   });
   timetables.map((item) => {

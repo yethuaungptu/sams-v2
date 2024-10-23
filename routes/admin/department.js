@@ -762,11 +762,44 @@ router.get("/:dept/timetable/backup/:id", checkDept, async function (req, res) {
   backup.class = timetable.classId.name;
   const data = await backup.save();
   res.redirect(
-    "/admin/department/" +
+    "/admin/departments/" +
       req.params.dept +
       "/timetable/backupDetail/" +
       data._id
   );
 });
+
+router.get(
+  "/:dept/timetable/backupDetail/:id",
+  checkDept,
+  async function (req, res) {
+    const timetable = await TimetableBackup.findById(req.params.id);
+    const academic = await Academic.findById(timetable.academicId)
+      .populate("combination.subjectId", "name code")
+      .populate("combination.teacherId", "name");
+    const teachers = await Teacher.find(
+      {
+        status: true,
+        isFamily: true,
+        department: req.params.dept,
+      },
+      { _id: 0, name: 1, familyClass: 1 }
+    );
+    res.render("admin/department/timetable/backupDetail", {
+      timetable: timetable,
+      academic: academic,
+      teachers: teachers,
+    });
+  }
+);
+
+router.get(
+  "/:dept/timetable/deleteBackup/:id",
+  checkDept,
+  async function (req, res) {
+    const data = await TimetableBackup.findByIdAndDelete(req.params.id);
+    res.redirect("/admin/departments/" + req.params.dept + "/timetable");
+  }
+);
 
 module.exports = router;

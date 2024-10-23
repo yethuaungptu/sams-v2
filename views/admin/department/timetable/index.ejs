@@ -11,15 +11,13 @@
     <h1 class="my-5 text-center text-2xl font-bold text-base-content">
       <%= locals.dept.name %> Department's Timetable List
     </h1>
-    <div class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mb-5">
-      <div
-        class="overflow-x-auto border border-base-content p-2 rounded-lg m-5"
-      >
-        <div class="text-center font-bold text-xl">Active Timetable</div>
+    <div class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 mb-5">
+      <div></div>
+      <div class="overflow-x-auto col-span-2 p-2 rounded-lg m-5">
         <table class="table font-bold">
           <!-- head -->
           <thead>
-            <tr class="text-xl">
+            <tr class="text-xl text-center">
               <th>No</th>
               <th>Academic-ID</th>
               <th>Class Name</th>
@@ -29,15 +27,45 @@
           <tbody>
             <% for(var i = 0; i < timetables.length;i++){%>
             <tr>
-              <th><%= i+1 %></th>
-              <td class="text-lg"><%= timetables[i].academicId.name %></td>
-              <td class="text-lg"><%= timetables[i].classId.name %></td>
-              <td>
+              <th rowspan="2"><%= i+1 %></th>
+              <td rowspan="2" class="text-lg"><%= timetables[i].academicId.name %></td>
+              <% const data = timetableBackups.filter((item)=>{ const backupId
+                = item.academicId._id.toString(); const timetableId =
+                timetables[i].academicId._id.toString(); return backupId ==
+                timetableId }); %> <% if(data.length == 0){%>
+              <td rowspan="2" class="text-lg"><%= timetables[i].classId.name %></td>
+              <td rowspan="2">
+                <a
+                  href="/admin/departments/<%= locals.dept.key %>/timetable/backup/<%= timetables[i]._id%>"
+                  class="btn btn-sm btn-info m-1"
+                  >Save as Pevious</a
+                >
                 <a
                   href="/admin/departments/<%= locals.dept.key %>/timetable/detail/<%= timetables[i]._id%>"
                   class="btn btn-sm btn-primary m-1"
                   >Detail</a
                 >
+                </td>
+                <%}else{%>
+                  <td class="text-lg"><%= data[0].class %></td>
+              <td><a
+                href="/admin/departments/<%= locals.dept.key %>/timetable/backupDetail/<%= data[0]._id%>"
+                class="btn btn-sm btn-warning m-1"
+                >Pevious Detail</a
+              ></td>
+                  
+            </tr>
+            <tr>
+              <td class="text-lg">
+                <%= timetables[i].classId.name %>
+              </td>
+              <td><a
+                href="/admin/departments/<%= locals.dept.key %>/timetable/detail/<%= timetables[i]._id%>"
+                class="btn btn-sm btn-primary m-1"
+                >Detail</a
+              ></td>
+                
+                <%}%>
               </td>
             </tr>
             <%}%>
@@ -48,40 +76,6 @@
           class="btn btn-block btn-primary my-5"
           >Add Timetable</a
         >
-      </div>
-      <div
-        class="overflow-x-auto border border-base-content p-2 rounded-lg m-5"
-      >
-        <div class="text-center font-bold text-xl">Backup Timetable</div>
-        <table class="table font-bold">
-          <!-- head -->
-          <thead>
-            <tr class="text-xl">
-              <th>No</th>
-              <th>Academic-ID</th>
-              <th>Class Name</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% for(var i = 0; i < timetableBackups.length;i++){%>
-            <tr>
-              <th><%= i+1 %></th>
-              <td class="text-lg">
-                <%= timetableBackups[i].academicId.name %>
-              </td>
-              <td class="text-lg"><%= timetableBackups[i].class %></td>
-              <td>
-                <a
-                  href="/admin/departments/<%= locals.dept.key %>/timetable/backupDetail/<%= timetableBackups[i]._id%>"
-                  class="btn btn-sm btn-primary m-1"
-                  >Detail</a
-                >
-              </td>
-            </tr>
-            <%}%>
-          </tbody>
-        </table>
       </div>
     </div>
     <% include ../../partial/footerbar %>
