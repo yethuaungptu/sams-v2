@@ -17,6 +17,7 @@ const normalMonths = [
   { no: 0, name: "January" },
   { no: 1, name: "February" },
   { no: 2, name: "March" },
+  { no: 3, name: "April" },
   { no: 5, name: "June" },
   { no: 6, name: "July" },
   { no: 7, name: "Auguest" },
@@ -34,6 +35,7 @@ const intervalMonths = [
   { no: 0, name: "January" },
   { no: 1, name: "February" },
   { no: 2, name: "March" },
+  { no: 3, name: "April" },
 ];
 
 const checkStudent = function (req, res, next) {
