@@ -24,6 +24,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 mongoose.connect("mongodb://127.0.0.1/samsv2db");
+// mongoose.connect(
+//   "mongodb+srv://sams:sams-2024@sams.skbqs.mongodb.net/?retryWrites=true&w=majority&appName=sams"
+// );
 const db = mongoose.connection;
 db.on("error", console.error.bind("Mongodb connection error at samsdb"));
 
