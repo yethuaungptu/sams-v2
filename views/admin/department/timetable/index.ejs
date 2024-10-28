@@ -34,8 +34,8 @@
                 timetables[i].academicId._id.toString(); return backupId ==
                 timetableId }); %> <% if(data.length == 0){%>
                   <tr>
-              <td rowspan="2" class="text-lg"><%= timetables[i].classId.name %></td>
-              <td rowspan="2">
+              <td class="text-lg"><%= timetables[i].classId.name %></td>
+              <td>
                 <a
                   href="/admin/departments/<%= locals.dept.key %>/timetable/backup/<%= timetables[i]._id%>"
                   class="btn btn-sm btn-info m-1"
