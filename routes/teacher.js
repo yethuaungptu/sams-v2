@@ -190,7 +190,9 @@ router.get("/callAttendance", checkTeacher, async function (req, res) {
     const students = await Student.find({
       classId: req.query.cid,
       status: true,
-    }).populate("classId", "name");
+    })
+      .sort({ roll: 1 })
+      .populate("classId", "name");
     res.render("teacher/callAttendance", {
       status: true,
       students: students,
@@ -233,7 +235,9 @@ router.get("/callLibraryAttendance", checkTeacher, async function (req, res) {
     const studentList = await Student.find({
       classId: req.query.cid,
       status: true,
-    }).select("_id");
+    })
+      .sort({ roll: 1 })
+      .select("_id");
 
     for (var i = 0; i < timelist.length; i++) {
       const list = [];
@@ -262,7 +266,9 @@ router.get("/callMultiAttendance", checkTeacher, async function (req, res) {
     const students = await Student.find({
       classId: req.query.cid,
       status: true,
-    }).populate("classId", "name");
+    })
+      .sort({ roll: 1 })
+      .populate("classId", "name");
     res.render("teacher/callMultiAttendance", {
       status: true,
       students: students,
@@ -325,7 +331,9 @@ router.get(
     const subject = await Subject.findById(req.params.id);
     const studentList = await Student.find({
       classId: subject.classId,
-    }).populate("classId");
+    })
+      .sort({ roll: 1 })
+      .populate("classId");
     const data = await Attendance.aggregate([
       { $match: { subjectId: id } },
       {
@@ -380,7 +388,9 @@ router.get(
     const studentList = await Student.find({
       classId: subject.classId,
       status: true,
-    }).populate("classId");
+    })
+      .sort({ roll: 1 })
+      .populate("classId");
     const data = await Attendance.aggregate([
       { $match: { subjectId: id } },
       {
@@ -460,9 +470,9 @@ router.get(
       name: { $ne: "Library" },
     });
     const id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
-    const students = await Student.find({ classId: id, status: true }).populate(
-      "classId"
-    );
+    const students = await Student.find({ classId: id, status: true })
+      .sort({ roll: 1 })
+      .populate("classId");
     const data = await Attendance.aggregate([
       { $match: { classId: id } },
       {
@@ -496,9 +506,9 @@ router.get(
     });
     const classData = await Class.findById(req.params.id);
     const id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
-    const students = await Student.find({ classId: id, status: true }).populate(
-      "classId"
-    );
+    const students = await Student.find({ classId: id, status: true })
+      .sort({ roll: 1 })
+      .populate("classId");
     const data = await Attendance.aggregate([
       { $match: { classId: id } },
       {
@@ -580,9 +590,9 @@ router.get(
     });
     const classData = await Class.findById(req.params.id);
     const id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
-    const students = await Student.find({ classId: id, status: true }).populate(
-      "classId"
-    );
+    const students = await Student.find({ classId: id, status: true })
+      .sort({ roll: 1 })
+      .populate("classId");
     const data = await Attendance.aggregate([
       { $match: { classId: id } },
       {
